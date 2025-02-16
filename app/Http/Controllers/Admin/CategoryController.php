@@ -105,6 +105,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-        return redirect()->route('categories.index')->with('success', 'Danh mục đã được xóa!');
+        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được xóa!');
     }
 }
