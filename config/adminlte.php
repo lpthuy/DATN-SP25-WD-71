@@ -1,3 +1,4 @@
+
 <?php
 
 return [
@@ -299,35 +300,51 @@ return [
     */
 
     'menu' => [
-    // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'Tìm kiếm',
-        'topnav_right' => true,
-    ],
-    [
-        'type' => 'fullscreen-widget',
-        'topnav_right' => true,
-    ],
-
-    // Quản lý Thanh toán
-    ['header' => 'QUẢN LÝ THANH TOÁN'],
-
-    
-
-    [
-        'text'    => 'Quản lý Thanh toán',
-        'icon'    => 'fas fa-money-check-alt',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Phương thức',
-                'url'  => 'admin/payment_methods',
-                'icon' => 'fas fa-credit-card',
-            ],
-           
+        // Navbar items:
+        [
+            'type' => 'navbar-search',
+            'text' => 'Tìm kiếm',
+            'topnav_right' => true,
         ],
+        [
+            'type' => 'fullscreen-widget',
+            'topnav_right' => true,
+        ],
+
+        // Quản lý Thanh toán
+        ['header' => 'QUẢN LÝ THANH TOÁN'],
+
+
+
+        [
+            'text'    => 'Quản lý Thanh toán',
+            'icon'    => 'fas fa-money-check-alt',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Phương thức',
+                    'url'  => 'admin/payment_methods',
+                    'icon' => 'fas fa-credit-card',
+                ],
+
+            ],
+        ],
+        // quản lý danh mục
+        [
+            'header' => 'QUẢN LÝ DANH MỤC',
+        ],
+        [
+            'text'    => 'Quản lý Danh mục',
+            'icon'    => 'fas fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Danh mục',
+                    'url'  => 'admin/categories',
+                    'icon' => 'fas fa-tags',
+                ],
+            ],
+        ],
+
     ],
-],
 
 
 
