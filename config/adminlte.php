@@ -344,7 +344,21 @@ return [
             ],
         ],
 
+        //quan ly banner
+        ['header' => 'QUẢN LÝ BANNER'],
+        [
+            'text'    => 'Quản lý Banner',
+            'icon'    => 'fas fa-images',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Banner',
+                    'url'  => 'admin/banners',
+                    'icon' => 'fas fa-photo-video',
+                ],
+            ],
+
     ],
+],
 
 
 
