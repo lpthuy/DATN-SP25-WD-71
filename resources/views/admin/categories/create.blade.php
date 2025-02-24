@@ -1,33 +1,31 @@
 @extends('adminlte::page')
 
+
+@section('title', 'Thêm danh mục')
+
+@section('content_header')
+    <h1>Thêm danh mục</h1>
+@endsection
+
 @section('content')
-<h1>Thêm Danh mục</h1>
+    <form action="{{ route('categories.store') }}" method="POST">
+        @csrf
+        <div class="form-group">
+            <label for="name">Tên danh mục</label>
+            <input type="text" name="name" class="form-control" required>
+        </div>
 
-<form action="{{ route('admin.categories.store') }}" method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="parent_id">Danh mục cha</label>
+            <select name="parent_id" class="form-control">
+                <option value="">Không có</option>
+                @foreach($categories as $category)
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                @endforeach
+            </select>
+        </div>
 
-
-    @csrf
-    <div class="form-group">
-        <label for="name">Tên danh mục</label>
-        <input type="text" class="form-control" id="name" name="name" required>
-    </div>
-    <div class="form-group">
-        <label for="sku">SKU</label>
-        <input type="text" class="form-control" id="sku" name="sku" required>
-    </div>
-    <div class="form-group">
-        <label for="parent_category_id">Danh mục cha</label>
-        <select class="form-control" id="parent_category_id" name="parent_category_id">
-            <option value="">Không có</option>
-            @foreach($parentCategories as $parent)
-            <option value="{{ $parent->id }}">{{ $parent->name }}</option>
-            @endforeach
-        </select>
-    </div>
-    <div class="form-group">
-        <label for="image">Hình ảnh</label>
-        <input type="file" class="form-control" id="image" name="image">
-    </div>
-    <button type="submit" class="btn btn-primary">Lưu</button>
-</form>
+        <button type="submit" class="btn btn-success">Lưu danh mục</button>
+        <a href="{{ route('categories.index') }}" class="btn btn-secondary">Hủy</a>
+    </form>
 @endsection
