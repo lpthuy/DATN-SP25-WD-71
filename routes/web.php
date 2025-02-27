@@ -43,7 +43,6 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('banners', BannerController::class)->names('admin.banners');
 
     // Quản lý danh mục sản phẩm
-    Route::resource('categories', CategoryController::class);
 // Quản lý sản phẩm
 Route::resource('products', ProductController::class);
 // Quản lý kích thước sản phẩm (Size)

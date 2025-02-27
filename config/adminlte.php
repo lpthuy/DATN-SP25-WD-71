@@ -326,25 +326,7 @@ return [
         ],
     ],
 
-    // Quản lý Sản phẩm
-    ['header' => 'QUẢN LÝ SẢN PHẨM'],
     
-    [
-        'text'    => 'Danh mục sản phẩm',
-        'icon'    => 'fas fa-list',
-        'submenu' => [
-            [
-                'text' => 'Danh sách danh mục',
-                'url'  => 'admin/categories',
-                'icon' => 'fas fa-folder-open',
-            ],
-            [
-                'text' => 'Thêm danh mục',
-                'url'  => 'admin/categories/create',
-                'icon' => 'fas fa-plus-circle',
-            ],
-        ],
-    ],
 
     [
         'text'    => 'Quản lý Sản phẩm',
