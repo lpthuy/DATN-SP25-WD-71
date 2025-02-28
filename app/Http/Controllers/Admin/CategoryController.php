@@ -1,12 +1,9 @@
 <?php
 
-<<<<<<< HEAD
 
-=======
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
->>>>>>> e0d369a (Lưu lại thay đổi)
 use Illuminate\Http\Request;
 use App\Models\Category;
 
@@ -80,10 +77,6 @@ class CategoryController extends Controller
 
         $category->delete();
 
-<<<<<<< HEAD
-
-=======
->>>>>>> e0d369a (Lưu lại thay đổi)
         return redirect()->route('categories.index')->with('success', 'Danh mục đã bị xóa!');
     }
 }
