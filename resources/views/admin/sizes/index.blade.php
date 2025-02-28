@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Danh sách danh mục')
+@section('title', 'Danh sách Kích thước')
 
 @section('content_header')
-    <h1>Danh sách danh mục</h1>
+    <h1>Danh sách Kích thước</h1>
 @endsection
 
 @section('content')
-    <a href="{{ route('categories.create') }}" class="btn btn-primary mb-3">Thêm danh mục</a>
+    <a href="{{ route('sizes.create') }}" class="btn btn-primary mb-3">Thêm kích thước</a>
 
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>
@@ -17,20 +17,18 @@
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Tên danh mục</th>
-                <th>Danh mục cha</th>
+                <th>Tên Kích thước</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($categories as $category)
+            @foreach($sizes as $size)
             <tr>
-                <td>{{ $category->id }}</td>
-                <td>{{ $category->name }}</td>
-                <td>{{ $category->parent ? $category->parent->name : 'Không có' }}</td>
+                <td>{{ $size->id }}</td>
+                <td>{{ $size->size_name }}</td>
                 <td>
-                    <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Sửa</a>
-                    <form action="{{ route('categories.destroy', $category->id) }}" method="POST" style="display:inline;">
+                    <a href="{{ route('sizes.edit', $size->id) }}" class="btn btn-warning btn-sm">Sửa</a>
+                    <form action="{{ route('sizes.destroy', $size->id) }}" method="POST" style="display:inline;">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">Xóa</button>
@@ -41,5 +39,5 @@
         </tbody>
     </table>
 
-    {{ $categories->links() }}
+    {{ $sizes->links() }}
 @endsection

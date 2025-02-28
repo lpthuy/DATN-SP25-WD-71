@@ -1,9 +1,15 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\ColorController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PaymentMethodController;
+
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\ProductImageController;
+use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +42,18 @@ Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('payment_methods', PaymentMethodController::class);
-    Route::resource('categories', CategoryController::class)->names('admin.categories');
     Route::resource('banners', BannerController::class)->names('admin.banners');
+
+    // Quản lý danh mục sản phẩm
+// Quản lý sản phẩm
+Route::resource('products', ProductController::class);
+// Quản lý kích thước sản phẩm (Size)
+Route::resource('sizes', SizeController::class);
+// Quản lý màu sắc sản phẩm (Color)
+Route::resource('colors', ColorController::class);
+// Quản lý biến thể sản phẩm (Product Variants)
+Route::resource('products_variants', ProductVariantController::class);
+ // Quản lý hình ảnh sản phẩm (Product Images)
+ Route::resource('products_images', ProductImageController::class);
+    
 });

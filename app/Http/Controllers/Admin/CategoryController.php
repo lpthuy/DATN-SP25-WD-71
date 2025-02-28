@@ -1,110 +1,82 @@
 <?php
 
+
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Category;
 
 class CategoryController extends Controller
 {
-    // Hiển thị danh sách danh mục
+    /**
+     * Hiển thị danh sách danh mục
+     */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::with('parent')->paginate(10);
         return view('admin.categories.index', compact('categories'));
     }
 
-    // Hiển thị form thêm danh mục
+    /**
+     * Hiển thị form thêm danh mục
+     */
     public function create()
     {
-        $parentCategories = Category::whereNull('parent_category_id')->get(); // Lấy danh mục cha
-        return view('admin.categories.create', compact('parentCategories'));
+        $categories = Category::whereNull('parent_id')->get();
+        return view('admin.categories.create', compact('categories'));
     }
 
-    // Lưu danh mục mới
+    /**
+     * Lưu danh mục mới vào database
+     */
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'sku' => 'required|string|max:50|unique:categories,sku',
-            'parent_category_id' => 'nullable|exists:categories,id',
-            'is_active' => 'boolean',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'name' => 'required|string|max:255|unique:categories',
+            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
-        // Lưu hình ảnh nếu có
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('category_images', 'public');
-        } else {
-            $imagePath = null;
-        }
+        Category::create($request->all());
 
-        Category::create([
-            'name' => $request->name,
-            'sku' => $request->sku,
-            'parent_category_id' => $request->parent_category_id,
-            'is_active' => $request->is_active ?? true,
-            'image_url' => $imagePath,
-        ]);
-
-        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được thêm!');
+        return redirect()->route('categories.index')->with('success', 'Danh mục đã được tạo thành công!');
     }
 
-    // Hiển thị form chỉnh sửa danh mục
-    public function edit($id)
+    /**
+     * Hiển thị form chỉnh sửa danh mục
+     */
+    public function edit(Category $category)
     {
-        $category = Category::findOrFail($id);
-        $parentCategories = Category::whereNull('parent_category_id')->where('id', '!=', $id)->get(); // Không cho tự chọn làm cha
-        return view('admin.categories.edit', compact('category', 'parentCategories'));
+        $categories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->get();
+        return view('admin.categories.edit', compact('category', 'categories'));
     }
 
-    // Cập nhật danh mục
-    public function update(Request $request, $id)
+    /**
+     * Cập nhật danh mục trong database
+     */
+    public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'sku' => 'required|string|max:50|unique:categories,sku,' . $id,
-            'parent_category_id' => 'nullable|exists:categories,id',
-            'is_active' => 'boolean',
-            'image' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
+            'parent_id' => 'nullable|exists:categories,id',
         ]);
 
-        $category = Category::findOrFail($id);
+        $category->update($request->all());
 
-        // Cập nhật hình ảnh nếu có
-        if ($request->hasFile('image')) {
-            if ($category->image_url) {
-                Storage::delete('public/' . $category->image_url);
-            }
-            $imagePath = $request->file('image')->store('category_images', 'public');
-        } else {
-            $imagePath = $category->image_url;
-        }
-
-        $category->update([
-            'name' => $request->name,
-            'sku' => $request->sku,
-            'parent_category_id' => $request->parent_category_id,
-            'is_active' => $request->is_active ?? true,
-            'image_url' => $imagePath,
-        ]);
-
-        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được cập nhật!');
+        return redirect()->route('categories.index')->with('success', 'Danh mục đã được cập nhật!');
     }
 
-    // Xóa danh mục
-    public function destroy($id)
+    /**
+     * Xóa danh mục
+     */
+    public function destroy(Category $category)
     {
-        $category = Category::findOrFail($id);
-
-        if ($category->image_url) {
-            Storage::delete('public/' . $category->image_url);
+        if ($category->children()->count() > 0) {
+            return redirect()->route('admin.categories.index')->with('error', 'Không thể xóa danh mục này vì có danh mục con.');
         }
 
         $category->delete();
 
-        return redirect()->route('admin.categories.index')->with('success', 'Danh mục đã được xóa!');
+        return redirect()->route('categories.index')->with('success', 'Danh mục đã bị xóa!');
     }
 }

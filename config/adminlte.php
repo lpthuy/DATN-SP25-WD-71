@@ -300,11 +300,89 @@ return [
     */
 
     'menu' => [
-        // Navbar items:
-        [
-            'type' => 'navbar-search',
-            'text' => 'Tìm kiếm',
-            'topnav_right' => true,
+
+    // Navbar items:
+    [
+        'type' => 'navbar-search',
+        'text' => 'Tìm kiếm',
+        'topnav_right' => true,
+    ],
+    [
+        'type' => 'fullscreen-widget',
+        'topnav_right' => true,
+    ],
+
+    // Quản lý Thanh toán
+    ['header' => 'QUẢN LÝ THANH TOÁN'],
+    [
+        'text'    => 'Quản lý Thanh toán',
+        'icon'    => 'fas fa-money-check-alt',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Phương thức',
+                'url'  => 'admin/payment_methods',
+                'icon' => 'fas fa-credit-card',
+            ],
+        ],
+    ],
+
+    
+
+    [
+        'text'    => 'Quản lý Sản phẩm',
+        'icon'    => 'fas fa-box',
+        'submenu' => [
+            [
+                'text' => 'Danh sách sản phẩm',
+                'url'  => 'admin/products',
+                'icon' => 'fas fa-boxes',
+            ],
+            [
+                'text' => 'Thêm sản phẩm',
+                'url'  => 'admin/products/create',
+                'icon' => 'fas fa-plus-circle',
+            ],
+        ],
+    ],
+
+    [
+        'text'    => 'Kích thước & Màu sắc',
+        'icon'    => 'fas fa-ruler-combined',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Size',
+                'url'  => 'admin/sizes',
+                'icon' => 'fas fa-text-height',
+            ],
+            [
+                'text' => 'Danh sách Màu sắc',
+                'url'  => 'admin/colors',
+                'icon' => 'fas fa-palette',
+            ],
+        ],
+    ],
+
+    [
+        'text'    => 'Biến thể sản phẩm',
+        'icon'    => 'fas fa-layer-group',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Biến thể',
+                'url'  => 'admin/products_variants',
+                'icon' => 'fas fa-cubes',
+            ],
+        ],
+    ],
+
+    [
+        'text'    => 'Hình ảnh sản phẩm',
+        'icon'    => 'fas fa-images',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Hình ảnh',
+                'url'  => 'admin/products_images',
+                'icon' => 'fas fa-camera',
+            ],
         ],
         [
             'type' => 'fullscreen-widget',
@@ -328,21 +406,7 @@ return [
 
             ],
         ],
-        // quản lý danh mục
-        [
-            'header' => 'QUẢN LÝ DANH MỤC',
-        ],
-        [
-            'text'    => 'Quản lý Danh mục',
-            'icon'    => 'fas fa-list',
-            'submenu' => [
-                [
-                    'text' => 'Danh sách Danh mục',
-                    'url'  => 'admin/categories',
-                    'icon' => 'fas fa-tags',
-                ],
-            ],
-        ],
+        
 
         //quan ly banner
         ['header' => 'QUẢN LÝ BANNER'],
@@ -358,7 +422,10 @@ return [
             ],
 
     ],
+    ],
+
 ],
+
 
 
 
