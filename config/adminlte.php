@@ -326,6 +326,25 @@ return [
         ],
     ],
 
+    [
+        'header' => 'QUẢN LÝ DANH MỤC',
+    ],
+    [
+        'text'    => 'Quản lý Danh mục',
+        'icon'    => 'fas fa-list',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Danh mục',
+                'url'  => 'admin/categories',
+                'icon' => 'fas fa-th-list',
+            ],
+            [
+                'text' => 'Thêm Danh mục',
+                'url'  => 'admin/categories/create',
+                'icon' => 'fas fa-plus-circle',
+            ],
+        ],
+    ],
     
 
     [

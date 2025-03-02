@@ -14,7 +14,7 @@ use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Auth::routes();
+Auth::routes();
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -39,12 +39,16 @@ Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
 // Chỉ Admin mới có quyền vào Dashboard
 
 // Nhóm các route của Admin vào cùng 1 middleware
+// Nhóm các route của Admin vào cùng 1 middleware
+
 Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::resource('payment_methods', PaymentMethodController::class);
     Route::resource('banners', BannerController::class)->names('admin.banners');
+    Route::resource('categories', CategoryController::class);
 
     // Quản lý danh mục sản phẩm
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');//sửa sản phẩm
 // Quản lý sản phẩm
 Route::resource('products', ProductController::class);
 // Quản lý kích thước sản phẩm (Size)
@@ -55,5 +59,7 @@ Route::resource('colors', ColorController::class);
 Route::resource('products_variants', ProductVariantController::class);
  // Quản lý hình ảnh sản phẩm (Product Images)
  Route::resource('products_images', ProductImageController::class);
+
+
     
 });

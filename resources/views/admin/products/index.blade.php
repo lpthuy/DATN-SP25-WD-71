@@ -17,9 +17,11 @@
         <thead>
             <tr>
                 <th>ID</th>
+                <th>Hình ảnh</th>
                 <th>Tên sản phẩm</th>
                 <th>Giá</th>
                 <th>Danh mục</th>
+                <th>Biến thể (Size - Màu - Số lượng)</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -27,9 +29,38 @@
             @foreach($products as $product)
             <tr>
                 <td>{{ $product->id }}</td>
+                <td>
+                    @if($product->image)
+                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+                    @else
+                        Không có ảnh
+                    @endif
+                </td>
                 <td>{{ $product->name }}</td>
-                <td>{{ number_format($product->price, 0, ',', '.') }} VND</td>
+                <td>
+                    @if($product->discount_price && $product->discount_price < $product->price)
+                        <span style="text-decoration: line-through; color: red;">
+                            {{ number_format($product->price, 0, ',', '.') }} VND
+                        </span>
+                        <br>
+                        <span style="color: green; font-weight: bold;">
+                            {{ number_format($product->discount_price, 0, ',', '.') }} VND
+                        </span>
+                    @else
+                        {{ number_format($product->price, 0, ',', '.') }} VND
+                    @endif
+                </td>
+                
                 <td>{{ $product->category->name ?? 'Không có danh mục' }}</td>
+                <td>
+                    @foreach($product->variants as $variant)
+                        <div style="margin-bottom: 5px;">
+                            <span class="badge badge-secondary">{{ $variant->size->size_name }}</span>
+                            <span style="background-color: {{ $variant->color->color_code }}; padding: 5px; border-radius: 5px; display: inline-block; width: 20px; height: 20px;"></span>
+                            <span class="text-muted">SL: {{ $variant->stock_quantity }}</span>
+                        </div>
+                    @endforeach
+                </td>
                 <td>
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Sửa</a>
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">

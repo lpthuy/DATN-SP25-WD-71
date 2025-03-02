@@ -2,65 +2,111 @@
 
 namespace App\Http\Controllers\client;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Controller;
 class HomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        //
-        return view('clients.home');
+        return view('client.pages.home');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function about()
     {
-        //
+        return view('client.pages.about');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function product()
     {
-        //
+        return view('client.pages.product');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function productbycategory()
     {
-        //
+        return view('client.pages.product-by-category');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function productDetail()
     {
-        //
+        return view('client.pages.product-detail');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function post()
     {
-        //
+        return view('client.pages.post');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function contact()
     {
-        //
+        return view('client.pages.contact');
+    }
+
+    public function search()
+    {
+        return view('client.pages.search');
+    }
+
+    public function wishlist()
+    {
+        return view('client.pages.wishlist');
+    }
+
+    public function cart()
+    {
+        return view('client.pages.cart');
+    }
+
+    public function checkOrder()
+    {
+        return view('client.pages.check-order');
+    }
+    public function chinhSachGiaoHang()
+    {
+        return view('client.pages.chinh-sach-giao-hang');
+    }
+
+    public function login()
+    {
+        return view('auth.client.login');
+    }
+
+    public function register()
+    {
+        return view('auth.client.register');
+    }
+
+    public function profile()
+    {
+        return view('auth.client.profile');
+    }
+
+    public function changePassword()
+    {
+        return view('auth.client.change-password');
+    }
+
+    public function order()
+    {
+        return view('client.pages.order');
+    }
+
+    public function address()
+    {
+        return view('client.pages.address');
     }
 }

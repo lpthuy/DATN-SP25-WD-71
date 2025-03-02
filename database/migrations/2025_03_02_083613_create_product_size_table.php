@@ -1,20 +1,20 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
     public function up() {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('product_size', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->foreignId('parent_id')->nullable()->constrained('categories')->onDelete('set null');
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('size_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
 
     public function down() {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('product_size');
     }
 };
+
