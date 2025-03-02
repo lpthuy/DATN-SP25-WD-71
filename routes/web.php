@@ -75,5 +75,7 @@ Route::resource('colors', ColorController::class);
 Route::resource('products_variants', ProductVariantController::class);
  // Quản lý hình ảnh sản phẩm (Product Images)
  Route::resource('products_images', ProductImageController::class);
+
+
     
 });
