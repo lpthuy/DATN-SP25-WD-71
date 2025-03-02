@@ -29,12 +29,28 @@ Route::get('/yeu-thich', [HomeController::class, 'wishlist'])->name('wishlist');
 Route::get('/gio-hang', [HomeController::class, 'cart'])->name('cart');
 Route::get('/kiem-tra-don-hang', [HomeController::class, 'checkOrder'])->name('checkOrder');
 Route::get('/chinh-sach-giao-hang', [HomeController::class, 'chinhSachGiaoHang'])->name('chinhSachGiaoHang');
+
 Route::get('/dang-nhap', [HomeController::class, 'login'])->name('login');
+Route::post('/dang-nhap', [HomeController::class, 'doLogin'])->name('doLogin');
+
 Route::get('/dang-ky', [HomeController::class, 'register'])->name('register');
+Route::post('/dang-ky', [HomeController::class, 'doRegister'])->name('doRegister');
+
 Route::get('/doi-mat-khau', [HomeController::class, 'changePassword'])->name('changePassword');
+Route::post('/doi-mat-khau', [HomeController::class, 'doChangePassword'])->name('doChangePassword');
+
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect()->route('home'); // Chuyển hướng về trang chủ sau khi logout
+})->name('logout');
+
 Route::get('/tai-khoan', [HomeController::class, 'profile'])->name('profile');
 Route::get('/don-hang', [HomeController::class, 'order'])->name('order');
 Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
+
+Route::get('/tai-khoan/chinh-sua', [HomeController::class, 'editProfile'])->name('editProfile');
+Route::post('/tai-khoan/chinh-sua', [HomeController::class, 'updateProfile'])->name('updateProfile');
+
 
 // Chỉ Admin mới có quyền vào Dashboard
 

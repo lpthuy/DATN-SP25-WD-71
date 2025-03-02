@@ -269,4 +269,7 @@ var ErrorNoti = function(ErrorText){
 		onClosed: null,
 		icon_type: 'class',
 	});
+
+
+	
 }

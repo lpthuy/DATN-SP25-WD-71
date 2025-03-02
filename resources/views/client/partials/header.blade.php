@@ -5,28 +5,46 @@
                 <div class="col-md-6 col-6 contact-header">
                     <span>
                         Hotline:
-                        <a class="fone" href="tel:19006750" title="1900 6750">
-                            1900 6750
-                        </a>
+                        <a class="fone" href="tel:19006750" title="1900 6750">1900 6750</a>
                     </span>
                     <span class="d-md-inline-block d-none">
                         Email:
-                        <a href="mailto:support@sapo.vn" title="support@sapo.vn">
-                            support@sapo.vn
-                        </a>
+                        <a href="mailto:support@sapo.vn" title="support@sapo.vn">support@sapo.vn</a>
                     </span>
                 </div>
                 <div class="col-md-6 col-12">
                     <div class="account-header">
-
-                        <a class="btnx" href="{{ route('login') }}" title="Đăng nhập">Đăng nhập</a>
-                        <a href="{{ route('register') }}" title="Đăng ký">Đăng ký</a>
-
+                        @if(Auth::check()) 
+                        <div class="dropdown user-dropdown">
+                            <button class="avatar-btn" type="button">
+                                <img src="{{ Auth::user()->avatar ?? asset('default-avatar.png') }}" class="user-avatar" alt="Avatar">
+                                <span>{{ Auth::user()->name }}</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('profile') }}">Trang cá nhân</a></li>
+                                @if(Auth::user()->role === 'admin')
+                                    <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Quay lại trang Admin</a></li>
+                                @else
+                                    <li><a class="dropdown-item" href="{{ route('order') }}">Đơn hàng của tôi</a></li>
+                                @endif
+                                <li>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">Đăng xuất</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                        @else
+                            <a class="btnx" href="{{ route('login') }}" title="Đăng nhập">Đăng nhập</a>
+                            <a href="{{ route('register') }}" title="Đăng ký">Đăng ký</a>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="main-header">
         <div class="container">
             <div class="box-hearder">

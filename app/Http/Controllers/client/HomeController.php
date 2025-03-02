@@ -1,66 +1,235 @@
 <?php
 
-namespace App\Http\Controllers\client;
+namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        // $this->middleware('auth');
+    }
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
-        //
-        return view('clients.home');
+        return view('client.pages.home');
+    }
+
+    public function about()
+    {
+        return view('client.pages.about');
+    }
+
+    public function product()
+    {
+        return view('client.pages.product');
+    }
+
+    public function productbycategory()
+    {
+        return view('client.pages.product-by-category');
+    }
+
+    public function productDetail()
+    {
+        return view('client.pages.product-detail');
+    }
+
+    public function post()
+    {
+        return view('client.pages.post');
+    }
+
+    public function contact()
+    {
+        return view('client.pages.contact');
+    }
+
+    public function search()
+    {
+        return view('client.pages.search');
+    }
+
+    public function wishlist()
+    {
+        return view('client.pages.wishlist');
+    }
+
+    public function cart()
+    {
+        return view('client.pages.cart');
+    }
+
+    public function checkOrder()
+    {
+        return view('client.pages.check-order');
+    }
+    public function chinhSachGiaoHang()
+    {
+        return view('client.pages.chinh-sach-giao-hang');
+    }
+
+    public function login()
+    {
+        return view('auth.client.login');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Xử lý đăng nhập
      */
-    public function create()
+    public function doLogin(Request $request)
     {
-        //
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công!');
+            } elseif ($user->role === 'user') {
+                return redirect()->route('profile')->with('success', 'Đăng nhập thành công!');
+            }
+
+            return redirect('/')->with('success', 'Đăng nhập thành công!');
+        }
+
+        return redirect()->back()->with('error', 'Email hoặc mật khẩu không đúng.');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Hiển thị trang đăng ký
      */
-    public function store(Request $request)
+    public function register()
     {
-        //
+        return view('auth.client.register');
     }
 
     /**
-     * Display the specified resource.
+     * Xử lý đăng ký
      */
-    public function show(string $id)
+    public function doRegister(Request $request)
+{
+    $request->validate([
+        'name' => 'required|min:3',
+        'email' => 'required|email|unique:users',
+        'phone' => 'required|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone, // Lưu số điện thoại
+        'password' => Hash::make($request->password),
+        'role' => 'user'
+    ]);
+
+    Auth::login($user);
+
+    return redirect()->route('profile')->with('success', 'Đăng ký thành công!');
+}
+
+
+    /**
+     * Hiển thị trang đổi mật khẩu
+     */
+    
+
+    /**
+     * Xử lý đổi mật khẩu
+     */
+    public function doChangePassword(Request $request)
     {
-        //
+        $request->validate([
+            'old_password' => 'required|min:6',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Mật khẩu cũ không chính xác.');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return redirect()->route('profile')->with('success', 'Mật khẩu đã được thay đổi.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Đăng xuất
      */
-    public function edit(string $id)
+    public function logout()
     {
-        //
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Bạn đã đăng xuất.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function profile()
+{
+    $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
+    return view('auth.client.profile', compact('user'));
+}
+
+
+public function editProfile()
+{
+    return view('auth.client.edit-profile', ['user' => Auth::user()]);
+}
+
+public function updateProfile(Request $request)
+{
+    $request->validate([
+        'name' => 'required|min:3',
+        'email' => 'required|email|unique:users,email,' . Auth::id(),
+        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
+    ]);
+
+    $user = Auth::user();
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+    ]);
+
+    return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
+}
+
+
+    public function changePassword()
     {
-        //
+        return view('auth.client.change-password');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    public function order()
     {
-        //
+        return view('client.pages.order');
+    }
+
+    public function address()
+    {
+        return view('client.pages.address');
     }
 }
