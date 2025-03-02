@@ -31,47 +31,45 @@
                                 <div class="page-login pagecustome clearfix">
                                     <div class="wpx">
                                         <h1 class="title_heads a-center"><span>Đăng ký</span></h1>
-                                        <span class="block a-center dkm margin-top-10">Đã có tài khoản, đăng nhập <a href="{{ route('login') }}" class="btn-link-style btn-register">tại đây</a></span>
-                                        <div id="login" class="section">
-                                            <form method="post" action="/account/register" id="customer_register" accept-charset="UTF-8"><input name="FormType" type="hidden" value="customer_register"><input name="utf8" type="hidden" value="true"><input type="hidden" id="Token-34586600b26f481e885942da7177412c" name="Token" value="03AFcWeA6lb0t6brVn4Wug-n3Ubbzctb_fgQKFIxXetj6dtPO7UodQyV7vbKirfLwR-fwU96lCizxHYzzFLb9XXhvEvMt4fIhxynAiL466bRT-yc81B8Ia2xWveYXkTCV2sWOXNwJSSOpgN-3Hk0sLeJTbGPvxqN6-QtKw4N1mw7qQi6tANByYs-7_uX8CCU9AM_SrhIpWhVmnxvIxqsyTVYP3POGDJPX0CZ68ZsZKNUmhu4OKPhfavOAJIuy2dePLC3yW2ym05XMblKYM21VVbmbVGFyGia-HGAOQWqYS7Y89iEFb0ipzDEfVjywdSThqMCe6AKaSg6jKmeMAkaT5T_eiA71puFVd7vHdOAdZYeqDfzvDjjSyyIo9Crzxa9bV6sZAZoyieCXhVoHVNIdc8OZOARwAyAdQHDI0fZbVQ2xjePSPG7wllbOiQFHQoW_NZY5-gT3p3EGUMUK1V-fQrBQVkq0yEDVX1_v5jJbRdsMzJnDHm1uFkkaIwmLOlBGCxGjmBygW3_ML_rr4a-bJTu4WwMarMMsDShkCA4zHBr5AlpgBoLaaB1q1k9cNDXXTNTzXzYDrOYow3Lwai6eFgjSA9LWV0ZlcYlEMKoxYz8JYrSM4tAhl-j_gm6XQfNK4a0rqrwVs_SxyOrKZic0dUlYZi9L63joIpn0OeeikG4H-YameBJ1UcR25k37JX1FTSws6CFxB2z1DKDQviv9P2Zrmleh_bKBOLLaspckBXDgg5A7he8oxX8XT7sA71x8_AerbX3DhSpI4lYRW5jLr1wmEuxUm3HWvPP3Q05bszzMGDoUWHuCYsUUrrS-MmAX6TtvA02rf3hI8uBLbM2M3JuETvU0qKc98y1T7CN2k5IQcTuF483WkQJsHN_GycrKI9uidhGeWwoXFyVhYjv7nYQZCh3tuBapskKgqZcSDzxTf4yBy5d7UNPWVQT1gHkYo3eFiavkTVPUVMtHjuAmWzEKP8UWOZbVlsdqSaJ_-JZVQqSCzgyCAJ6T6KjsxKiuKy25x4Semy9pK"><script src="https://www.google.com/recaptcha/api.js?render=6Ldtu4IUAAAAAMQzG1gCw3wFlx_GytlZyLrXcsuK"></script><script>grecaptcha.ready(function() {grecaptcha.execute("6Ldtu4IUAAAAAMQzG1gCw3wFlx_GytlZyLrXcsuK", {action: "customer_register"}).then(function(token) {document.getElementById("Token-34586600b26f481e885942da7177412c").value = token});});</script>
-                                            <div class="form-signup " style="color:red;">
+                                <span class="block a-center dkm margin-top-10">Đã có tài khoản? <a href="{{ route('login') }}" class="btn-link-style btn-register">Đăng nhập tại đây</a></span>
 
-                                            </div>
-                                            <div class="form-signup clearfix">
-                                                <div class="row">
-                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                        <fieldset class="form-group">
-                                                            <input type="text" class="form-control form-control-lg" value="" name="lastName" id="lastName" placeholder="Họ" required="" fdprocessedid="0n8grg">
-                                                        </fieldset>
-                                                    </div>
-                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                        <fieldset class="form-group">
-                                                            <input type="text" class="form-control form-control-lg" value="" name="firstName" id="firstName" placeholder="Tên" required="" fdprocessedid="a9sxlb">
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                        <fieldset class="form-group">
-                                                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,63}$" class="form-control form-control-lg" value="" name="email" id="email" placeholder="Email" required="" fdprocessedid="3ldbb9">
-                                                        </fieldset>
-                                                    </div>
-                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                        <fieldset class="form-group">
-                                                            <input placeholder="Số điện thoại" type="text" pattern="\d+" class="form-control form-control-comment form-control-lg" name="Phone" required="" fdprocessedid="hpvz0a">
-                                                        </fieldset>
-                                                    </div>
-                                                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12">
-                                                        <fieldset class="form-group">
-                                                            <input type="password" class="form-control form-control-lg" value="" name="password" id="password" placeholder="Mật khẩu" required="" fdprocessedid="bg06fo">
-                                                        </fieldset>
-                                                    </div>
-                                                </div>
-                                                <div class="section">
-                                                    <button type="submit" value="Đăng ký" class="btn  btn-style btn_50" fdprocessedid="tdhv2">Đăng ký</button>
-                                                </div>
-                                            </div>
-                                            </form>
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if(session('success'))
+                                    <div class="alert alert-success">{{ session('success') }}</div>
+                                @endif
+
+                                <form method="POST" action="{{ route('doRegister') }}">
+                                    @csrf
+                                    <div class="form-signup">
+                                        <fieldset class="form-group">
+                                            <input type="text" class="form-control form-control-lg" name="name" placeholder="Họ và Tên" required value="{{ old('name') }}">
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" required value="{{ old('email') }}">
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <input type="text" class="form-control form-control-lg" name="phone" placeholder="Số điện thoại" required value="{{ old('phone') }}">
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <input type="password" class="form-control form-control-lg" name="password" placeholder="Mật khẩu" required>
+                                        </fieldset>
+                                        <fieldset class="form-group">
+                                            <input type="password" class="form-control form-control-lg" name="password_confirmation" placeholder="Xác nhận mật khẩu" required>
+                                        </fieldset>
+                                        <div class="section">
+                                            <button type="submit" class="btn btn-style btn_50">Đăng ký</button>
+                                        </div>
+                                    </div>
+                                </form>
                                             <div class="block social-login--facebooks margin-top-15">
                                                 <p class="a-center">
                                                     Hoặc đăng nhập bằng
@@ -91,3 +89,13 @@
         </div>
     </section>
 @endsection
+
+
+
+
+
+
+
+
+
+

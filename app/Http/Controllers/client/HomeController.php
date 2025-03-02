@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\client;
+namespace App\Http\Controllers\Client;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+
 class HomeController extends Controller
 {
     /**
@@ -85,15 +89,134 @@ class HomeController extends Controller
         return view('auth.client.login');
     }
 
+    /**
+     * Xử lý đăng nhập
+     */
+    public function doLogin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Đăng nhập thành công!');
+            } elseif ($user->role === 'user') {
+                return redirect()->route('profile')->with('success', 'Đăng nhập thành công!');
+            }
+
+            return redirect('/')->with('success', 'Đăng nhập thành công!');
+        }
+
+        return redirect()->back()->with('error', 'Email hoặc mật khẩu không đúng.');
+    }
+
+    /**
+     * Hiển thị trang đăng ký
+     */
     public function register()
     {
         return view('auth.client.register');
     }
 
-    public function profile()
+    /**
+     * Xử lý đăng ký
+     */
+    public function doRegister(Request $request)
+{
+    $request->validate([
+        'name' => 'required|min:3',
+        'email' => 'required|email|unique:users',
+        'phone' => 'required|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+        'password' => 'required|min:6|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone, // Lưu số điện thoại
+        'password' => Hash::make($request->password),
+        'role' => 'user'
+    ]);
+
+    Auth::login($user);
+
+    return redirect()->route('profile')->with('success', 'Đăng ký thành công!');
+}
+
+
+    /**
+     * Hiển thị trang đổi mật khẩu
+     */
+    
+
+    /**
+     * Xử lý đổi mật khẩu
+     */
+    public function doChangePassword(Request $request)
     {
-        return view('auth.client.profile');
+        $request->validate([
+            'old_password' => 'required|min:6',
+            'new_password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = Auth::user();
+
+        if (!Hash::check($request->old_password, $user->password)) {
+            return redirect()->back()->with('error', 'Mật khẩu cũ không chính xác.');
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        return redirect()->route('profile')->with('success', 'Mật khẩu đã được thay đổi.');
     }
+
+    /**
+     * Đăng xuất
+     */
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Bạn đã đăng xuất.');
+    }
+
+    public function profile()
+{
+    $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
+    return view('auth.client.profile', compact('user'));
+}
+
+
+public function editProfile()
+{
+    return view('auth.client.edit-profile', ['user' => Auth::user()]);
+}
+
+public function updateProfile(Request $request)
+{
+    $request->validate([
+        'name' => 'required|min:3',
+        'email' => 'required|email|unique:users,email,' . Auth::id(),
+        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
+    ]);
+
+    $user = Auth::user();
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+    ]);
+
+    return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
+}
+
 
     public function changePassword()
     {
