@@ -1,11 +1,4 @@
 @extends('adminlte::page')
-
-<<<<<<< HEAD
-
-=======
->>>>>>> e0d369a (Lưu lại thay đổi)
-@section('title', 'Thêm danh mục')
-
 @section('content_header')
     <h1>Thêm danh mục</h1>
 @endsection

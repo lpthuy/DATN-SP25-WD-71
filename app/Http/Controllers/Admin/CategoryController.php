@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        $categories = Category::whereNull('parent_id')->get();
+        $categories = Category::whereNull('parent_category_id')->get();
         return view('admin.categories.create', compact('categories'));
     }
 
@@ -34,7 +34,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories',
-            'parent_id' => 'nullable|exists:categories,id',
+            'parent_category_id' => 'nullable|exists:categories,id',
         ]);
 
         Category::create($request->all());
@@ -47,7 +47,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        $categories = Category::whereNull('parent_id')->where('id', '!=', $category->id)->get();
+        $categories = Category::whereNull('parent_category_id')->where('id', '!=', $category->id)->get();
         return view('admin.categories.edit', compact('category', 'categories'));
     }
 
@@ -58,7 +58,7 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name,' . $category->id,
-            'parent_id' => 'nullable|exists:categories,id',
+            'parent_category_id' => 'nullable|exists:categories,id',
         ]);
 
         $category->update($request->all());
