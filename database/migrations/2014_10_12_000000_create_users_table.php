@@ -16,12 +16,14 @@ return new class extends Migration
         $table->string('name');
         $table->string('email')->unique();
         $table->timestamp('email_verified_at')->nullable();
+        $table->string('phone')->unique(); // Thêm cột số điện thoại
         $table->string('password');
         $table->enum('role', ['admin', 'user'])->default('user'); // Thêm cột phân quyền
         $table->rememberToken();
         $table->timestamps();
     });
 }
+
 
 
     /**
