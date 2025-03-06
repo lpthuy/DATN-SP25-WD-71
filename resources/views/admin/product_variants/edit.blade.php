@@ -23,6 +23,12 @@
                 @endforeach
             </select>
         </div>
+        
+        <!-- Giá tự động lấy từ danh mục sản phẩm -->
+        <div class="form-group">
+            <label for="price">Giá</label>
+            <input type="number" name="price" id="price" class="form-control" value="{{ $products_variant->price }}" >
+        </div>
 
         <!-- Thanh tìm kiếm -->
         <div class="form-group">
@@ -31,7 +37,7 @@
 
         <!-- Chọn kích thước, màu sắc và số lượng -->
         <div class="form-group">
-            <label for="variants">Chỉnh sửa Kích thước, Màu sắc và Số lượng</label>
+            <label for="variants">Chỉnh sửa Kích thước, Màu sắc, Số lượng và Giá</label>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -39,20 +45,24 @@
                         <th>Size</th>
                         <th>Màu sắc</th>
                         <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
                     </tr>
                 </thead>
                 <tbody id="variantTable">
                     @foreach($sizes as $size)
                         @foreach($colors as $color)
                             @php
-                                $variant = $selected_variants->where('size_id', $size->id)->where('color_id', $color->id)->first();
+                                $variant = $selected_variants->where('size_id', $size->id)
+                                                             ->where('color_id', $color->id)
+                                                             ->first();
                             @endphp
                             <tr class="variant-row">
                                 <td>
                                     <input type="checkbox" name="variants[{{ $size->id }}][{{ $color->id }}][selected]" 
-                                           value="1" class="variant-checkbox"
-                                           @if($variant) checked @endif 
-                                           onchange="toggleQuantityInput(this)">
+                                           value="1" class="variant-checkbox" 
+                                           onchange="toggleInputs(this)"
+                                           {{ $variant ? 'checked' : '' }}>
                                 </td>
                                 <td class="size-name">{{ $size->size_name }}</td>
                                 <td class="color-name">
@@ -63,9 +73,24 @@
                                 </td>
                                 <td>
                                     <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][stock_quantity]" 
-                                           class="form-control variant-quantity" min="1" placeholder="Nhập số lượng"
-                                           value="{{ $variant ? $variant->stock_quantity : '' }}"
-                                           @if(!$variant) disabled @endif>
+                                           class="form-control variant-quantity" 
+                                           min="1" placeholder="Nhập số lượng"
+                                           value="{{ $variant->stock_quantity ?? '' }}"
+                                           {{ $variant ? '' : 'disabled' }}>
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][price]" 
+                                           class="form-control variant-price" 
+                                           min="0" step="0.01" placeholder="Nhập giá"
+                                           value="{{ $variant->price ?? '' }}"
+                                           {{ $variant ? '' : 'disabled' }}>
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][discount_price]" 
+                                           class="form-control variant-discount-price" 
+                                           min="0" step="0.01" placeholder="Nhập giá giảm"
+                                           value="{{ $variant->discount_price ?? '' }}"
+                                           {{ $variant ? '' : 'disabled' }}>
                                 </td>
                             </tr>
                         @endforeach
@@ -73,12 +98,18 @@
                 </tbody>
             </table>
         </div>
+        
+        <script>
+            function toggleInputs(checkbox) {
+                let row = checkbox.closest('tr');
+                let inputs = row.querySelectorAll('input[type="number"]');
+                inputs.forEach(input => {
+                    input.disabled = !checkbox.checked;
+                });
+            }
+        </script>
+        
 
-        <!-- Giá tự động lấy từ danh mục sản phẩm -->
-        <div class="form-group">
-            <label for="price">Giá</label>
-            <input type="number" name="price" id="price" class="form-control" value="{{ $products_variant->price }}" readonly>
-        </div>
 
         <button type="submit" class="btn btn-success">Cập nhật</button>
         <a href="{{ route('products_variants.index') }}" class="btn btn-secondary">Hủy</a>

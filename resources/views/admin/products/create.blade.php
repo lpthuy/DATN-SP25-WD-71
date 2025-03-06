@@ -9,12 +9,14 @@
 @section('content')
     <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
+
+        {{-- Tên sản phẩm --}}
         <div class="form-group">
             <label for="name">Tên sản phẩm</label>
             <input type="text" name="name" class="form-control" required>
         </div>
 
-
+        {{-- Danh mục --}}
         <div class="form-group">
             <label for="category_id">Danh mục</label>
             <select name="category_id" class="form-control">
@@ -30,23 +32,10 @@
             <label for="images">Hình ảnh sản phẩm</label>
             <input type="file" name="images[]" class="form-control" multiple>
         </div>
-        {{-- Giá --}}
-        <div class="form-group">
-            <label for="price">Giá gốc</label>
-            <input type="number" name="price" class="form-control" min="0" placeholder="Nhập giá gốc" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="discount_price">Giá sau giảm</label>
-            <input type="number" name="discount_price" class="form-control" min="0" placeholder="Nhập giá sau giảm (nếu có)">
-        </div>
-        
 
-        {{-- Chọn Kích thước & Màu sắc + Nhập Số lượng --}}
-   
-        
+        {{-- Chọn Kích thước, Màu sắc, Số lượng, Giá, Giá giảm --}}
         <div class="form-group">
-            <label for="variants">Chọn Kích thước, Màu sắc và Số lượng</label>
+            <label for="variants">Chọn Kích thước, Màu sắc, Số lượng và Giá</label>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -54,6 +43,8 @@
                         <th>Size</th>
                         <th>Màu sắc</th>
                         <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
                     </tr>
                 </thead>
                 <tbody id="variantTable">
@@ -75,33 +66,37 @@
                                     <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][stock_quantity]" 
                                            class="form-control variant-quantity" min="1" placeholder="Nhập số lượng" disabled>
                                 </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][price]"
+                                           class="form-control variant-price" min="0" step="0.01" placeholder="Nhập giá" disabled>
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][discount_price]"
+                                           class="form-control variant-discount-price" min="0" step="0.01" placeholder="Giá giảm" disabled>
+                                </td>
                             </tr>
                         @endforeach
                     @endforeach
                 </tbody>
             </table>
         </div>
-        
+
+        {{-- Script bật/tắt input khi chọn biến thể --}}
         <script>
             function toggleInputs(checkbox) {
-                let row = checkbox.closest("tr");
-                let quantityInput = row.querySelector(".variant-quantity");
-        
+                let row = checkbox.closest('tr');
+                let inputs = row.querySelectorAll('input[type=\"number\"]');
+
                 if (checkbox.checked) {
-                    quantityInput.removeAttribute("disabled");
+                    inputs.forEach(input => input.removeAttribute('disabled'));
                 } else {
-                    quantityInput.setAttribute("disabled", "true");
+                    inputs.forEach(input => {
+                        input.setAttribute('disabled', 'true');
+                        input.value = '';
+                    });
                 }
             }
-        </script>        
-
-<script>
-    function toggleQuantityInput(checkbox) {
-        let quantityInput = checkbox.closest('tr').querySelector('.variant-quantity');
-        quantityInput.disabled = !checkbox.checked;
-    }
-</script>
-
+        </script>
 
         <button type="submit" class="btn btn-success">Lưu sản phẩm</button>
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Hủy</a>

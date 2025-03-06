@@ -11,11 +11,13 @@
         @csrf
         @method('PUT')
 
+        {{-- Tên sản phẩm --}}
         <div class="form-group">
             <label for="name">Tên sản phẩm</label>
             <input type="text" name="name" class="form-control" value="{{ $product->name }}" required>
         </div>
 
+        {{-- Danh mục --}}
         <div class="form-group">
             <label for="category_id">Danh mục</label>
             <select name="category_id" class="form-control">
@@ -30,31 +32,18 @@
 
         {{-- Hình ảnh sản phẩm --}}
         <div class="form-group">
-            <label for="images">Hình ảnh sản phẩm</label>
-            <input type="file" name="images[]" class="form-control" multiple>
-            <div class="mt-2">
+            <label>Hình ảnh sản phẩm</label>
+            <div class="mb-2">
                 @foreach(explode(',', $product->image) as $img)
-                    @if($img)
-                        <img src="{{ asset('storage/' . $img) }}" alt="Hình ảnh sản phẩm" width="100">
-                    @endif
+                    <img src="{{ asset('storage/' . $img) }}" width="100" class="mr-2">
                 @endforeach
             </div>
+            <input type="file" name="images[]" class="form-control" multiple>
         </div>
 
-        {{-- Giá --}}
+        {{-- Cập nhật biến thể --}}
         <div class="form-group">
-            <label for="price">Giá gốc</label>
-            <input type="number" name="price" class="form-control" min="0" value="{{ $product->price }}" required>
-        </div>
-
-        <div class="form-group">
-            <label for="discount_price">Giá sau giảm</label>
-            <input type="number" name="discount_price" class="form-control" min="0" value="{{ $product->discount_price }}">
-        </div>
-
-        {{-- Biến thể sản phẩm --}}
-        <div class="form-group">
-            <label for="variants">Chọn Kích thước, Màu sắc và Số lượng</label>
+            <label for="variants">Chỉnh sửa Kích thước, Màu sắc, Số lượng và Giá</label>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -62,6 +51,8 @@
                         <th>Size</th>
                         <th>Màu sắc</th>
                         <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
                     </tr>
                 </thead>
                 <tbody id="variantTable">
@@ -70,14 +61,14 @@
                             @php
                                 $variant = $product->variants->where('size_id', $size->id)->where('color_id', $color->id)->first();
                             @endphp
-                            <tr class="variant-row">
+                            <tr>
                                 <td>
                                     <input type="checkbox" name="variants[{{ $size->id }}][{{ $color->id }}][selected]" 
-                                           value="1" class="variant-checkbox" 
-                                           onchange="toggleInputs(this)" {{ $variant ? 'checked' : '' }}>
+                                           value="1" class="variant-checkbox" onchange="toggleInputs(this)"
+                                           {{ $variant ? 'checked' : '' }}>
                                 </td>
-                                <td class="size-name">{{ $size->size_name }}</td>
-                                <td class="color-name">
+                                <td>{{ $size->size_name }}</td>
+                                <td>
                                     <div style="display: flex; align-items: center;">
                                         <div style="width: 20px; height: 20px; background-color: {{ $color->color_code }}; margin-right: 5px;"></div>
                                         {{ $color->color_name }}
@@ -85,9 +76,18 @@
                                 </td>
                                 <td>
                                     <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][stock_quantity]" 
-                                           class="form-control variant-quantity" min="1" 
-                                           value="{{ $variant ? $variant->stock_quantity : '' }}" 
-                                           {{ $variant ? '' : 'disabled' }}>
+                                           class="form-control variant-quantity" min="1" placeholder="Nhập số lượng"
+                                           value="{{ $variant->stock_quantity ?? '' }}" {{ $variant ? '' : 'disabled' }}>
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][price]"
+                                           class="form-control variant-price" min="0" step="0.01" placeholder="Nhập giá"
+                                           value="{{ $variant->price ?? '' }}" {{ $variant ? '' : 'disabled' }}>
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][discount_price]"
+                                           class="form-control variant-discount-price" min="0" step="0.01" placeholder="Giá giảm"
+                                           value="{{ $variant->discount_price ?? '' }}" {{ $variant ? '' : 'disabled' }}>
                                 </td>
                             </tr>
                         @endforeach
@@ -96,19 +96,22 @@
             </table>
         </div>
 
+        {{-- Script bật/tắt input khi chọn biến thể --}}
         <script>
             function toggleInputs(checkbox) {
-                let row = checkbox.closest("tr");
-                let quantityInput = row.querySelector(".variant-quantity");
-        
+                let row = checkbox.closest('tr');
+                let inputs = row.querySelectorAll('input[type="number"]');
+
                 if (checkbox.checked) {
-                    quantityInput.removeAttribute("disabled");
+                    inputs.forEach(input => input.removeAttribute('disabled'));
                 } else {
-                    quantityInput.setAttribute("disabled", "true");
-                    quantityInput.value = "";
+                    inputs.forEach(input => {
+                        input.setAttribute('disabled', 'true');
+                        input.value = '';
+                    });
                 }
             }
-        </script>  
+        </script>
 
         <button type="submit" class="btn btn-success">Cập nhật sản phẩm</button>
         <a href="{{ route('products.index') }}" class="btn btn-secondary">Hủy</a>

@@ -28,7 +28,7 @@
 
         <!-- Chọn kích thước, màu sắc và số lượng -->
         <div class="form-group">
-            <label for="variants">Chọn Kích thước, Màu sắc và Số lượng</label>
+            <label for="variants">Chọn Kích thước, Màu sắc, Số lượng và Giá</label>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -36,6 +36,8 @@
                         <th>Size</th>
                         <th>Màu sắc</th>
                         <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Giá giảm</th>
                     </tr>
                 </thead>
                 <tbody id="variantTable">
@@ -44,7 +46,7 @@
                             <tr class="variant-row">
                                 <td>
                                     <input type="checkbox" name="variants[{{ $size->id }}][{{ $color->id }}][selected]" 
-                                           value="1" class="variant-checkbox" onchange="toggleQuantityInput(this)">
+                                           value="1" class="variant-checkbox" onchange="toggleInputs(this)">
                                 </td>
                                 <td class="size-name">{{ $size->size_name }}</td>
                                 <td class="color-name">
@@ -55,8 +57,15 @@
                                 </td>
                                 <td>
                                     <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][stock_quantity]" 
-                                           class="form-control variant-quantity" min="1" placeholder="Nhập số lượng"
-                                           disabled>
+                                           class="form-control variant-quantity" min="1" placeholder="Nhập số lượng" >
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][price]" 
+                                           class="form-control variant-price" min="0" step="0.01" placeholder="Nhập giá" >
+                                </td>
+                                <td>
+                                    <input type="number" name="variants[{{ $size->id }}][{{ $color->id }}][discount_price]" 
+                                           class="form-control variant-discount-price" min="0" step="0.01" placeholder="Nhập giá giảm" >
                                 </td>
                             </tr>
                         @endforeach
