@@ -15,18 +15,23 @@ class ProductVariantController extends Controller
     /**
      * Hiển thị danh sách biến thể sản phẩm.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $variants = ProductVariant::with('product', 'size', 'color')
+        $productId = $request->query('product'); // Lấy product_id từ URL
+        $product = Product::find($productId); // Tìm sản phẩm từ database
+    
+        if (!$product) {
+            return redirect()->route('products.index')->with('error', 'Sản phẩm không tồn tại.');
+        }
+    
+        $variants = ProductVariant::with(['size', 'color'])
+            ->where('product_id', $productId)
             ->get()
-            ->groupBy(function ($item) {
-                return $item->product_id . '-' . $item->color_id;
-            });
-
-        // Lấy hình ảnh từ bảng products_images
-        $productImages = ProductImage::all()->groupBy('product_id');
-
-        return view('admin.product_variants.index', compact('variants', 'productImages'));
+            ->groupBy('color_id');
+    
+        $productImages = ProductImage::where('product_id', $productId)->get();
+    
+        return view('admin.product_variants.index', compact('product', 'variants', 'productImages'));
     }
 
     /**
@@ -40,115 +45,118 @@ class ProductVariantController extends Controller
         return view('admin.product_variants.create', compact('products', 'sizes', 'colors'));
     }
 
-
     /**
      * Lưu nhiều biến thể vào database.
      */
     public function store(Request $request)
-{
-    $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'variants' => 'required|array',
-    ]);
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'variants' => 'required|array',
+        ]);
 
-    // Lấy giá từ sản phẩm
-    $product = Product::findOrFail($request->product_id);
-    $price = $product->price;
+        $product = Product::findOrFail($request->product_id);
+        $price = $product->price;
 
-    // Lưu từng tổ hợp biến thể size + color + stock_quantity
-    foreach ($request->variants as $size_id => $colors) {
-        foreach ($colors as $color_id => $variant) {
-            if (isset($variant['selected']) && isset($variant['stock_quantity']) && $variant['stock_quantity'] > 0) {
-                ProductVariant::create([
-                    'product_id' => $request->product_id,
-                    'size_id' => $size_id,
-                    'color_id' => $color_id,
-                    'stock_quantity' => $variant['stock_quantity'],
-                    'price' => $price, // Giá lấy từ sản phẩm
-                ]);
+        foreach ($request->variants as $size_id => $colors) {
+            foreach ($colors as $color_id => $variant) {
+                if (!empty($variant['selected']) && !empty($variant['stock_quantity'])) {
+                    ProductVariant::updateOrCreate(
+                        [
+                            'product_id' => $request->product_id,
+                            'size_id' => $size_id,
+                            'color_id' => $color_id,
+                        ],
+                        [
+                            'stock_quantity' => $variant['stock_quantity'],
+                            'price' => $variant['price'] ?? $price,
+                            'discount_price' => $variant['discount_price'] ?? 0,
+                        ]
+                    );
+                }
             }
         }
+
+        return redirect()->route('products_variants.index')->with('success', 'Biến thể sản phẩm đã được thêm thành công!');
     }
-
-    return redirect()->route('products_variants.index')->with('success', 'Biến thể sản phẩm đã được thêm thành công!');
-}
-
 
     /**
      * Hiển thị form chỉnh sửa biến thể.
      */
-    public function edit(ProductVariant $products_variant)
-{
-    $products = Product::with('images')->get();
-    $sizes = Size::all();
-    $colors = Color::all();
+    public function edit($id)
+    {
+        $products_variant = ProductVariant::findOrFail($id);
+        $products = Product::with('images')->get();
+        $sizes = Size::all();
+        $colors = Color::all();
 
-    $selected_variants = ProductVariant::where('product_id', $products_variant->product_id)
-                                        ->get();
+        $selected_variants = ProductVariant::where('product_id', $products_variant->product_id)->get();
 
-    return view('admin.product_variants.edit', compact(
-        'products_variant',
-        'products',
-        'sizes',
-        'colors',
-        'selected_variants'
-    ));
-}
-
+        return view('admin.product_variants.edit', compact(
+            'products_variant',
+            'products',
+            'sizes',
+            'colors',
+            'selected_variants'
+        ));
+    }
 
     /**
      * Cập nhật biến thể trong database.
      */
-    public function update(Request $request, ProductVariant $products_variant)
-{
-    $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'variants' => 'required|array',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'variants' => 'required|array',
+        ]);
 
-    // Lấy giá từ sản phẩm
-    $product = Product::findOrFail($request->product_id);
-    $price = $product->price;
+        $product = Product::findOrFail($request->product_id);
+        $price = $product->price;
 
-    // Xóa tất cả các biến thể cũ của sản phẩm này
-    ProductVariant::where('product_id', $products_variant->product_id)->delete();
-
-    // Thêm các biến thể mới
-    foreach ($request->variants as $size_id => $colors) {
-        foreach ($colors as $color_id => $variant) {
-            if (isset($variant['selected']) && isset($variant['stock_quantity']) && $variant['stock_quantity'] > 0) {
-                ProductVariant::create([
-                    'product_id' => $request->product_id,
-                    'size_id' => $size_id,
-                    'color_id' => $color_id,
-                    'stock_quantity' => $variant['stock_quantity'],
-                    'price' => $price, // Giá lấy từ sản phẩm
-                ]);
+        foreach ($request->variants as $size_id => $colors) {
+            foreach ($colors as $color_id => $variant) {
+                if (!empty($variant['selected']) && !empty($variant['stock_quantity'])) {
+                    ProductVariant::updateOrCreate(
+                        [
+                            'product_id' => $request->product_id,
+                            'size_id' => $size_id,
+                            'color_id' => $color_id,
+                        ],
+                        [
+                            'stock_quantity' => $variant['stock_quantity'],
+                            'price' => $variant['price'] ?? $price,
+                            'discount_price' => $variant['discount_price'] ?? 0,
+                        ]
+                    );
+                } else {
+                    // Nếu bỏ chọn thì xóa biến thể đó
+                    ProductVariant::where([
+                        'product_id' => $request->product_id,
+                        'size_id' => $size_id,
+                        'color_id' => $color_id,
+                    ])->delete();
+                }
             }
         }
+
+        return redirect()->route('products_variants.index')->with('success', 'Biến thể sản phẩm đã được cập nhật thành công!');
     }
 
-    return redirect()->route('products_variants.index')->with('success', 'Biến thể sản phẩm đã được cập nhật thành công!');
-}
-
-
-    /**
-     * Xóa toàn bộ biến thể của một sản phẩm.
-     */
     /**
      * Xóa biến thể sản phẩm hoặc theo kích thước cụ thể.
      */
-    public function destroy(Request $request, ProductVariant $products_variant)
+    public function destroy(Request $request, $id)
     {
         try {
-            // Kiểm tra nếu có chọn kích thước cụ thể để xóa
+            $products_variant = ProductVariant::findOrFail($id);
+
             if ($request->has('size_ids')) {
                 $request->validate([
                     'size_ids' => 'required|array',
                     'size_ids.*' => 'exists:sizes,id',
                 ]);
 
-                // Xóa biến thể theo danh sách kích thước được chọn
                 ProductVariant::where('product_id', $products_variant->product_id)
                     ->whereIn('size_id', $request->size_ids)
                     ->where('color_id', $products_variant->color_id)
@@ -158,7 +166,6 @@ class ProductVariantController extends Controller
                     ->with('success', 'Kích thước được chọn đã được xóa thành công!');
             }
 
-            // Nếu không chọn kích thước cụ thể, xóa toàn bộ biến thể theo ID
             $products_variant->delete();
 
             return redirect()->route('products_variants.index')
