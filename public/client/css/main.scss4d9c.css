@@ -4228,3 +4228,39 @@ button.close {
 .user-dropdown .dropdown-item:hover::after {
     transform: translateX(5px);
 }
+
+
+
+/* Chỉnh kích thước hình ảnh sản phẩm */
+.product-image img {
+    width: 250px; /* Đặt kích thước chiều rộng ảnh */
+    height: 250px; /* Đặt kích thước chiều cao ảnh */
+    object-fit: cover; /* Cắt ảnh vừa khung */
+    border-radius: 10px; /* Bo tròn nhẹ */
+}
+
+/* Chỉnh kích thước thẻ chứa sản phẩm */
+.item_product_main {
+    width: 230px; /* Điều chỉnh để sản phẩm to hơn */
+    padding: 15px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Căn giữa text */
+.product-name a {
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+/* Căn chỉnh giá */
+.price-box {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}

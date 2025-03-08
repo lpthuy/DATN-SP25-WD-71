@@ -31,11 +31,17 @@
                 <td>{{ $product->id }}</td>
                 <td>
                     @if($product->image)
-                        <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" width="100">
+                        @php
+                            $images = explode(',', $product->image); // Tách ảnh thành mảng
+                        @endphp
+                        @foreach($images as $img)
+                            <img src="{{ asset('storage/' . trim($img)) }}" alt="{{ $product->name }}" width="100" style="margin-right: 5px;">
+                        @endforeach
                     @else
                         Không có ảnh
                     @endif
                 </td>
+                
                 <td>{{ $product->name }}</td>
                 <td>
                     @if($product->discount_price && $product->discount_price < $product->price)

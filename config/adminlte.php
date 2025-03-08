@@ -381,28 +381,10 @@ return [
         ],
     ],
 
-    [
-        'text'    => 'Biến thể sản phẩm',
-        'icon'    => 'fas fa-layer-group',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Biến thể',
-                'url'  => 'admin/products_variants',
-                'icon' => 'fas fa-cubes',
-            ],
-        ],
-    ],
+    
 
     [
-        'text'    => 'Hình ảnh sản phẩm',
-        'icon'    => 'fas fa-images',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Hình ảnh',
-                'url'  => 'admin/products_images',
-                'icon' => 'fas fa-camera',
-            ],
-        ],
+        
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
