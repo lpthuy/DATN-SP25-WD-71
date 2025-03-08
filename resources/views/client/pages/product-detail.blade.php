@@ -69,91 +69,54 @@
                 <div class="row">
                     <div class="product-detail-left product-images col-12 col-md-12 col-lg-6 col-left">
                         <div class="product-image-block relative">
-
+                            <!-- Ảnh lớn - Dạng slider -->
                             <div class="swiper-container gallery-top">
                                 <div class="swiper-wrapper" id="lightgallery">
-
-                                    <a class="swiper-slide" data-hash="0"
-                                        href="../bizweb.dktcdn.net/thumb/1024x1024/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                        title="Click để xem">
-                                        <img height="540" width="540"
-                                            src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                            data-image="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            class="img-responsive mx-auto d-block lazy" />
-                                    </a>
-
-                                    <a class="swiper-slide" data-hash="1"
-                                        href="../bizweb.dktcdn.net/thumb/1024x1024/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-maxb05e.jpg?v=1673192704330"
-                                        title="Click để xem">
-                                        <img height="540" width="540"
-                                            src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                            data-image="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            class="img-responsive mx-auto d-block lazy" />
-                                    </a>
-
-                                    <a class="swiper-slide" data-hash="2"
-                                        href="../bizweb.dktcdn.net/thumb/1024x1024/100/456/491/products/sk4wqsh4zap2erxlvegs-simg-fb5b2e-928x928-max5b5e.jpg?v=1673192704817"
-                                        title="Click để xem">
-                                        <img height="540" width="540"
-                                            src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                            data-image="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                            class="img-responsive mx-auto d-block lazy" />
-                                    </a>
+                                    @foreach($images as $index => $image)
+                                        @php
+                                            $imagePath = asset('storage/' . $image); // Sử dụng đường dẫn chuẩn
+                                        @endphp
+                                        <a class="swiper-slide" data-hash="{{ $index }}" href="{{ $imagePath }}" title="Click để xem">
+                                            <img height="540" width="540"
+                                                 src="{{ $imagePath }}"
+                                                 alt="{{ $product->name }}"
+                                                 data-image="{{ $imagePath }}"
+                                                 class="img-responsive mx-auto d-block lazy" />
+                                        </a>
+                                    @endforeach
                                 </div>
-                                <div class="swiper-button-next">
-                                </div>
-                                <div class="swiper-button-prev">
-                                </div>
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
                             </div>
+                        
+                            <!-- Ảnh nhỏ - Hiển thị tất cả ảnh -->
                             <div class="swiper-container gallery-thumbs">
                                 <div class="swiper-wrapper">
-
-                                    <div class="swiper-slide" data-hash="0">
-                                        <div class="p-100">
-                                            <img height="80" width="80"
-                                                src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                                alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                                data-image="//bizweb.dktcdn.net/thumb/medium/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397"
-                                                class="lazy" />
+                                    @foreach($images as $index => $image)
+                                        @php
+                                            $imagePath = asset('storage/' . $image);
+                                        @endphp
+                                        <div class="swiper-slide" data-hash="{{ $index }}">
+                                            <div class="p-100">
+                                                <img height="80" width="80"
+                                                     src="{{ $imagePath }}"
+                                                     alt="{{ $product->name }}"
+                                                     data-image="{{ $imagePath }}"
+                                                     class="lazy" />
+                                            </div>
                                         </div>
-                                    </div>
-
-                                    <div class="swiper-slide" data-hash="1">
-                                        <div class="p-100">
-                                            <img height="80" width="80"
-                                                src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                                alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                                data-image="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                                class="lazy" />
-                                        </div>
-                                    </div>
-
-                                    <div class="swiper-slide" data-hash="2">
-                                        <div class="p-100">
-                                            <img height="80" width="80"
-                                                src="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                                alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                                data-image="http://127.0.0.1:5500/bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397"
-                                                class="lazy" />
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="swiper-button-next">
-                                </div>
-                                <div class="swiper-button-prev">
+                                    @endforeach
                                 </div>
                             </div>
-
                         </div>
+                        
+                        
                     </div>
                     <div class="details-pro col-12 col-md-12 col-lg-6 col-center">
                         <div class="title-product">
-                            <h1>Áo Phông, Thun Nữ Form Rộng</h1>
+                            <h1>{{ $product->name }}</h1>
                         </div>
+                        
                         <div class="inventory_quantity">
                             <span class="mb-break">
                                 <span class="stock-brand-title">Thương hiệu:</span>
@@ -179,23 +142,28 @@
                         <form enctype="multipart/form-data" data-cart-form id="add-to-cart-form"
                             action="https://lofi-style.mysapo.net/cart/add" method="post" class="form-inline">
                             <div class="price-box clearfix">
-
+                                <!-- Giá Khuyến Mại -->
                                 <span class="special-price">
-                                    <span class="price product-price">109.000₫</span>
-                                    <meta itemprop="price" content="109000">
+                                    <span class="price product-price">
+                                        {{ number_format($product->discount_price ?? $product->price, 0, ',', '.') }}₫
+                                    </span>
+                                    <meta itemprop="price" content="{{ $product->discount_price ?? $product->price }}">
                                     <meta itemprop="priceCurrency" content="VND">
-                                </span> <!-- Giá Khuyến mại -->
-                                <span class="old-price" itemprop="priceSpecification" itemscope=""
-                                    itemtype="http://schema.org/priceSpecification">
-                                    <del class="price product-price-old">
-                                        199.000₫
-                                    </del>
-                                    <meta itemprop="price" content="199000">
-                                    <meta itemprop="priceCurrency" content="VND">
-                                </span> <!-- Giá gốca -->
-
-
+                                </span>
+                            
+                                <!-- Giá Gốc (Chỉ hiển thị nếu có giá khuyến mãi) -->
+                                @if($product->discount_price)
+                                    <span class="old-price" itemprop="priceSpecification" itemscope=""
+                                        itemtype="http://schema.org/priceSpecification">
+                                        <del class="price product-price-old">
+                                            {{ number_format($product->price, 0, ',', '.') }}₫
+                                        </del>
+                                        <meta itemprop="price" content="{{ $product->price }}">
+                                        <meta itemprop="priceCurrency" content="VND">
+                                    </span>
+                                @endif
                             </div>
+                            
                             <div class='product-promotion rounded-sm' id='lofi-salebox'>
                                 <h3 class='product-promotion__heading rounded-sm d-inline-flex align-items-center'>
                                     <img src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
@@ -218,15 +186,25 @@
 
                                 <div class="select-swatch">
                                     <div class="swatch-color swatch clearfix" data-option-index="0">
-                                        <div class="options-title">Màu sắc: <span class="var"></span></div>
-                                        <div data-value="Đen" class="swatch-element color den soldout">
-                                            <input id="swatch-0-den" type="radio" name="option-0" value="Đen"
-                                                checked />
-                                            <label for="swatch-0-den" title="Đen"
-                                                data-image="https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330"
-                                                style="background-image:url(../bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-maxb05e.jpg?v=1673192704330);background-size: 40px; background-repeat: no-repeat; background-position: center !important;">
-                                            </label>
+                                        <div class="swatch-color swatch clearfix" data-option-index="0">
+                                            <div class="options-title">Màu sắc: <span class="var"></span></div>
+                                        
+                                            @foreach($colors as $color)
+                                                <div data-value="{{ $color->color_name }}" class="swatch-element color {{ strtolower($color->color_name) }} available">
+                                                    <input id="swatch-0-{{ strtolower($color->color_name) }}" type="radio" name="option-0" value="{{ $color->color_name }}" />
+                                        
+                                                    <label for="swatch-0-{{ strtolower($color->color_name) }}" title="{{ $color->color_name }}"
+                                                           style="background-color: {{ $color->color_code }}; background-size: 40px; background-repeat: no-repeat; background-position: center !important;">
+                                                    </label>
+                                                </div>
+                                        
+                                                <script>
+                                                    jQuery('.swatch[data-option-index="0"] .{{ strtolower($color->color_name) }}').removeClass('soldout').addClass('available').find(':radio')
+                                                        .removeAttr('disabled');
+                                                </script>
+                                            @endforeach
                                         </div>
+                                        
                                         <script>
                                             jQuery('.swatch[data-option-index="0"] .Đen').removeClass('soldout').addClass('available').find(':radio')
                                                 .removeAttr('disabled');
@@ -434,9 +412,56 @@
 
                                         <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now">Mua
                                             ngay</button>
-                                        <button type="submit"
-                                            class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">Thêm
-                                            vào giỏ hàng</button>
+                                            <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
+                                                Thêm vào giỏ hàng
+                                            </button>
+
+
+
+
+
+                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".add_to_cart").click(function(e) {
+            e.preventDefault();
+
+            let productId = $("input[name=product_id]").val();
+            let quantity = $("input[name=quantity]").val();
+            let color = $("input[name=color]:checked").val();
+            let size = $("input[name=size]:checked").val();
+
+            if (!color || !size) {
+                alert("Vui lòng chọn màu sắc và kích thước!");
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    product_id: productId,
+                    quantity: quantity,
+                    color: color,
+                    size: size
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $("#cart-count").text(response.totalItems);
+                        $(".cart_body").load(location.href + " .cart_body");
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Lỗi: " + xhr.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
 
                                     </div>
                                 </div>
@@ -1233,4 +1258,5 @@
             });
         });
     </script>
+    
 @endsection

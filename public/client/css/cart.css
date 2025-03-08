@@ -524,6 +524,69 @@ h1 {
     padding-top: 15px
 }
 
+/* Make the product info section wider */
+.cart-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-product {
+    display: flex;
+    align-items: center;
+    flex: 2;
+}
+
+.cart-image {
+    max-width: 80px;  /* Increase the size of the product image */
+    margin-right: 15px;
+}
+
+.cart-price, .cart-quantity, .cart-total {
+    text-align: center;
+    font-size: 16px;
+    flex: 1;
+    padding: 10px;
+}
+
+.cart-header-info div {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Increase the table width and ensure the columns are equally spaced */
+.table {
+    width: 100%;
+}
+
+.cart-footer {
+    padding-top: 20px;
+}
+
+.cart__totle {
+    font-weight: bold;
+    font-size: 18px;
+    color: #ff5b5b;
+}
+
+/* Button Styles */
+.cart__btn-proceed-checkout {
+    background-color: #ff5b5b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.cart__btn-proceed-checkout:hover {
+    background-color: #ff2d2d;
+}
+
+
 @media (max-width: 1199px) {
     .CartMobileContainer .cart--empty-message {
         text-align:center

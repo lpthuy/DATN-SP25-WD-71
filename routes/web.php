@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\SizeController;
+use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,7 +21,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('about');
 Route::get('/san-pham', [HomeController::class, 'product'])->name('product');
-Route::get('/chi-tiet-san-pham', [HomeController::class, 'productDetail'])->name('productDetail');
+// Route::get('/chi-tiet-san-pham', [HomeController::class, 'productDetail'])->name('productDetail');
+Route::get('/chi-tiet-san-pham/{id}', [HomeController::class, 'productDetail'])->name('productDetail');
 Route::get('/danh-muc', [HomeController::class, 'productbycategory'])->name('productbycategory');
 Route::get('/tin-tuc', [HomeController::class, 'post'])->name('post');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
@@ -50,6 +52,19 @@ Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
 
 Route::get('/tai-khoan/chinh-sua', [HomeController::class, 'editProfile'])->name('editProfile');
 Route::post('/tai-khoan/chinh-sua', [HomeController::class, 'updateProfile'])->name('updateProfile');
+
+Route::get('/gio-hang', [CartController::class, 'showCart'])->name('cart.show');
+Route::post('/gio-hang/them', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/gio-hang/xoa', [CartController::class, 'removeItem'])->name('cart.remove');
+
+
+
+
+
+
+
+
+
 
 
 // Chỉ Admin mới có quyền vào Dashboard

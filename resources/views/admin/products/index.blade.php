@@ -34,6 +34,7 @@
                         Không có ảnh
                     @endif
                 </td>
+                
                 <td>{{ $product->name }}</td>
                 <td>{{ $product->category->name ?? 'Không có danh mục' }}</td>
                 <td>

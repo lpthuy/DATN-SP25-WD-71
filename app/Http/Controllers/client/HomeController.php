@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\Color;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -25,10 +28,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
-    {
-        return view('client.pages.home');
-    }
+
+public function index() {
+    $products = Product::all(); // Lấy tất cả sản phẩm từ database
+    return view('client.pages.home', compact('products')); 
+}
+
 
     public function about()
     {
@@ -45,10 +50,31 @@ class HomeController extends Controller
         return view('client.pages.product-by-category');
     }
 
-    public function productDetail()
-    {
-        return view('client.pages.product-detail');
+    public function productDetail($id)
+{
+    $product = Product::find($id);
+
+    if ($product) {
+        // Nếu cột `image` lưu nhiều ảnh dưới dạng chuỗi có dấu phẩy
+        $images = explode(',', $product->image);
+
+        // Lấy danh mục của sản phẩm
+        $category = Category::find($product->category_id);
+
+        // Lấy danh sách màu sắc của sản phẩm từ bảng `colors`
+        $colors = Color::where('product_id', $id)->get();
+
+        // Truyền dữ liệu sản phẩm, hình ảnh và danh mục sang view
+        return view('client.pages.product-detail', compact('product', 'images', 'category', 'colors'));
     }
+
+    return redirect()->route('home')->with('error', 'Sản phẩm không tồn tại');
+}
+
+    
+    
+
+
 
     public function post()
     {
@@ -70,10 +96,7 @@ class HomeController extends Controller
         return view('client.pages.wishlist');
     }
 
-    public function cart()
-    {
-        return view('client.pages.cart');
-    }
+    
 
     public function checkOrder()
     {
@@ -232,4 +255,8 @@ public function updateProfile(Request $request)
     {
         return view('client.pages.address');
     }
+
+
+
+    
 }

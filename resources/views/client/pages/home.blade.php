@@ -69,8 +69,8 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide item">
                                 <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="32"
-                                        viewBox="0 0 41 32" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="32" viewBox="0 0 41 32"
+                                        fill="none">
                                         <path
                                             d="M36.0389 0.00115465H29.1444C29.1422 0.00115465 29.1411 0 29.1389 0H21.9378C21.9356 0 21.9344 0.00115465 21.9322 0.00115465H6.22778C5.46445 0.00115465 4.84556 0.644295 4.84556 1.43754C4.84556 2.23079 5.46445 2.87393 6.22778 2.87393H20.5556V11.52C20.5556 12.3097 21.1778 12.9563 21.9378 12.9563H29.1389C29.8989 12.9563 30.5211 12.3097 30.5211 11.52V2.87393H36.0389C36.9744 2.87393 37.7356 3.66486 37.7356 4.63823V27.3641C37.7356 28.3363 36.9744 29.1272 36.0389 29.1272H14.17C13.2344 29.1272 12.4733 28.3363 12.4733 27.3641V11.5754C12.4733 10.7821 11.8544 10.139 11.0911 10.139H7.43667C6.67333 10.139 6.05444 10.7821 6.05444 11.5754C6.05444 12.3686 6.67333 13.0118 7.43667 13.0118H9.70889V27.3641C9.70889 29.9205 11.71 32 14.17 32H36.0389C38.4989 32 40.5 29.9193 40.5 27.3641V4.63708C40.5 2.08184 38.4989 0.00115465 36.0389 0.00115465ZM27.7567 10.0824H23.32V2.87393H27.7567V10.0824Z"
                                             fill="black" />
@@ -94,8 +94,8 @@
 
                             <div class="swiper-slide item">
                                 <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40"
-                                        viewBox="0 0 41 40" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40"
+                                        fill="none">
                                         <path
                                             d="M36.2766 32.8575H35.8199C41.8521 25.6697 42.0766 15.2553 36.3588 7.81532C30.641 0.375322 20.5199 -2.08912 12.0221 1.88865C3.52326 5.86754 -1.06674 15.2186 0.986593 24.3753C3.03881 33.5309 11.181 40.0297 20.5644 39.9997C22.1188 39.9975 23.6677 39.8109 25.1788 39.4431C25.5721 39.382 25.9221 39.1586 26.1455 38.8286C26.3677 38.4975 26.4421 38.0897 26.3499 37.702C26.2588 37.3142 26.0088 36.9831 25.6621 36.7864C25.3144 36.5909 24.9021 36.5497 24.5221 36.6709C16.2366 38.6942 7.71325 34.3709 4.45103 26.4897C1.1877 18.6098 4.16215 9.52754 11.4544 5.1031C18.7466 0.678655 28.1755 2.23421 33.6599 8.76754C39.1432 15.3009 39.0421 24.8575 33.4199 31.272V30.0009C33.4199 29.212 32.781 28.572 31.991 28.572C31.2021 28.572 30.5621 29.2109 30.5621 30.0009V34.2864C30.5621 35.0753 31.201 35.7153 31.991 35.7153H36.2766C37.0655 35.7153 37.7055 35.0764 37.7055 34.2864C37.7055 33.4964 37.0666 32.8575 36.2766 32.8575Z"
                                             fill="black" />
@@ -116,8 +116,8 @@
 
                             <div class="swiper-slide item">
                                 <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40"
-                                        viewBox="0 0 41 40" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="40" viewBox="0 0 41 40"
+                                        fill="none">
                                         <path
                                             d="M21.748 15C23.1279 14.9989 24.2467 13.88 24.2478 12.5V10C24.2456 8.62 23.1279 7.50111 21.748 7.5H17.9981C17.3082 7.5 16.7482 8.06 16.7482 8.75C16.7482 9.44 17.3082 10 17.9981 10H21.748V12.5H19.2481C17.8681 12.5022 16.7493 13.62 16.7482 15V17.5C16.7493 18.88 17.8681 19.9989 19.2481 20H22.9979C23.6879 20 24.2478 19.44 24.2478 18.75C24.2478 18.06 23.6879 17.5 22.9979 17.5H19.2481V15H21.748Z"
                                             fill="black" />
@@ -144,8 +144,8 @@
 
                             <div class="swiper-slide item">
                                 <div class="icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="38"
-                                        viewBox="0 0 41 38" fill="none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="41" height="38" viewBox="0 0 41 38"
+                                        fill="none">
                                         <path
                                             d="M37.8424 7.32321H36.2783L36.2799 4.52747C36.2808 2.65004 34.755 1.12259 32.8776 1.12176L21.0071 1.11426C21.0063 1.11426 21.0063 1.11426 21.0055 1.11426C20.3297 1.11426 19.6947 1.37758 19.2164 1.85507L1.49614 19.5753C0.853666 20.2186 0.499512 21.0736 0.499512 21.9827C0.499512 22.8918 0.853666 23.7468 1.49614 24.3901L12.9957 35.8897C13.6591 36.553 14.5315 36.8855 15.4032 36.8855C16.2748 36.8855 17.1473 36.5539 17.8106 35.8897L28.9677 24.7326C29.2727 24.4276 29.2727 23.9326 28.9677 23.6276C28.6627 23.3227 28.1677 23.3227 27.8627 23.6276L16.7056 34.7848C15.9873 35.5031 14.819 35.5031 14.1007 34.7848L2.60111 23.2852C2.25362 22.9377 2.06196 22.4743 2.06196 21.9827C2.06196 21.4911 2.25362 21.0277 2.60111 20.6802L20.3213 2.96003C20.5038 2.77753 20.7471 2.6767 21.0055 2.6767L32.8759 2.68337C33.8917 2.68337 34.7175 3.51084 34.7167 4.52664L34.7133 11.0731H31.1943C30.891 11.0731 30.6168 10.9489 30.4185 10.7498C30.7451 10.6098 31.0518 10.4073 31.3184 10.1406C32.4409 9.01732 32.4409 7.19071 31.3184 6.06825C30.1951 4.94496 28.3685 4.94496 27.2461 6.06825C26.1236 7.19071 26.1236 9.01732 27.2461 10.1406C27.6627 10.5573 28.1761 10.8181 28.7135 10.9264C29.096 11.9247 30.0635 12.6355 31.1951 12.6355H34.7133L34.7108 16.3804C34.7108 16.6387 34.61 16.8812 34.4275 17.0637L32.2826 19.2086C31.9776 19.5136 31.9776 20.0086 32.2826 20.3136C32.5876 20.6186 33.0817 20.6186 33.3875 20.3136L35.5325 18.1687C36.0099 17.6912 36.2733 17.0562 36.2733 16.3812L36.2758 12.6355H37.8432C39.3073 12.6355 40.4998 11.4439 40.4998 9.97895C40.4981 8.51483 39.3065 7.32321 37.8424 7.32321ZM28.351 7.17238C28.6077 6.91572 28.9452 6.78739 29.2827 6.78739C29.6202 6.78739 29.9568 6.91572 30.2143 7.17238C30.2951 7.25404 30.3626 7.34404 30.4185 7.43904C29.561 7.70153 28.8869 8.38817 28.641 9.25314C28.5377 9.19564 28.4394 9.12398 28.3519 9.03565C27.8369 8.5215 27.8369 7.68653 28.351 7.17238ZM37.8424 11.0731H36.2766L36.2774 8.88565H37.8424C38.4457 8.88565 38.9365 9.37647 38.9365 9.97895C38.9357 10.5823 38.4449 11.0731 37.8424 11.0731Z"
                                             fill="black" />
@@ -418,16 +418,14 @@
                                                         href="vi-nu-dai-cam-tay-2-ngan-keo-nhieu-ngan-tien-dung.html"
                                                         title="Ví nữ dài cầm tay 2 ngăn kéo nhiều ngăn tiện dụng">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/blhess-simg-d0daf0-800x1200-max.jpg') }}"
                                                                 data-src="{{ asset('client/images/blhess-simg-d0daf0-800x1200-max.jpg') }}"
                                                                 alt="V&#237; nữ d&#224;i cầm tay 2 ngăn k&#233;o nhiều ngăn tiện dụng" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/odraybrjkx1cudni9cmp-simg-d0daf0-800x1200-max.jpg') }}"
                                                                 data-src="{{ asset('client/images/odraybrjkx1cudni9cmp-simg-d0daf0-800x1200-max.jpg') }}"
                                                                 alt="V&#237; nữ d&#224;i cầm tay 2 ngăn k&#233;o nhiều ngăn tiện dụng" />
@@ -482,8 +480,7 @@
                                                         href="tui-xach-nu-deo-cheo-da-pu-di-du-tiec-du-lich.html"
                                                         title="Túi Xách Nữ Đeo Chéo Da Pu Đi Dự Tiệc Du Lịch">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/anh1.png') }}"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/pdwkie-simg-d0daf0-800x1200-max.png?v=1673363151100"
@@ -491,8 +488,7 @@
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/anh2.png') }}"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/blhess-simg-d0daf0-800x1200-max.png?v=1673363152457"
                                                                 alt="T&#250;i X&#225;ch Nữ Đeo Ch&#233;o Da Pu Đi Dự Tiệc Du Lịch" />
@@ -554,21 +550,19 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-35%
-">
+    35%
+    ">
                                                     <a class="image_thumb" href="tui-xach-nu-hoa-tiet-thoi-trang.html"
                                                         title="Túi xách nữ họa tiết thời trang">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/anh1.png') }}"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/jwonepcvkjlswxyixhqt-simg-d0daf0-800x1200-max.jpg?v=1673362979710"
                                                                 alt="T&#250;i x&#225;ch nữ họa tiết thời trang" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="{{ asset('client/images/anh2.png') }}"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/odraybrjkx1cudni9cmp-simg-d0daf0-800x1200-max.jpg?v=1673362980193"
                                                                 alt="T&#250;i x&#225;ch nữ họa tiết thời trang" />
@@ -586,8 +580,7 @@
 
                                                         </div>
                                                     </div>
-                                                    <h3 class="product-name"><a
-                                                            href="tui-xach-nu-hoa-tiet-thoi-trang.html"
+                                                    <h3 class="product-name"><a href="tui-xach-nu-hoa-tiet-thoi-trang.html"
                                                             title="Túi xách nữ họa tiết thời trang">Túi xách nữ
                                                             họa tiết thời trang</a></h3>
 
@@ -636,22 +629,20 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-39%
-">
+    39%
+    ">
                                                     <a class="image_thumb"
                                                         href="quan-short-nu-cap-cao-4-cuc-cap-cheo-cach-dieu.html"
                                                         title="Quần Short Nữ Cạp Cao 4 Cúc Cạp Chéo Cách Điệu">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/rufkqze8ki024f0lzru6-simg-d0daf0-800x1200-max.jpg?v=1673361556170"
                                                                 alt="Quần Short Nữ Cạp Cao 4 C&#250;c Cạp Ch&#233;o C&#225;ch Điệu" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/8ismbno6w1kd3xcq5zgk-simg-d0daf0-800x1200-max.jpg?v=1673361556707"
                                                                 alt="Quần Short Nữ Cạp Cao 4 C&#250;c Cạp Ch&#233;o C&#225;ch Điệu" />
@@ -715,21 +706,19 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-44%
-">
+    44%
+    ">
                                                     <a class="image_thumb" href="quan-short-dui-nu.html"
                                                         title="Quần short đũi nữ">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/pmioumgmndfegdh4amhg-simg-d0daf0-800x1200-max.jpg?v=1673361292573"
                                                                 alt="Quần short đũi nữ" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/ugasezzc9qg3gcptfnf6-simg-d0daf0-800x1200-max.png?v=1673361293383"
                                                                 alt="Quần short đũi nữ" />
@@ -791,21 +780,19 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-40%
-">
+    40%
+    ">
                                                     <a class="image_thumb" href="quan-baggy-kaki-nu.html"
                                                         title="Quần baggy kaki nữ">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/bub1xb-simg-d0daf0-800x1200-max.jpg?v=1673194785170"
                                                                 alt="Quần baggy kaki nữ" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/bub1xb-simg-d0daf0-800x1200-max.jpg?v=1673194785170"
                                                                 alt="Quần baggy kaki nữ" />
@@ -875,16 +862,14 @@
                                                     <a class="image_thumb" href="quan-baggy-jeans-nu-phong-cach.html"
                                                         title="Quần Baggy Jeans Nữ Phong Cách">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/kz6cb8fyvc2y67ftu3xx-simg-d0daf0-800x1200-max.jpg?v=1673193856937"
                                                                 alt="Quần Baggy Jeans Nữ Phong C&#225;ch" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/0kzkbkmh1dck7chifown-simg-d0daf0-800x1200-max.jpg?v=1673193858470"
                                                                 alt="Quần Baggy Jeans Nữ Phong C&#225;ch" />
@@ -946,21 +931,19 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-45%
-">
+    45%
+    ">
                                                     <a class="image_thumb" href="ao-phong-thun-nu-form-rong.html"
                                                         title="Áo Phông, Thun Nữ Form Rộng">
                                                         <div class="product-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397"
                                                                 alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng" />
                                                         </div>
 
                                                         <div class="product-image second-image">
-                                                            <img class="lazy img-responsive" width="480"
-                                                                height="480"
+                                                            <img class="lazy img-responsive" width="480" height="480"
                                                                 src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
                                                                 data-src="//bizweb.dktcdn.net/thumb/large/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330"
                                                                 alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng" />
@@ -1067,854 +1050,105 @@
                     </div>
                 </div>
 
-                <div class="block-product">
-                    <div class="product-new-swiper swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="{{ route('productDetail') }}"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
 
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="17"
-                                                        viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16"
-                                                        viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="{{ route('productDetail') }}"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="block-product">
+                            <div class="product-new-swiper swiper-container">
+                                <div class="swiper-wrapper">
+                                    @foreach($products as $product)
+                                                                    <div class="swiper-slide">
+                                                                        <div class="item_product_main" data-url="{{ route('productDetail', $product->id) }}"
+                                                                            data-id="{{ $product->id }}">
+                                                                            <form action="{{ route('cart.add', $product->id) }}" method="post"
+                                                                                class="variants product-action wishItem" data-cart-form
+                                                                                data-id="product-actions-{{ $product->id }}" enctype="multipart/form-data">
+                                                                                @csrf
+                                                                                <div class="product-thumbnail sale">
+                                                                                    <a class="image_thumb" href="{{ route('productDetail', $product->id) }}"
+                                                                                        title="{{ $product->name }}">
+                                                                                        <div class="product-image">
+                                                                                            @php
+                                                                                                $images = explode(',', $product->image); // Tách ảnh thành mảng
+                                                                                                $firstImage = isset($images[0]) ? trim($images[0]) : null; // Lấy ảnh đầu tiên
+                                                                                            @endphp
+                                                                                            @if($firstImage)
+                                                                                                <img class="lazy img-responsive" width="300" height="300"
+                                                                                                    src="{{ asset('storage/' . $firstImage) }}"
+                                                                                                    alt="{{ $product->name }}" />
+                                                                                            @else
+                                                                                                <img class="lazy img-responsive" width="300" height="300"
+                                                                                                    src="{{ asset('images/no-image.png') }}"
+                                                                                                    alt="Không có ảnh" />
+                                                                                            @endif
+                                                                                        </div>
+                                                                                    </a>
+                                                                                    <div class="action-cart">
+                                                                                        <a href="javascript:void(0)"
+                                                                                            class="action btn-compare js-btn-wishlist setWishlist btn-views"
+                                                                                            data-wish="{{ $product->id }}" tabindex="0"
+                                                                                            title="Thêm vào yêu thích">
+                                                                                            ❤️
+                                                                                        </a>
+                                                                                        {{-- <button class="btn-cart btn-views add-to-cart"
+                                                                                            data-product-id="{{ $product->id }}" type="button"
+                                                                                            title="Thêm vào giỏ hàng"> 🛒
 
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
+                                                                                        </button> --}}
+
+
+
+                                                                                        <a title="Xem nhanh"
+                                                                                            href="{{ route('productDetail', $product->id) }}"
+                                                                                            class="quick-view btn-views">
+                                                                                            🔍
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="product-info">
+                                                                                    <div class="lofi-product">
+                                                                                        <div class="product-type">Phụ kiện</div>
+                                                                                    </div>
+                                                                                    <h3 class="product-name">
+                                                                                        <a href="{{ route('productDetail', $product->id) }}"
+                                                                                            title="{{ $product->name }}">
+                                                                                            {{ $product->name }}
+                                                                                        </a>
+                                                                                    </h3>
+                                                                                    <div class="bottom-action">
+                                                                                        <div class="price-box">
+                                                                                            @if($product->discount_price && $product->discount_price < $product->price)
+                                                                                                <span class="price text-success font-weight-bold">
+                                                                                                    {{ number_format($product->discount_price, 0, ',', '.') }}₫
+                                                                                                </span>
+                                                                                                <span class="compare-price text-danger"
+                                                                                                    style="text-decoration: line-through;">
+                                                                                                    {{ number_format($product->price, 0, ',', '.') }}₫
+                                                                                                </span>
+                                                                                            @else
+                                                                                                <span class="price font-weight-bold">
+                                                                                                    {{ number_format($product->price, 0, ',', '.') }}₫
+                                                                                                </span>
+                                                                                            @endif
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                    @endforeach
                                 </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="17"
-                                                        viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16"
-                                                        viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18" height="17"
-                                                        viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="16"
-                                                        viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="17" viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="16" viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="17" viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="16" viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="17" viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="16" viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="17" viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="16" viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                            <div class="swiper-slide">
-                                <div class="item_product_main" data-url="/vi-nu-cam-tay-phong-cach-han-quoc"
-                                    data-id="29237840">
-                                    <form action="https://lofi-style.mysapo.net/cart/add" method="post"
-                                        class="variants product-action wishItem" data-cart-form
-                                        data-id="product-actions-29237840" enctype="multipart/form-data">
-                                        <div class="product-thumbnail sale "
-                                            data-sale="-
-                                            48%
-                                            ">
-                                            <a class="image_thumb" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                title="Ví nữ cầm tay phong cách Hàn Quốc">
-                                                <div class="product-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-
-                                                <div class="product-image second-image">
-                                                    <img class="lazy img-responsive" width="300" height="300"
-                                                        src="{{ asset('client/images/vi1.png') }}"
-                                                        data-src="{{ asset('client/images/vi1.png') }}"
-                                                        alt="V&#237; nữ cầm tay phong c&#225;ch H&#224;n Quốc" />
-                                                </div>
-                                            </a>
-                                            <div class="action-cart">
-                                                <a href="javascript:void(0)"
-                                                    class="action btn-compare js-btn-wishlist setWishlist btn-views"
-                                                    data-wish="vi-nu-cam-tay-phong-cach-han-quoc" tabindex="0"
-                                                    title="Thêm vào yêu thích">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="17" viewBox="0 0 18 17" fill="none">
-                                                        <path
-                                                            d="M1.34821 8.7354C0.330209 5.77575 1.60274 2.00897 4.40225 1.2018C5.92926 0.663681 7.96523 1.20177 8.98323 2.81612C10.0012 1.20177 12.0372 0.663681 13.5642 1.2018C16.6182 2.27803 17.6363 5.77575 16.6183 8.7354C15.3458 13.3094 10.2557 16 8.98323 16C7.71073 15.7309 2.87522 13.5784 1.34821 8.7354Z"
-                                                            stroke="#000" stroke-width="1.5px" stroke-linecap="round"
-                                                            stroke-linejoin="round" fill="none"></path>
-                                                    </svg>
-                                                </a>
-                                                <input class="hidden" type="hidden" name="variantId"
-                                                    value="79723841" />
-                                                <button class="btn-cart btn-views" title="Tùy chọn" type="button"
-                                                    onclick="window.location.href='vi-nu-cam-tay-phong-cach-han-quoc.html'">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="18"
-                                                        height="16" viewBox="0 0 20 18" fill="none">
-                                                        <path d="M1 3H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 15H4" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 3L19 3" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M12 15L19 15" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <path d="M1 9H2.5H3.25M13 9H7" stroke="#000" stroke-width="1.5"
-                                                            stroke-linecap="round" />
-                                                        <rect x="6" y="1" width="4" height="4" rx="1.5"
-                                                            stroke="#000" stroke-width="1.5" />
-                                                        <rect x="6" y="13" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                        <rect x="15" y="7" width="4" height="4"
-                                                            rx="1.5" stroke="#000" stroke-width="1.5" />
-                                                    </svg>
-                                                </button>
-                                                <a title="Xem nhanh" href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    data-handle="vi-nu-cam-tay-phong-cach-han-quoc"
-                                                    class="quick-view btn-views">
-                                                    <svg width="14" height="14" viewBox="0 0 14 14"
-                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <path
-                                                            d="M13.3638 8.90944C13.0122 8.90944 12.7276 9.19411 12.7276 9.54567V11.8277L8.72278 7.82367C8.47389 7.57478 8.071 7.57478 7.82289 7.82367C7.574 8.07178 7.574 8.47467 7.82289 8.72356L11.8269 12.7283H9.54489C9.19333 12.7283 8.90867 13.013 8.90867 13.3646C8.90867 13.7161 9.19333 14.0008 9.54489 14.0008H13.363C13.7153 14 14 13.7146 14 13.3638V9.54567C14 9.19411 13.7153 8.90944 13.3638 8.90944Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M0.636222 5.09056C0.987778 5.09056 1.27244 4.80589 1.27244 4.45433V2.17311L5.27722 6.17711C5.40167 6.30156 5.56422 6.36378 5.72756 6.36378C5.89011 6.36378 6.05344 6.30156 6.17711 6.17711C6.426 5.929 6.426 5.52611 6.17711 5.27722L2.17311 1.27322H4.45511C4.80667 1.27322 5.09133 0.988556 5.09133 0.637C5.09056 0.284667 4.80589 0 4.45433 0H0.636222C0.284667 0 0 0.285444 0 0.636222V4.45433C0 4.80589 0.284667 5.09056 0.636222 5.09056Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M5.27722 7.82289L1.27244 11.8269V9.54489C1.27244 9.19333 0.987778 8.90867 0.636222 8.90867C0.284667 8.90944 0 9.19411 0 9.54567V13.3638C0 13.7153 0.285444 14 0.636222 14H4.45433C4.80589 14 5.09056 13.7153 5.09056 13.3638C5.09056 13.0122 4.80589 12.7276 4.45433 12.7276H2.17311L6.17711 8.72278C6.426 8.47389 6.426 8.071 6.17711 7.82289C5.929 7.574 5.52533 7.574 5.27722 7.82289Z"
-                                                            fill="black" />
-                                                        <path
-                                                            d="M8.27244 6.36378C8.435 6.36378 8.59833 6.30156 8.722 6.17711L12.7268 2.17311V4.45511C12.7268 4.80667 13.0114 5.09133 13.363 5.09133C13.7153 5.09056 14 4.80589 14 4.45433V0.636222C14 0.284667 13.7146 0 13.3638 0H9.54567C9.19411 0 8.90944 0.284667 8.90944 0.636222C8.90944 0.987778 9.19411 1.27244 9.54567 1.27244H11.8277L7.82367 5.27722C7.57478 5.52611 7.57478 5.929 7.82367 6.17711C7.94733 6.30156 8.10989 6.36378 8.27244 6.36378Z"
-                                                            fill="black" />
-                                                    </svg>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="lofi-product">
-                                                <div class="product-type">
-                                                    Phụ kiện
-                                                </div>
-                                            </div>
-
-                                            <h3 class="product-name"><a href="vi-nu-cam-tay-phong-cach-han-quoc.html"
-                                                    title="Ví nữ cầm tay phong cách Hàn Quốc">Ví nữ cầm tay
-                                                    phong cách Hàn Quốc</a></h3>
-                                            <div class="bottom-action">
-                                                <div class="price-box">
-                                                    <span class="price">120.000₫</span>
-                                                    <span class="compare-price">230.000₫</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </form>
-                                </div>
+                                <div class="swiper-pagination"></div>
                             </div>
                         </div>
-                        <div class="swiper-pagination"></div>
                     </div>
                 </div>
+
+
+                <div class="swiper-pagination"></div>
             </div>
+        </div>
+        </div>
         </div>
     </section>
 
@@ -2009,9 +1243,9 @@
                                     </div>
                                     <div class="post-body">
                                         <div class="time-post f">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="clock"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                class="svg-inline--fa fa-clock fa-w-16">
                                                 <path fill="currentColor"
                                                     d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
                                                     class=""></path>
@@ -2020,9 +1254,9 @@
                                             28/02/2023
                                         </div>
                                         <div class="time-post">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas"
-                                                data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 448 512" class="svg-inline--fa fa-user fa-w-14">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                                class="svg-inline--fa fa-user fa-w-14">
                                                 <path fill="currentColor"
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
@@ -2053,9 +1287,9 @@
                                     </div>
                                     <div class="post-body">
                                         <div class="time-post f">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="clock"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                class="svg-inline--fa fa-clock fa-w-16">
                                                 <path fill="currentColor"
                                                     d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
                                                     class=""></path>
@@ -2064,9 +1298,9 @@
                                             28/02/2023
                                         </div>
                                         <div class="time-post">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas"
-                                                data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 448 512" class="svg-inline--fa fa-user fa-w-14">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                                class="svg-inline--fa fa-user fa-w-14">
                                                 <path fill="currentColor"
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
@@ -2097,9 +1331,9 @@
                                     </div>
                                     <div class="post-body">
                                         <div class="time-post f">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="clock"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                                class="svg-inline--fa fa-clock fa-w-16">
                                                 <path fill="currentColor"
                                                     d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
                                                     class=""></path>
@@ -2108,9 +1342,9 @@
                                             28/02/2023
                                         </div>
                                         <div class="time-post">
-                                            <svg aria-hidden="true" focusable="false" data-prefix="fas"
-                                                data-icon="user" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 448 512" class="svg-inline--fa fa-user fa-w-14">
+                                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                                                role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
+                                                class="svg-inline--fa fa-user fa-w-14">
                                                 <path fill="currentColor"
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
@@ -2156,8 +1390,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2170,8 +1404,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2184,8 +1418,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2198,8 +1432,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2212,8 +1446,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2226,8 +1460,8 @@
                                             src="{{ asset('client/images/ig1.png') }}"
                                             data-src="{{ asset('client/images/ig1.png') }}" alt="Lofi Style">
                                         <div class="icon">
-                                            <img width="35" height="35"
-                                                src="{{ asset('client/images/ig-con.png') }}" alt="Lofi Style">
+                                            <img width="35" height="35" src="{{ asset('client/images/ig-con.png') }}"
+                                                alt="Lofi Style">
                                         </div>
                                     </a>
                                 </div>
@@ -2340,7 +1574,7 @@
     </script>
 
     <script>
-        $(document).on('click', '.dis_copy_2', function(e) {
+        $(document).on('click', '.dis_copy_2', function (e) {
             e.preventDefault();
             var copyText = $(this).attr('data-copy');
             var copyTextarea = document.createElement("textarea");
@@ -2354,7 +1588,7 @@
             $(this).addClass("disabled");
             $(this).text("Đã lưu");
             $(this).parent().addClass('active');
-            setTimeout(function() {
+            setTimeout(function () {
                 $cur_btn.removeClass("disabled");
                 $cur_btn.parent().removeClass('active');
                 $cur_btn.text(cur_text);
@@ -2552,4 +1786,71 @@
             }
         });
     </script>
+
+{{-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.addEventListener("click", function (event) {
+            // Kiểm tra nếu click vào phần tử hoặc icon bên trong nút giỏ hàng
+            const targetButton = event.target.closest(".add-to-cart");
+
+            if (!targetButton) {
+                console.warn("⚠ Click không phải vào nút giỏ hàng.");
+                return;
+            }
+
+            event.preventDefault(); // Ngăn trang reload nếu có
+
+            const productId = targetButton.getAttribute("data-product-id");
+
+            if (!productId) {
+                console.error("❌ Lỗi: `data-product-id` không tồn tại hoặc bị null.");
+                return;
+            }
+
+            console.log("✅ Đã nhấn vào nút giỏ hàng:", targetButton);
+            console.log("📌 Product ID:", productId);
+
+            // Kiểm tra xem thẻ CSRF token có tồn tại không
+            const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+            if (!csrfTokenElement) {
+                console.error("❌ Lỗi: CSRF token không tìm thấy!");
+                alert("❌ Lỗi bảo mật! Không thể thêm vào giỏ hàng.");
+                return;
+            }
+
+            const csrfToken = csrfTokenElement.getAttribute("content");
+
+            // Gửi request thêm vào giỏ hàng
+            fetch("/add-to-cart", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": csrfToken
+                },
+                body: JSON.stringify({ product_id: productId })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("❌ Lỗi từ server: " + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("📌 Server response:", data);
+                alert("✅ Sản phẩm đã được thêm vào giỏ hàng!");
+
+                // Cập nhật số lượng giỏ hàng trên giao diện nếu có phần tử .cart-count
+                const cartCountElement = document.querySelector(".cart-count");
+                if (cartCountElement && data.totalItems !== undefined) {
+                    cartCountElement.textContent = data.totalItems;
+                }
+            })
+            .catch(error => {
+                console.error("❌ Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
+                alert("❌ Đã xảy ra lỗi, vui lòng thử lại!");
+            });
+        });
+    });
+</script> --}}
+
 @endsection
