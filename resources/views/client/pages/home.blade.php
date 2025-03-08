@@ -1090,11 +1090,11 @@
                                                                                             title="Thêm vào yêu thích">
                                                                                             ❤️
                                                                                         </a>
-                                                                                        <button class="btn-cart btn-views add-to-cart"
+                                                                                        {{-- <button class="btn-cart btn-views add-to-cart"
                                                                                             data-product-id="{{ $product->id }}" type="button"
                                                                                             title="Thêm vào giỏ hàng"> 🛒
 
-                                                                                        </button>
+                                                                                        </button> --}}
 
 
 
@@ -1787,7 +1787,7 @@
         });
     </script>
 
-<script>
+{{-- <script>
     document.addEventListener("DOMContentLoaded", function () {
         document.addEventListener("click", function (event) {
             // Kiểm tra nếu click vào phần tử hoặc icon bên trong nút giỏ hàng
@@ -1851,6 +1851,6 @@
             });
         });
     });
-</script>
+</script> --}}
 
 @endsection

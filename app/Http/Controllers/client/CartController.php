@@ -9,83 +9,64 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     public function showCart()
-{
-    $cartItems = session()->get('cart', []);  // Lấy dữ liệu giỏ hàng từ session
-    $totalPrice = 0;
+    {
+        $cartItems = session()->get('cart', []);
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cartItems));
 
-    // Tính tổng giá trị của giỏ hàng
-    foreach ($cartItems as $item) {
-        $totalPrice += $item['price'] * $item['quantity'];
+        return view('client.pages.cart', compact('cartItems', 'totalPrice'));
     }
-
-    return view('client.pages.cart', compact('cartItems', 'totalPrice'));
-}
 
     public function addToCart(Request $request)
     {
-        $productId = $request->product_id;
-        $product = Product::find($productId);
-    
-        if ($product) {
-            $cart = session()->get('cart', []);
-    
-            // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
-            if (isset($cart[$productId])) {
-                $cart[$productId]['quantity']++;
-            } else {
-                $cart[$productId] = [
-                    'id' => $product->id,
-                    'name' => $product->name,
-                    'price' => $product->price,
-                    'quantity' => 1,
-                    'image' => $product->image, // Giả sử bạn lưu đường dẫn ảnh
-                ];
-            }
-    
-            session()->put('cart', $cart);
-    
-            return response()->json([
-                'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
-                'totalItems' => count($cart),
-            ]);
+        $product = Product::find($request->product_id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Sản phẩm không tồn tại!'], 404);
         }
-    
-        return response()->json(['message' => 'Sản phẩm không tồn tại'], 404);
+
+        // Tạo khóa duy nhất cho sản phẩm dựa trên ID, màu sắc, size
+        $cartKey = "{$product->id}-{$request->color}-{$request->size}";
+
+        $cart = session()->get('cart', []);
+
+        if (isset($cart[$cartKey])) {
+            $cart[$cartKey]['quantity'] += $request->quantity;
+        } else {
+            $cart[$cartKey] = [
+                'id' => $product->id,
+                'name' => $product->name,
+                'price' => $product->discount_price ?? $product->price,
+                'quantity' => $request->quantity,
+                'color' => $request->color,
+                'size' => $request->size,
+                'image' => explode(',', $product->image)[0] ?? null
+            ];
+        }
+
+        session()->put('cart', $cart);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
+            'totalItems' => count($cart)
+        ]);
     }
-    
+
     public function removeItem(Request $request)
-{
-    $productId = $request->input('product_id');
-    $cart = session()->get('cart', []);
+    {
+        $cart = session()->get('cart', []);
 
-    // Lọc giỏ hàng, giữ lại sản phẩm không bị xóa
-    $updatedCart = array_filter($cart, function ($item) use ($productId) {
-        return $item['id'] != $productId;
-    });
+        if (isset($cart[$request->cartKey])) {
+            unset($cart[$request->cartKey]);
+            session()->put('cart', $cart);
+        }
 
-    // Reset lại chỉ mục của mảng
-    $updatedCart = array_values($updatedCart);
+        $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
 
-    // Cập nhật session giỏ hàng
-    if (empty($updatedCart)) {
-        session()->forget('cart');
-        $totalPrice = 0;
-    } else {
-        session()->put('cart', $updatedCart);
-        $totalPrice = array_sum(array_map(function ($item) {
-            return $item['price'] * $item['quantity'];
-        }, $updatedCart));
+        return response()->json([
+            'success' => true,
+            'total_price' => number_format($totalPrice, 0, ',', '.'),
+            'totalItems' => count($cart)
+        ]);
     }
-
-    return response()->json([
-        'success' => true,
-        'total_price' => number_format($totalPrice, 0, ',', '.')
-    ]);
-}
-
-
-
-
-      
-
 }

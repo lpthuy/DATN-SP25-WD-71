@@ -19,9 +19,7 @@
                 <th>ID</th>
                 <th>Hình ảnh</th>
                 <th>Tên sản phẩm</th>
-                <th>Giá</th>
                 <th>Danh mục</th>
-                <th>Biến thể (Size - Màu - Số lượng)</th>
                 <th>Thao tác</th>
             </tr>
         </thead>
@@ -31,43 +29,30 @@
                 <td>{{ $product->id }}</td>
                 <td>
                     @if($product->image)
+<<<<<<< HEAD
                         @php
                             $images = explode(',', $product->image); // Tách ảnh thành mảng
                         @endphp
                         @foreach($images as $img)
                             <img src="{{ asset('storage/' . trim($img)) }}" alt="{{ $product->name }}" width="100" style="margin-right: 5px;">
                         @endforeach
+=======
+                        <img src="{{ asset('storage/' . explode(',', $product->image)[0]) }}" alt="{{ $product->name }}" width="100">
+>>>>>>> c4e3938ab15ab1c7c2db857cd5784c3aa49bbd20
                     @else
                         Không có ảnh
                     @endif
                 </td>
                 
                 <td>{{ $product->name }}</td>
-                <td>
-                    @if($product->discount_price && $product->discount_price < $product->price)
-                        <span style="text-decoration: line-through; color: red;">
-                            {{ number_format($product->price, 0, ',', '.') }} VND
-                        </span>
-                        <br>
-                        <span style="color: green; font-weight: bold;">
-                            {{ number_format($product->discount_price, 0, ',', '.') }} VND
-                        </span>
-                    @else
-                        {{ number_format($product->price, 0, ',', '.') }} VND
-                    @endif
-                </td>
-                
                 <td>{{ $product->category->name ?? 'Không có danh mục' }}</td>
                 <td>
-                    @foreach($product->variants as $variant)
-                        <div style="margin-bottom: 5px;">
-                            <span class="badge badge-secondary">{{ $variant->size->size_name }}</span>
-                            <span style="background-color: {{ $variant->color->color_code }}; padding: 5px; border-radius: 5px; display: inline-block; width: 20px; height: 20px;"></span>
-                            <span class="text-muted">SL: {{ $variant->stock_quantity }}</span>
-                        </div>
-                    @endforeach
-                </td>
-                <td>
+                    {{-- Nút hiển thị modal biến thể --}}
+                    <button class="btn btn-info btn-sm open-variants" 
+                            data-product-id="{{ $product->id }}"
+                            data-variants="{{ $product->variants->toJson() }}">
+                        Biến thể
+                    </button>
                     <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">Sửa</a>
                     <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
                         @csrf
@@ -81,4 +66,81 @@
     </table>
 
     {{ $products->links() }}
+
+    <!-- Modal hiển thị biến thể -->
+    <div class="modal fade" id="variantModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Danh sách biến thể</h5>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Size</th>
+                                <th>Màu</th>
+                                <th>Giá cũ</th>
+                                <th>Giá mới</th>
+                                <th>Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody id="variantTableBody">
+                            <!-- Dữ liệu sẽ được load vào đây bằng JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+@endsection
+{{ $products->links() }}
+@section('js')
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.open-variants').forEach(button => {
+        button.addEventListener('click', function () {
+            let variants = JSON.parse(this.getAttribute('data-variants'));
+            let tableBody = document.getElementById("variantTableBody");
+            tableBody.innerHTML = "";
+
+            if (variants.length === 0) {
+                tableBody.innerHTML = "<tr><td colspan='5' class='text-center'>Không có biến thể nào</td></tr>";
+            } else {
+                variants.forEach(variant => {
+                    let sizeName = variant.size && variant.size.size_name ? variant.size.size_name : 'Không có size';
+                    let colorCode = variant.color && variant.color.color_code ? variant.color.color_code : '#000';
+
+                    let oldPrice = variant.price 
+    ? `<span style="text-decoration: line-through; color: gray;">${new Intl.NumberFormat('vi-VN').format(variant.price)} VND</span>` 
+    : 'N/A';
+
+let newPrice = variant.discount_price && variant.discount_price < variant.price
+    ? `<span style="color: red; font-weight: bold;">${new Intl.NumberFormat('vi-VN').format(variant.discount_price)} VND</span>`
+    : `<span style="color: green; font-weight: bold;">${new Intl.NumberFormat('vi-VN').format(variant.price)} VND</span>`;
+
+                    let row = `
+                        <tr>
+                            <td>${sizeName}</td>
+                            <td>
+                                <span style="background-color: ${colorCode}; display: inline-block; width: 20px; height: 20px; border-radius: 5px;"></span>
+                            </td>
+                            <td>${oldPrice}</td>
+                            <td>${newPrice}</td>
+                            <td>${variant.stock_quantity}</td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+
+            $('#variantModal').modal('show');
+        });
+    });
+});
+</script>
 @endsection

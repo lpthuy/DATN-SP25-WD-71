@@ -412,9 +412,56 @@
 
                                         <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now">Mua
                                             ngay</button>
-                                        <button type="submit"
-                                            class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">Thêm
-                                            vào giỏ hàng</button>
+                                            <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
+                                                Thêm vào giỏ hàng
+                                            </button>
+
+
+
+
+
+                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".add_to_cart").click(function(e) {
+            e.preventDefault();
+
+            let productId = $("input[name=product_id]").val();
+            let quantity = $("input[name=quantity]").val();
+            let color = $("input[name=color]:checked").val();
+            let size = $("input[name=size]:checked").val();
+
+            if (!color || !size) {
+                alert("Vui lòng chọn màu sắc và kích thước!");
+                return;
+            }
+
+            $.ajax({
+                url: "{{ route('cart.add') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    product_id: productId,
+                    quantity: quantity,
+                    color: color,
+                    size: size
+                },
+                success: function(response) {
+                    if (response.success) {
+                        alert(response.message);
+                        $("#cart-count").text(response.totalItems);
+                        $(".cart_body").load(location.href + " .cart_body");
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function(xhr) {
+                    alert("Lỗi: " + xhr.responseJSON.message);
+                }
+            });
+        });
+    });
+</script>
 
                                     </div>
                                 </div>

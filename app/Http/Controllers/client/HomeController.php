@@ -255,4 +255,8 @@ public function updateProfile(Request $request)
     {
         return view('client.pages.address');
     }
+
+
+
+    
 }
