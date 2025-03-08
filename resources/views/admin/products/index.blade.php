@@ -29,16 +29,7 @@
                 <td>{{ $product->id }}</td>
                 <td>
                     @if($product->image)
-<<<<<<< HEAD
-                        @php
-                            $images = explode(',', $product->image); // Tách ảnh thành mảng
-                        @endphp
-                        @foreach($images as $img)
-                            <img src="{{ asset('storage/' . trim($img)) }}" alt="{{ $product->name }}" width="100" style="margin-right: 5px;">
-                        @endforeach
-=======
                         <img src="{{ asset('storage/' . explode(',', $product->image)[0]) }}" alt="{{ $product->name }}" width="100">
->>>>>>> c4e3938ab15ab1c7c2db857cd5784c3aa49bbd20
                     @else
                         Không có ảnh
                     @endif
