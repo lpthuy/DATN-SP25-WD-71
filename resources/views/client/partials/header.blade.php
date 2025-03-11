@@ -2,6 +2,9 @@
     <head>
         <!-- Thêm CSRF Token vào đây -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
+        <body data-user-authenticated="{{ Auth::check() ? 'true' : 'false' }}" 
+        data-user-role="{{ Auth::check() ? Auth::user()->role : '' }}">
+
     </head>
     <div class="topbar">
         <div class="container">
@@ -29,7 +32,7 @@
                                 @if(Auth::user()->role === 'admin')
                                     <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">Quay lại trang Admin</a></li>
                                 @else
-                                    <li><a class="dropdown-item" href="{{ route('order') }}">Đơn hàng của tôi</a></li>
+                                    <li><a class="dropdown-item" href="{{ route('order.index') }}">Đơn hàng của tôi</a></li>
                                 @endif
                                 <li>
                                     <form method="POST" action="{{ route('logout') }}">
