@@ -53,9 +53,17 @@ Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
 Route::get('/tai-khoan/chinh-sua', [HomeController::class, 'editProfile'])->name('editProfile');
 Route::post('/tai-khoan/chinh-sua', [HomeController::class, 'updateProfile'])->name('updateProfile');
 
+
 Route::get('/gio-hang', [CartController::class, 'showCart'])->name('cart.show');
 Route::post('/gio-hang/them', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/gio-hang/xoa', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/gio-hang/cap-nhat', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/count', [CartController::class, 'countCart'])->name('cart.count');
+
+
+
+Route::post('/check-availability', [HomeController::class, 'checkAvailability'])->name('product.checkAvailability');
+
 
 
 
