@@ -210,7 +210,26 @@
                                         <li>Đổi trả trong 30 ngày nếu sản phẩm lỗi bất kì</li>
                                     </ul>
                                 </div>
-
+                                <!-- Thêm phần phương thức thanh toán -->
+                                <div class="payment-method rounded-sm">
+                                    <h3 class="payment-heading d-inline-flex align-items-center">
+                                        Phương thức thanh toán
+                                    </h3>
+                                    
+                                    <div class="payment-options">
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="bank_transfer"> Chuyển khoản ngân hàng
+                                        </label>
+                                    </div>
+                                    
+                                    <div id="bank-details" class="bank-details" style="display: none;">
+                                        <p><strong>Thông tin chuyển khoản:</strong></p>
+                                        <p>Nội dung: Thanh toán đơn hàng: {{ $product->name }}</p>
+                                    </div>
+                                </div>
 
                             <div class="form-product">
 
@@ -259,10 +278,10 @@
                                         </div>
                                     
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
-                                        <div class="btn-mua button_actions clearfix">
-                                            <button type="submit" name="buy_now" value="1" class="btn btn-lg btn-gray btn_buy btn-buy-now">
-                                                Mua ngay
-                                            </button>
+                                            <div class="btn-mua button_actions clearfix">
+                                                <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
+                                                    Mua ngay
+                                                </button>
                                             <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
                                                 Thêm vào giỏ hàng
                                             </button>
@@ -1026,5 +1045,296 @@
 
 </script>
 
-    
+    <!-- JavaScript để hiển thị chi tiết tài khoản ngân hàng khi chọn chuyển khoản -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let paymentMethods = document.querySelectorAll("input[name='payment_method']");
+        let bankDetails = document.getElementById("bank-details");
+
+        paymentMethods.forEach(method => {
+            method.addEventListener("change", function () {
+                if (this.value === "bank_transfer") {
+                    bankDetails.style.display = "block";
+                } else {
+                    bankDetails.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("buy-now-btn").addEventListener("click", function () {
+    let productId = document.querySelector("input[name='product_id']").value;
+    let productName = document.querySelector(".title-product h1").innerText;
+    let selectedColorElement = document.querySelector("input[name='option-0']:checked");
+    let selectedSizeElement = document.querySelector("input[name='option-1']:checked");
+    let quantity = document.getElementById("qty").value;
+    let paymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
+
+    let selectedColor = selectedColorElement ? selectedColorElement.value : null;
+    let selectedSize = selectedSizeElement ? selectedSizeElement.value : null;
+    let selectedColorName = selectedColorElement ? selectedColorElement.nextElementSibling.title : "Chưa chọn";
+    let selectedSizeName = selectedSizeElement ? selectedSizeElement.nextElementSibling.innerText : "Chưa chọn";
+
+    let isLoggedIn = document.body.getAttribute("data-user-authenticated");
+    let isAdmin = document.body.getAttribute("data-user-role") === "admin";
+
+    if (!isLoggedIn || isLoggedIn === "false") {
+        alert("Vui lòng đăng nhập hoặc đăng ký tài khoản trước khi mua hàng!");
+        return;
+    }
+
+    if (isAdmin) {
+        alert("Tài khoản admin không thể mua hàng!");
+        return;
+    }
+
+    if (!selectedColor) {
+        alert("Vui lòng chọn màu sắc!");
+        return;
+    }
+    if (!selectedSize) {
+        alert("Vui lòng chọn size!");
+        return;
+    }
+    if (!paymentMethod) {
+        alert("Vui lòng chọn phương thức thanh toán!");
+        return;
+    }
+
+    fetch("/check-availability", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ product_id: productId, color_id: selectedColor, size_id: selectedSize })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "error") {
+            alert(data.message);
+            return;
+        }
+        showOrderSummary(productId, productName, selectedColor, selectedColorName, selectedSize, selectedSizeName, quantity, paymentMethod, data.new_price);
+    })
+    .catch(error => {
+        console.error("Lỗi kiểm tra sản phẩm:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+    });
+});
+
+function showOrderSummary(productId, productName, colorId, color, sizeId, size, quantity, paymentMethod, price) {
+    let existingPopup = document.getElementById("checkout-popup");
+    let existingOverlay = document.getElementById("checkout-overlay");
+    if (existingPopup) existingPopup.remove();
+    if (existingOverlay) existingOverlay.remove();
+
+    let overlay = document.createElement("div");
+    overlay.id = "checkout-overlay";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0, 0, 0, 0.6)";
+    overlay.style.zIndex = "999";
+    overlay.addEventListener("click", function () {
+        document.getElementById("checkout-popup")?.remove();
+        overlay.remove();
+    });
+
+    let checkoutPopup = document.createElement("div");
+    checkoutPopup.id = "checkout-popup";
+    checkoutPopup.style.position = "fixed";
+    checkoutPopup.style.top = "50%";
+    checkoutPopup.style.left = "50%";
+    checkoutPopup.style.transform = "translate(-50%, -50%)";
+    checkoutPopup.style.background = "#fff";
+    checkoutPopup.style.padding = "30px";
+    checkoutPopup.style.borderRadius = "10px";
+    checkoutPopup.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
+    checkoutPopup.style.zIndex = "1000";
+    checkoutPopup.style.width = "500px";
+    checkoutPopup.style.textAlign = "center";
+    checkoutPopup.style.fontSize = "16px";
+
+    let qrCodeHtml = paymentMethod === "bank_transfer" ? `
+        <p><strong>Quét mã QR để thanh toán:</strong></p>
+        <img src="/client/images/qr-code.png" alt="QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;" />
+        <p style="color: red; font-size: 14px;">Vui lòng chuyển khoản và chờ xác nhận.</p>
+        <p id="payment-status" style="color: blue; font-size: 14px; font-weight: bold;">Đang kiểm tra thanh toán...</p>
+    ` : '';
+
+    checkoutPopup.innerHTML = `
+        <h2 style="margin-bottom: 15px; color: #333;">Thông tin đơn hàng</h2>
+        <p><strong>Sản phẩm:</strong> ${productName}</p>
+        <p><strong>Màu sắc:</strong> ${color}</p>
+        <p><strong>Size:</strong> ${size}</p>
+        <p><strong>Số lượng:</strong> ${quantity}</p>
+        <p><strong>Phương thức thanh toán:</strong> ${paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}</p>
+        <p><strong>Giá:</strong> <span style="color: red; font-size: 18px;">${price}đ</span></p>
+        ${qrCodeHtml}
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+            ${paymentMethod !== "bank_transfer" ? `<button id="confirm-order" style="background: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Xác nhận đặt hàng</button>` : ''}
+            <button id="close-order" style="background: #dc3545; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 15px;">Đóng</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(checkoutPopup);
+
+    document.getElementById("close-order").addEventListener("click", function () {
+        checkoutPopup.remove();
+        overlay.remove();
+    });
+
+    if (paymentMethod === "bank_transfer") {
+        let checkCount = 0;  // Giới hạn số lần kiểm tra
+        let interval = setInterval(() => {
+            checkCount++;
+            console.log("Checking payment status...");
+            checkPaymentStatus(productId, interval, checkCount);
+        }, 5000);
+    } else {
+        document.getElementById("confirm-order")?.addEventListener("click", function () {
+            placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod);
+        });
+    }
+}
+
+function checkPaymentStatus(productId, interval, checkCount, errorCount = 0) {
+    fetch(`/order/check-payment-status?product_id=${productId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Lỗi API: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Dữ liệu từ API:", data); // Log dữ liệu nhận từ API
+            let statusText = document.getElementById("payment-status");
+
+            if (data.payment_status === "completed") {
+                alert(`✅ Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
+                document.getElementById("checkout-popup")?.remove();
+                document.getElementById("checkout-overlay")?.remove();
+                clearInterval(interval);  // Dừng kiểm tra khi thanh toán thành công
+            } else {
+                if (statusText) {
+                    statusText.textContent = `🔄 Đang kiểm tra... (${checkCount}/12)`;
+                    statusText.style.color = "blue";
+                }
+            }
+
+            // Nếu đã kiểm tra đủ 12 lần (60 giây) mà vẫn chưa nhận thanh toán, dừng lại
+            if (checkCount >= 12) {
+                clearInterval(interval);
+                if (statusText) {
+                    statusText.textContent = "⚠ Không thể xác nhận thanh toán. Vui lòng liên hệ hỗ trợ!";
+                    statusText.style.color = "red";
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi kiểm tra trạng thái thanh toán:", error);
+            errorCount++;
+
+            let statusText = document.getElementById("payment-status");
+            if (statusText) {
+                statusText.textContent = `⚠ Lỗi kết nối đến hệ thống. Đang thử lại... (${errorCount}/3)`;
+                statusText.style.color = "orange";
+            }
+
+            // Nếu gặp lỗi API quá 3 lần liên tiếp, dừng kiểm tra
+            if (errorCount >= 3) {
+                clearInterval(interval);
+                if (statusText) {
+                    statusText.textContent = "❌ Không thể kết nối đến hệ thống. Vui lòng thử lại sau!";
+                    statusText.style.color = "red";
+                }
+            }
+        });
+}
+
+
+
+
+
+function placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod) {
+    let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    if (!csrfToken) {
+        alert("Lỗi bảo mật! Không tìm thấy CSRF Token.");
+        return;
+    }
+
+    let orderData = {
+        product_id: productId,
+        product_name: productName,
+        color: colorId,
+        size: sizeId,
+        quantity: parseInt(quantity),
+        price: parseFloat(price),
+        payment_method: paymentMethod
+    };
+
+    fetch("/order/save", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
+            document.getElementById("checkout-popup")?.remove();
+            document.getElementById("checkout-overlay")?.remove();
+        } else {
+            alert("Lỗi hệ thống: " + data.message);
+        }
+    })
+    .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
+}
+
+
+
+
+
+</script>
+
+
+<!-- CSS cho phần thanh toán -->
+<style>
+    .payment-method {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .payment-option {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .bank-details {
+        background: #fff;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+    }
+</style>
 @endsection
