@@ -140,331 +140,156 @@
                         </div>
 
                         <form enctype="multipart/form-data" data-cart-form id="add-to-cart-form"
-                            action="https://lofi-style.mysapo.net/cart/add" method="post" class="form-inline">
-                            <div class="price-box clearfix">
-                                <!-- Giá Khuyến Mại -->
-                                <span class="special-price">
-                                    <span class="price product-price">
-                                        {{ number_format($product->discount_price ?? $product->price, 0, ',', '.') }}₫
-                                    </span>
-                                    <meta itemprop="price" content="{{ $product->discount_price ?? $product->price }}">
-                                    <meta itemprop="priceCurrency" content="VND">
-                                </span>
-                            
-                                <!-- Giá Gốc (Chỉ hiển thị nếu có giá khuyến mãi) -->
-                                @if($product->discount_price)
-                                    <span class="old-price" itemprop="priceSpecification" itemscope=""
-                                        itemtype="http://schema.org/priceSpecification">
-                                        <del class="price product-price-old">
-                                            {{ number_format($product->price, 0, ',', '.') }}₫
-                                        </del>
-                                        <meta itemprop="price" content="{{ $product->price }}">
+                            action="{{ route('cart.add') }}" method="POST" class="form-inline">
+                            <div id="alert-message" class="alert-box" style="display: none;">
+                                <span id="alert-text"></span>
+                            </div>
+                            <style>
+                                .alert-box {
+                                    position: fixed;
+                                    top: 20px;
+                                    left: 50%;
+                                    transform: translateX(-50%);
+                                    background: rgba(255, 0, 0, 0.9);
+                                    color: white;
+                                    padding: 10px 20px;
+                                    border-radius: 5px;
+                                    font-weight: bold;
+                                    z-index: 9999;
+                                    display: none;
+                                    transition: opacity 0.5s ease-in-out;
+                                }
+                            </style>
+                            @php
+                                // Lấy một biến thể bất kỳ của sản phẩm
+                                $variant = $product->variants->first();
+                                $price = $variant ? $variant->price : $product->price;
+                                $discountPrice = $variant && $variant->discount_price ? $variant->discount_price : null;
+                            @endphp
+
+                                <div class="price-box clearfix">
+                                    <!-- Giá Khuyến Mại -->
+                                    <span class="special-price">
+                                        <span class="price product-price">
+                                            <span id="dynamic-new-price">
+                                                {{ number_format($discountPrice ?? $price, 0, ',', '.') }}₫
+                                            </span>
+                                        </span>
+                                        <meta itemprop="price" content="{{ $discountPrice ?? $price }}">
                                         <meta itemprop="priceCurrency" content="VND">
                                     </span>
-                                @endif
-                            </div>
-                            
-                            <div class='product-promotion rounded-sm' id='lofi-salebox'>
-                                <h3 class='product-promotion__heading rounded-sm d-inline-flex align-items-center'>
-                                    <img src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
-                                        data-src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
-                                        alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
-                                        data-image="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
-                                        width='22' height='22' class='mr-2' />
-                                    Khuyến mại - ưu đãi
-                                </h3>
-                                <ul class="promotion-box">
-                                    <li>Đồng giá Ship toàn quốc 25.000đ</li>
-                                    <li>Hỗ trợ 10.000 phí Ship cho đơn hàng từ 200.000đ</li>
-                                    <li>Miễn phí Ship cho đơn hàng từ 300.000đ</li>
-                                    <li>Đổi trả trong 30 ngày nếu sản phẩm lỗi bất kì</li>
-                                </ul>
-                            </div>
 
+                                    <!-- Giá Gốc (Chỉ hiển thị nếu có giá khuyến mãi) -->
+                                    @if($discountPrice && $discountPrice < $price)
+                                        <span class="old-price" itemprop="priceSpecification" itemscope=""
+                                            itemtype="http://schema.org/priceSpecification">
+                                            <del class="price product-price-old" id="dynamic-old-price">
+                                                {{ number_format($price, 0, ',', '.') }}₫
+                                            </del>
+                                            <meta itemprop="price" content="{{ $price }}">
+                                            <meta itemprop="priceCurrency" content="VND">
+                                        </span>
+                                    @endif
+                                </div>
+
+
+                            
+                                <div class='product-promotion rounded-sm' id='lofi-salebox'>
+                                    <h3 class='product-promotion__heading rounded-sm d-inline-flex align-items-center'>
+                                        <img src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
+                                            data-src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
+                                            alt="&#193;o Ph&#244;ng, Thun Nữ Form Rộng"
+                                            data-image="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
+                                            width='22' height='22' class='mr-2' />
+                                        Khuyến mại - ưu đãi
+                                    </h3>
+                                    <ul class="promotion-box">
+                                        <li>Đồng giá Ship toàn quốc 25.000đ</li>
+                                        <li>Hỗ trợ 10.000 phí Ship cho đơn hàng từ 200.000đ</li>
+                                        <li>Miễn phí Ship cho đơn hàng từ 300.000đ</li>
+                                        <li>Đổi trả trong 30 ngày nếu sản phẩm lỗi bất kì</li>
+                                    </ul>
+                                </div>
+                                <!-- Thêm phần phương thức thanh toán -->
+                                <div class="payment-method rounded-sm">
+                                    <h3 class="payment-heading d-inline-flex align-items-center">
+                                        Phương thức thanh toán
+                                    </h3>
+                                    
+                                    <div class="payment-options">
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="bank_transfer"> Chuyển khoản ngân hàng
+                                        </label>
+                                    </div>
+                                    
+                                    <div id="bank-details" class="bank-details" style="display: none;">
+                                        <p><strong>Thông tin chuyển khoản:</strong></p>
+                                        <p>Nội dung: Thanh toán đơn hàng: {{ $product->name }}</p>
+                                    </div>
+                                </div>
 
                             <div class="form-product">
 
-                                <div class="select-swatch">
-                                    <div class="swatch-color swatch clearfix" data-option-index="0">
-                                        <div class="swatch-color swatch clearfix" data-option-index="0">
-                                            <div class="options-title">Màu sắc: <span class="var"></span></div>
-                                        
-                                            @foreach($colors as $color)
-                                                <div data-value="{{ $color->color_name }}" class="swatch-element color {{ strtolower($color->color_name) }} available">
-                                                    <input id="swatch-0-{{ strtolower($color->color_name) }}" type="radio" name="option-0" value="{{ $color->color_name }}" />
-                                        
-                                                    <label for="swatch-0-{{ strtolower($color->color_name) }}" title="{{ $color->color_name }}"
-                                                           style="background-color: {{ $color->color_code }}; background-size: 40px; background-repeat: no-repeat; background-position: center !important;">
-                                                    </label>
+                                <form action="{{ route('cart.add') }}" method="POST" class="add-to-cart-form">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                    <input type="hidden" name="color_id" id="selected_color" value="">
+                                    <input type="hidden" name="size_id" id="selected_size" value="">
+                                    <input type="hidden" name="quantity" id="selected_quantity" value="1">
+                                
+                                    <div class="select-swatch">
+                                        <!-- Hiển thị màu sắc -->
+                                        <div class="swatch-color swatch clearfix">
+                                            <div class="options-title">Màu sắc:</div>
+                                            @foreach ($colors as $color)
+                                                <div data-value="{{ $color->id }}" class="swatch-element color {{ strtolower($color->color_name) }} available">
+                                                    <input id="swatch-0-{{ $color->id }}" type="radio" name="option-0" value="{{ $color->id }}" class="color-option"/>
+                                                    <label for="swatch-0-{{ $color->id }}" title="{{ $color->color_name }}" style="background-color: {{ $color->color_code }};"></label>
                                                 </div>
-                                        
-                                                <script>
-                                                    jQuery('.swatch[data-option-index="0"] .{{ strtolower($color->color_name) }}').removeClass('soldout').addClass('available').find(':radio')
-                                                        .removeAttr('disabled');
-                                                </script>
                                             @endforeach
                                         </div>
-                                        
-                                        <script>
-                                            jQuery('.swatch[data-option-index="0"] .Đen').removeClass('soldout').addClass('available').find(':radio')
-                                                .removeAttr('disabled');
-                                        </script>
-                                        <script>
-                                            jQuery('.swatch[data-option-index="0"] .Đen').removeClass('soldout').addClass('available').find(':radio')
-                                                .removeAttr('disabled');
-                                        </script>
 
-                                        <div data-value="Xanh" class="swatch-element color xanh available">
-                                            <input id="swatch-0-xanh" type="radio" name="option-0" value="Xanh" />
-
-                                            <label for="swatch-0-xanh" title="Xanh"
-                                                data-image="https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397"
-                                                style="background-image:url(../bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max4325.jpg?v=1673192703397);background-size: 40px; background-repeat: no-repeat; background-position: center !important;">
-                                            </label>
+                                        <!-- Hiển thị Size -->
+                                        <div class="swatch clearfix">
+                                            <div class="options-title">Size:</div>
+                                            @foreach ($sizes as $size)
+                                                <div data-value="{{ $size->id }}" class="swatch-element {{ strtolower($size->size_name) }} available">
+                                                    <input id="swatch-1-{{ $size->id }}" type="radio" name="option-1" value="{{ $size->id }}" class="size-option"/>
+                                                    <label for="swatch-1-{{ $size->id }}">{{ strtoupper($size->size_name) }}</label>
+                                                </div>
+                                            @endforeach
                                         </div>
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="0"] .Xanh').removeClass('soldout').addClass('available').find(':radio')
-                                                .removeAttr('disabled');
-                                        </script>
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="0"] .Xanh').removeClass('soldout').addClass('available').find(':radio')
-                                                .removeAttr('disabled');
-                                        </script>
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="0"] .Xanh').removeClass('soldout').addClass('available').find(':radio')
-                                                .removeAttr('disabled');
-                                        </script>
                                     </div>
-
-                                    <div class=" swatch clearfix" data-option-index="1">
-                                        <div class="options-title">Size: <span class="var"></span></div>
-                                        <div data-value="M" class="swatch-element m soldout">
-                                            <input id="swatch-1-m" type="radio" name="option-1" value="M"
-                                                checked />
-
-                                            <label title="M" for="swatch-1-m">
-                                                M
-                                            </label>
-
-                                        </div>
-
-
-
-
-
-
-
-
-                                        <div data-value="L" class="swatch-element l available">
-                                            <input id="swatch-1-l" type="radio" name="option-1" value="L" />
-
-                                            <label title="L" for="swatch-1-l">
-                                                L
-                                            </label>
-
-                                        </div>
-
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="1"] .L').removeClass('soldout').addClass('available').find(':radio').removeAttr(
-                                                'disabled');
-                                        </script>
-
-
-
-
-
-
-
-                                        <div data-value="XL" class="swatch-element xl available">
-                                            <input id="swatch-1-xl" type="radio" name="option-1" value="XL" />
-
-                                            <label title="XL" for="swatch-1-xl">
-                                                XL
-                                            </label>
-
-                                        </div>
-
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="1"] .XL').removeClass('soldout').addClass('available').find(':radio').removeAttr(
-                                                'disabled');
-                                        </script>
-
-
-
-
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="1"] .M').removeClass('soldout').addClass('available').find(':radio').removeAttr(
-                                                'disabled');
-                                        </script>
-
-
-
-
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="1"] .L').removeClass('soldout').addClass('available').find(':radio').removeAttr(
-                                                'disabled');
-                                        </script>
-
-
-
-
-
-                                        <script>
-                                            jQuery('.swatch[data-option-index="1"] .XL').removeClass('soldout').addClass('available').find(':radio').removeAttr(
-                                                'disabled');
-                                        </script>
-
-
-                                    </div>
-
-
-
-
-
-                                </div>
-
-                                <div class="box-variant clearfix  d-none ">
-
-                                    <select id="product-selectors" class="form-control form-control-lg" name="variantId"
-                                        style="display:none">
-
-                                        <option value="79581820">Đen / M - 109.000₫</option>
-
-                                        <option selected="selected" value="79581821">Đen / L - 109.000₫</option>
-
-                                        <option value="79581822">Đen / XL - 109.000₫</option>
-
-                                        <option value="79581823">Xanh / M - 109.000₫</option>
-
-                                        <option value="79581824">Xanh / L - 109.000₫</option>
-
-                                        <option value="79581825">Xanh / XL - 109.000₫</option>
-
-                                    </select>
-
-                                </div>
-                                <div class="clearfix form-group ">
-                                    <div class="flex-quantity">
-                                        <div class="custom custom-btn-number ">
-                                            <div class="input_number_product form-control">
-                                                <button class="btn_num num_1 button button_qty"
-                                                    onClick="var result = document.getElementById('qty'); var qtypro = result.value; if( !isNaN( qtypro ) &amp;&amp; qtypro &gt; 1 ) result.value--;return false;"
-                                                    type="button">
-                                                    <svg xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                        xmlns="http://www.w3.org/2000/svg" class="icon" width="16"
-                                                        height="2">
-                                                        <defs>
-                                                            <symbol id="icon-minus" class="icon icon-minus"
-                                                                viewBox="0 0 16 2" fill="none"
-                                                                xmlns="http://www.w3.org/2000/svg">
-                                                                <path
-                                                                    d="M15.375 0H0.625C0.279813 0 0 0.279813 0 0.625C0 0.970187 0.279813 1.25 0.625 1.25H15.375C15.7202 1.25 16 0.970187 16 0.625C16 0.279813 15.7202 0 15.375 0Z"
-                                                                    fill="#8C9196"></path>
-                                                            </symbol>
-                                                        </defs>
-                                                        <g stroke="#8C9196" fill="#8C9196" stroke-width="0px">
-                                                            <path
-                                                                d="M15.375 0H0.625C0.279813 0 0 0.279813 0 0.625C0 0.970187 0.279813 1.25 0.625 1.25H15.375C15.7202 1.25 16 0.970187 16 0.625C16 0.279813 15.7202 0 15.375 0Z"
-                                                                fill="#8C9196"></path>
-                                                        </g>
-                                                    </svg>
-                                                </button>
-                                                <input type="text" id="qty" name="quantity" value="1"
-                                                    maxlength="3" class="form-control prd_quantity"
-                                                    onkeypress="if ( isNaN(this.value + String.fromCharCode(event.keyCode) )) return false;"
-                                                    onchange="if(this.value == 0)this.value=1;">
-                                                <button class="btn_num num_2 button button_qty"
-                                                    onClick="var result = document.getElementById('qty'); var qtypro = result.value; if( !isNaN( qtypro )) result.value++;return false;"
-                                                    type="button">
-                                                    <?xml version="1.0" ?><svg viewBox="0 0 32 32"
-                                                        xmlns="http://www.w3.org/2000/svg" width="16" height="16">
-                                                        <defs>
-                                                            <style>
-                                                                .cls-1 {
-                                                                    fill: none;
-                                                                    stroke: #000;
-                                                                    stroke-linecap: round;
-                                                                    stroke-linejoin: round;
-                                                                    stroke-width: 2px;
-                                                                }
-                                                            </style>
-                                                        </defs>
-                                                        <title />
-                                                        <g id="plus">
-                                                            <line class="cls-1" x1="16" x2="16"
-                                                                y1="7" y2="25" />
-                                                            <line class="cls-1" x1="7" x2="25"
-                                                                y1="16" y2="16" />
-                                                        </g>
-                                                    </svg>
-                                                </button>
+                                
+                                    <!-- Chọn số lượng -->
+                                    <div class="clearfix form-group">
+                                        <div class="flex-quantity">
+                                            <div class="custom custom-btn-number">
+                                                <div class="input_number_product form-control">
+                                                    <button type="button" class="btn_num num_1 button button_qty btn-decrease">-</button>
+                                                    <input type="number" id="qty" name="quantity" value="1" min="1" class="form-control prd_quantity">
+                                                    <button type="button" class="btn_num num_2 button button_qty btn-increase">+</button>
+                                                </div>
                                             </div>
+                                            <span id="stock-info" class="stock-info">Số lượng: --</span> <!-- Hiển thị số lượng tồn kho -->
                                         </div>
-                                    </div>
-                                    <div class="btn-mua button_actions clearfix">
-
-                                        <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now">Mua
-                                            ngay</button>
+                                    
+                                        <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
+                                            <div class="btn-mua button_actions clearfix">
+                                                <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
+                                                    Mua ngay
+                                                </button>
                                             <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
                                                 Thêm vào giỏ hàng
                                             </button>
-
-
-
-
-
-                                            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $(".add_to_cart").click(function(e) {
-            e.preventDefault();
-
-            let productId = $("input[name=product_id]").val();
-            let quantity = $("input[name=quantity]").val();
-            let color = $("input[name=color]:checked").val();
-            let size = $("input[name=size]:checked").val();
-
-            if (!color || !size) {
-                alert("Vui lòng chọn màu sắc và kích thước!");
-                return;
-            }
-
-            $.ajax({
-                url: "{{ route('cart.add') }}",
-                type: "POST",
-                data: {
-                    _token: "{{ csrf_token() }}",
-                    product_id: productId,
-                    quantity: quantity,
-                    color: color,
-                    size: size
-                },
-                success: function(response) {
-                    if (response.success) {
-                        alert(response.message);
-                        $("#cart-count").text(response.totalItems);
-                        $(".cart_body").load(location.href + " .cart_body");
-                    } else {
-                        alert(response.message);
-                    }
-                },
-                error: function(xhr) {
-                    alert("Lỗi: " + xhr.responseJSON.message);
-                }
-            });
-        });
-    });
-</script>
-
+                                        </div>
                                     </div>
-                                </div>
+                                    
+                                </form>
+                                
                                 <div class="product-hotline ">
                                     <p>
                                         Gọi đặt mua <a class="link" href="tel:19006750">19006750</a> (9:00 -
@@ -931,213 +756,6 @@
 @endsection
 
 @section('js')
-    {{-- <script>
-    var ww = $(window).width();
-    /*For recent product*/
-    var product = { "id": 29217273, "name": "Áo Phông, Thun Nữ Form Rộng", "alias": "ao-phong-thun-nu-form-rong", "vendor": null, "type": "Áo", "content": "<p>Mô Tả Sản Phẩm:</p>\n<ul>\n<li><em><strong>Áo Phông</strong></em>&nbsp;được thiết kế đẹp, chuẩn form, đường may sắc xảo, vải cotton dày, mịn, thấm hút mồ hôi tạo sự thoải mái khi mặc!</li>\n<li>\n<p>Toàn bộ đều là những mẫu mã mới . Giúp bạn tự tin diện lên người</p></li>\n<li>\n<p>Chất vải cotton... mềm mịn, co dãn và thoáng mát -</p></li>\n<li>Thiết kế trẻ trung năng động, hợp xu hướng thời trang quốc tế.</li>\n<li>Đường may tinh xảo, tạo nên gu thời trang sành điệu cho giới trẻ -</li>\n<li>Dễ dàng phối hợp cùng nhiều phụ kiện khác mang đến phong cách thời trang riêng cho mỗi người, khéo léo lựa chọn trang phục cùng phụ kiện phù hợp, bạn sẽ có set đồ đẹp mắt... -</li>\n<li>Là 1 item không thể thiếu trong tủ đồ của các bạn.</li></ul>", "summary": null, "template_layout": "product", "available": true, "tags": [], "price": 109000.0000, "price_min": 109000.0000, "price_max": 109000.0000, "price_varies": false, "compare_at_price": 199000.0000, "compare_at_price_min": 199000.0000, "compare_at_price_max": 199000.0000, "compare_at_price_varies": false, "variants": [{ "id": 79581820, "barcode": null, "sku": null, "title": "Đen / M", "options": ["Đen", "M"], "option1": "Đen", "option2": "M", "option3": null, "available": false, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "bizweb", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581821, "barcode": null, "sku": null, "title": "Đen / L", "options": ["Đen", "L"], "option1": "Đen", "option2": "L", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581822, "barcode": null, "sku": null, "title": "Đen / XL", "options": ["Đen", "XL"], "option1": "Đen", "option2": "XL", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581823, "barcode": null, "sku": null, "title": "Xanh / M", "options": ["Xanh", "M"], "option1": "Xanh", "option2": "M", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }, { "id": 79581824, "barcode": null, "sku": null, "title": "Xanh / L", "options": ["Xanh", "L"], "option1": "Xanh", "option2": "L", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }, { "id": 79581825, "barcode": null, "sku": null, "title": "Xanh / XL", "options": ["Xanh", "XL"], "option1": "Xanh", "option2": "XL", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }], "featured_image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" }, "images": [{ "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" }, { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" }, { "src": "https://bizweb.dktcdn.net/100/456/491/products/sk4wqsh4zap2erxlvegs-simg-fb5b2e-928x928-max.jpg?v=1673192704817" }], "options": ["Màu sắc", "Size"], "created_on": "2023-01-08T22:45:02", "modified_on": "2023-06-28T18:27:06", "published_on": "2023-01-08T22:45:02" };
-    var alias_pro = 'ao-phong-thun-nu-form-rong';
-    var variantsize = false;
-    var alias = "ao-phong-thun-nu-form-rong";
-
-    function validate(evt) {
-        var theEvent = evt || window.event;
-        var key = theEvent.keyCode || theEvent.which;
-        key = String.fromCharCode(key);
-        var regex = /[0-9]|\./;
-        if (!regex.test(key)) {
-            theEvent.returnValue = false;
-            if (theEvent.preventDefault) theEvent.preventDefault();
-        }
-    }
-    var selectCallback = function (variant, selector) {
-        if (variant) {
-            var form = jQuery('#' + selector.domIdPrefix).closest('form');
-            for (var i = 0, length = variant.options.length; i < length; i++) {
-                var radioButton = form.find('.swatch[data-option-index="' + i + '"] :radio[value="' + variant.options[i] + '"]');
-                if (radioButton.size()) {
-                    radioButton.get(0).checked = true;
-                }
-            }
-        }
-        var addToCart = jQuery('.form-product .btn-cart.normal_button'),
-            btnNow = jQuery('.form-product .btn-buy-now'),
-            FastAddToCart = jQuery('.form-product .btn-cart.fast'),
-            form = jQuery('.form-product .form-group'),
-            productPrice = jQuery('.details-pro .special-price .product-price'),
-            qty = jQuery('.inventory_quantity .a-stock'),
-            comparePrice = jQuery('.details-pro .old-price .product-price-old'),
-            comparePriceText = jQuery('.details-pro .old-price'),
-            savePrice = jQuery('.details-pro .save-price .product-price-save'),
-            savePriceText = jQuery('.details-pro .save-price'),
-            qtyBtn = jQuery('.form-product .form-group .custom-btn-number'),
-            BtnSold = jQuery('.form-product .form-group .btn-mua'),
-            product_sku = jQuery('.details-product .sku-product .variant-sku');
-        if (variant && variant.sku != "" && variant.sku != null) {
-            product_sku.html(variant.sku);
-        } else {
-            product_sku.html('(Đang cập nhật...)');
-        }
-        FastAddToCart.addClass('d-none');
-        if (variant && variant.available) {
-            if (variant.inventory_management == "bizweb") {
-                if (variant.inventory_quantity != 0) {
-                    qty.html('<span class="a-stock">Còn hàng</span>');
-                } else if (variant.inventory_quantity == '') {
-                    if (variant.inventory_policy == "continue") {
-                        qty.html('<span class="a-stock">Còn hàng</span>');
-                    } else {
-                        qty.html('<span class="a-stock a-stock-out">Hết hàng</span>');
-                    }
-                }
-            } else {
-                qty.html('<span class="a-stock">Còn hàng</span>');
-            }
-            FastAddToCart.removeClass('d-none');
-            btnNow.removeAttr('disabled').removeClass('d-none');
-            addToCart.html('Thêm vào giỏ hàng').removeAttr('disabled');
-            BtnSold.removeClass('btnsold');
-            qtyBtn.removeClass('d-none');
-            if (variant.price == 0) {
-                productPrice.html('Liên hệ');
-                comparePrice.hide();
-                savePrice.hide();
-                comparePriceText.hide();
-                savePriceText.hide();
-                form.addClass('d-none');
-            } else {
-                form.removeClass('d-none');
-                productPrice.html(Bizweb.formatMoney(variant.price, "{{amount_no_decimals_with_comma_separator}}₫"));
-                if (variant.compare_at_price > variant.price) {
-                    comparePrice.html(Bizweb.formatMoney(variant.compare_at_price, "{{amount_no_decimals_with_comma_separator}}₫")).show();
-                    savePrice.html(Bizweb.formatMoney(variant.compare_at_price - variant.price, "{{amount_no_decimals_with_comma_separator}}₫")).show();
-                    comparePriceText.show();
-                    savePriceText.show();
-                } else {
-                    comparePrice.hide();
-                    savePrice.hide();
-                    comparePriceText.hide();
-                    savePriceText.hide();
-                }
-            }
-        } else {
-            btnNow.attr('disabled', 'disabled').addClass('d-none');
-            qty.html('<span class="a-stock a-stock-out">Hết hàng</span>');
-            FastAddToCart.addClass('d-none');
-            addToCart.html('<span class="txt-main">Hết hàng</span>').attr('disabled', 'disabled');
-            BtnSold.addClass('btnsold');
-            qtyBtn.addClass('d-none');
-            if (variant) {
-                if (variant.price != 0) {
-                    form.removeClass('d-none');
-                    productPrice.html(Bizweb.formatMoney(variant.price, "{{amount_no_decimals_with_comma_separator}}₫"));
-                    if (variant.compare_at_price > variant.price) {
-                        FastAddToCart.addClass('d-none');
-                        addToCart.html('<span class="txt-main">Hết hàng</span>').attr('disabled', 'disabled');
-                        comparePrice.html(Bizweb.formatMoney(variant.compare_at_price, "{{amount_no_decimals_with_comma_separator}}₫")).show();
-                        savePrice.html(Bizweb.formatMoney(variant.compare_at_price - variant.price, "{{amount_no_decimals_with_comma_separator}}₫")).show();
-                        comparePriceText.show();
-                        savePriceText.show();
-                    } else {
-                        comparePrice.hide();
-                        savePrice.hide();
-                        comparePriceText.hide();
-                        savePriceText.hide();
-                        FastAddToCart.addClass('d-none');
-                        addToCart.html('<span class="txt-main">Hết hàng</span>').attr('disabled', 'disabled');
-                    }
-                } else {
-                    productPrice.html('Liên hệ');
-                    comparePrice.hide();
-                    savePrice.hide();
-                    comparePriceText.hide();
-                    savePriceText.hide();
-                    form.addClass('d-none');
-                }
-            } else {
-                productPrice.html('Liên hệ');
-                comparePrice.hide();
-                savePrice.hide();
-                comparePriceText.hide();
-                savePriceText.hide();
-                form.addClass('d-none');
-            }
-        }
-        /*begin variant image*/
-        if (variant && variant.image) {
-            var originalImage = jQuery(".gallery-thumbs img");
-            var stickoriginalImage = jQuery(".nd-product-news img");
-            var newImage = variant.image;
-            var element = originalImage[0];
-            Bizweb.Image.switchImage(newImage, element, function (newImageSizedSrc, newImage, element) {
-                $('.gallery-thumbs .swiper-slide').each(function () {
-                    var $this = $(this);
-                    var imgThis = $this.find('img').attr('data-image');
-                    if (newImageSizedSrc.split("?")[0] == imgThis.split("?")[0]) {
-                        var pst = $this.attr('data-hash');
-                        galleryTop.slideTo(pst, 1000, false);
-                    }
-                    jQuery(stickoriginalImage).attr('src', newImageSizedSrc);
-                });
-            });
-        }
-        /*end of variant image*/
-    };
-    jQuery(function ($) {
-
-        new Bizweb.OptionSelectors('product-selectors', {
-            product: { "id": 29217273, "name": "Áo Phông, Thun Nữ Form Rộng", "alias": "ao-phong-thun-nu-form-rong", "vendor": null, "type": "Áo", "content": "<p>Mô Tả Sản Phẩm:</p>\n<ul>\n<li><em><strong>Áo Phông</strong></em>&nbsp;được thiết kế đẹp, chuẩn form, đường may sắc xảo, vải cotton dày, mịn, thấm hút mồ hôi tạo sự thoải mái khi mặc!</li>\n<li>\n<p>Toàn bộ đều là những mẫu mã mới . Giúp bạn tự tin diện lên người</p></li>\n<li>\n<p>Chất vải cotton... mềm mịn, co dãn và thoáng mát -</p></li>\n<li>Thiết kế trẻ trung năng động, hợp xu hướng thời trang quốc tế.</li>\n<li>Đường may tinh xảo, tạo nên gu thời trang sành điệu cho giới trẻ -</li>\n<li>Dễ dàng phối hợp cùng nhiều phụ kiện khác mang đến phong cách thời trang riêng cho mỗi người, khéo léo lựa chọn trang phục cùng phụ kiện phù hợp, bạn sẽ có set đồ đẹp mắt... -</li>\n<li>Là 1 item không thể thiếu trong tủ đồ của các bạn.</li></ul>", "summary": null, "template_layout": "product", "available": true, "tags": [], "price": 109000.0000, "price_min": 109000.0000, "price_max": 109000.0000, "price_varies": false, "compare_at_price": 199000.0000, "compare_at_price_min": 199000.0000, "compare_at_price_max": 199000.0000, "compare_at_price_varies": false, "variants": [{ "id": 79581820, "barcode": null, "sku": null, "title": "Đen / M", "options": ["Đen", "M"], "option1": "Đen", "option2": "M", "option3": null, "available": false, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "bizweb", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581821, "barcode": null, "sku": null, "title": "Đen / L", "options": ["Đen", "L"], "option1": "Đen", "option2": "L", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581822, "barcode": null, "sku": null, "title": "Đen / XL", "options": ["Đen", "XL"], "option1": "Đen", "option2": "XL", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" } }, { "id": 79581823, "barcode": null, "sku": null, "title": "Xanh / M", "options": ["Xanh", "M"], "option1": "Xanh", "option2": "M", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }, { "id": 79581824, "barcode": null, "sku": null, "title": "Xanh / L", "options": ["Xanh", "L"], "option1": "Xanh", "option2": "L", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }, { "id": 79581825, "barcode": null, "sku": null, "title": "Xanh / XL", "options": ["Xanh", "XL"], "option1": "Xanh", "option2": "XL", "option3": null, "available": true, "taxable": false, "price": 109000.0000, "compare_at_price": 199000.0000, "inventory_management": "", "inventory_policy": "deny", "inventory_quantity": 0, "weight_unit": "g", "weight": 0, "requires_shipping": true, "image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" } }], "featured_image": { "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" }, "images": [{ "src": "https://bizweb.dktcdn.net/100/456/491/products/ujfb9jsyjr0rygdja304-simg-cf603b-938x938-max.jpg?v=1673192703397" }, { "src": "https://bizweb.dktcdn.net/100/456/491/products/bcbchsie3amjuunh6y8j-simg-e8409c-967x967-max.jpg?v=1673192704330" }, { "src": "https://bizweb.dktcdn.net/100/456/491/products/sk4wqsh4zap2erxlvegs-simg-fb5b2e-928x928-max.jpg?v=1673192704817" }], "options": ["Màu sắc", "Size"], "created_on": "2023-01-08T22:45:02", "modified_on": "2023-06-28T18:27:06", "published_on": "2023-01-08T22:45:02" },
-            onVariantSelected: selectCallback,
-            enableHistoryState: true
-        });
-
-        // Add label if only one product option and it isn't 'Title'. Could be 'Size'.
-
-        // Hide selectors if we only have 1 variant and its title contains 'Default'.
-
-        $('.selector-wrapper').css({
-            'text-align': 'left',
-            'margin-bottom': '15px'
-        });
-    });
-
-    jQuery('.swatch :radio').change(function () {
-        var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
-        var optionValue = jQuery(this).val();
-        jQuery(this)
-            .closest('form')
-            .find('.single-option-selector')
-            .eq(optionIndex)
-            .val(optionValue)
-            .trigger('change');
-    });
-
-    $('.slider-big-video .slider-for a').each(function () {
-        $(this).attr('rel', 'lightbox-demo');
-    });
-
-    $(document).ready(function () {
-        $(document).on('click', '.btn-buy-now', function () {
-            var _variantID = $('#product-selectors').val();
-            var _Qty = parseInt($('#qty').val());;
-            if (_variantID == null) {
-                _variantID = $('#one_variant').val();
-            }
-            jQuery.ajax({
-                type: "POST",
-                url: "/cart/add.js",
-                data: "quantity=" + _Qty + "&VariantId=" + _variantID,
-                dataType: "json",
-                success: function (e) {
-                    window.location = 'cart.html';
-                },
-                error: function (e, t) {
-                    Bizweb.onError(e, t);
-                }
-            });
-        })
-    });
-
-</script> --}}
     <script>
         $('.tabs-title li').on('click', function(e) {
             $('.tabs-title li, .tab-content').removeClass('current');
@@ -1258,5 +876,465 @@
             });
         });
     </script>
-    
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    let selectedColor = null;
+    let selectedSize = null;
+    let productId = document.querySelector("input[name='product_id']").value;
+    let quantityInput = document.getElementById("qty");
+    let newPriceDisplay = document.querySelector(".product-price");
+    let oldPriceDisplay = document.querySelector(".product-price-old");
+    let priceMeta = document.querySelector("meta[itemprop='price']");
+    let stockInfo = document.getElementById("stock-info");
+    let stockQuantity = 0; 
+
+    function showAlert(message) {
+        let alertBox = document.getElementById("alert-message");
+        let alertText = document.getElementById("alert-text");
+        alertText.innerHTML = message;
+        alertBox.style.display = "block";
+        setTimeout(() => {
+            alertBox.style.display = "none";
+        }, 3000);
+    }
+
+    function checkAvailability() {
+        if (selectedColor && selectedSize) {
+            fetch("{{ route('product.checkAvailability') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").content,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    color_id: selectedColor,
+                    size_id: selectedSize,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "error") {
+                    newPriceDisplay.innerHTML = `<span style="color: red; font-weight: bold;">${data.message}</span>`;
+                    oldPriceDisplay.innerHTML = "";
+                    priceMeta.setAttribute("content", "0");
+                    stockInfo.innerHTML = "Số lượng: --"; 
+                } else {
+                    newPriceDisplay.innerHTML = `<span style="color: green; font-weight: bold;">${data.new_price}</span>`;
+                    oldPriceDisplay.innerHTML = data.old_price_raw > data.new_price_raw 
+                        ? `<del class="price product-price-old">${data.old_price}</del>` 
+                        : "";
+                    priceMeta.setAttribute("content", data.new_price_raw);
+
+                    // Cập nhật số lượng tồn kho của sản phẩm
+                    stockQuantity = data.stock_quantity;
+                    stockInfo.innerHTML = `Số lượng: ${stockQuantity}`;
+                }
+            })
+            .catch(error => console.error("Lỗi:", error));
+        }
+    }
+
+    // Xử lý chọn màu sắc
+    document.querySelectorAll(".color-option").forEach(colorInput => {
+        colorInput.addEventListener("change", function () {
+            selectedColor = this.value;
+            document.getElementById("selected_color").value = selectedColor;
+            checkAvailability();
+        });
+    });
+
+    // Xử lý chọn size
+    document.querySelectorAll(".size-option").forEach(sizeInput => {
+        sizeInput.addEventListener("change", function () {
+            selectedSize = this.value;
+            document.getElementById("selected_size").value = selectedSize;
+            checkAvailability();
+        });
+    });
+
+    // Xử lý tăng số lượng
+    document.querySelector(".btn-increase").addEventListener("click", function () {
+        if (!selectedColor || !selectedSize) {
+            showAlert("Vui lòng chọn màu sắc và size trước khi thay đổi số lượng!");
+            return;
+        }
+        let currentValue = parseInt(quantityInput.value);
+        if (!isNaN(currentValue)) {
+            if (currentValue < stockQuantity) {
+                quantityInput.value = currentValue + 1;
+                document.getElementById("selected_quantity").value = quantityInput.value;
+            } else {
+                showAlert(`Sản phẩm chỉ còn ${stockQuantity} cái. Vui lòng nhập lại.`);
+            }
+        }
+    });
+
+    // Xử lý giảm số lượng
+    document.querySelector(".btn-decrease").addEventListener("click", function () {
+        if (!selectedColor || !selectedSize) {
+            showAlert("Vui lòng chọn màu sắc và size trước khi thay đổi số lượng!");
+            return;
+        }
+        let currentValue = parseInt(quantityInput.value);
+        if (!isNaN(currentValue) && currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+            document.getElementById("selected_quantity").value = quantityInput.value;
+        }
+    });
+
+    // Đảm bảo input không nhập số âm hoặc quá số lượng tồn kho
+    quantityInput.addEventListener("change", function () {
+        if (!selectedColor || !selectedSize) {
+            showAlert("Vui lòng chọn màu sắc và size trước khi thay đổi số lượng!");
+            this.value = 1;
+            return;
+        }
+        let currentValue = parseInt(this.value);
+        if (isNaN(currentValue) || currentValue < 1) {
+            this.value = 1;
+        } else if (currentValue > stockQuantity) {
+            showAlert(`Sản phẩm chỉ còn ${stockQuantity} cái. Vui lòng nhập lại.`);
+            this.value = stockQuantity;
+        }
+        document.getElementById("selected_quantity").value = this.value;
+    });
+
+    // Xử lý khi nhấn "Thêm vào giỏ hàng"
+    document.querySelector(".btn-cart").addEventListener("click", function (event) {
+        if (!selectedColor || !selectedSize) {
+            showAlert("Vui lòng chọn màu sắc và size trước khi thêm vào giỏ hàng!");
+            event.preventDefault();
+        } else {
+            fetch("{{ route('cart.add') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector("meta[name='csrf-token']").content,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    product_id: productId,
+                    color_id: selectedColor,
+                    size_id: selectedSize,
+                    quantity: quantityInput.value
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === "success") {
+                    showAlert("🎉 Sản phẩm đã được thêm vào giỏ hàng!");
+                } else {
+                    showAlert("Không thể thêm sản phẩm vào giỏ hàng, vui lòng thử lại!");
+                }
+            })
+            .catch(error => console.error("Lỗi:", error));
+        }
+    });
+
+    // Xử lý khi nhấn "Mua ngay"
+    document.querySelector(".btn-buy-now").addEventListener("click", function (event) {
+        if (!selectedColor || !selectedSize) {
+            showAlert("Vui lòng chọn màu sắc và size trước khi mua hàng!");
+            event.preventDefault();
+        }
+    });
+});
+
+
+</script>
+
+    <!-- JavaScript để hiển thị chi tiết tài khoản ngân hàng khi chọn chuyển khoản -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let paymentMethods = document.querySelectorAll("input[name='payment_method']");
+        let bankDetails = document.getElementById("bank-details");
+
+        paymentMethods.forEach(method => {
+            method.addEventListener("change", function () {
+                if (this.value === "bank_transfer") {
+                    bankDetails.style.display = "block";
+                } else {
+                    bankDetails.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("buy-now-btn").addEventListener("click", function () {
+    let productId = document.querySelector("input[name='product_id']").value;
+    let productName = document.querySelector(".title-product h1").innerText;
+    let selectedColorElement = document.querySelector("input[name='option-0']:checked");
+    let selectedSizeElement = document.querySelector("input[name='option-1']:checked");
+    let quantity = document.getElementById("qty").value;
+    let paymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
+
+    let selectedColor = selectedColorElement ? selectedColorElement.value : null;
+    let selectedSize = selectedSizeElement ? selectedSizeElement.value : null;
+    let selectedColorName = selectedColorElement ? selectedColorElement.nextElementSibling.title : "Chưa chọn";
+    let selectedSizeName = selectedSizeElement ? selectedSizeElement.nextElementSibling.innerText : "Chưa chọn";
+
+    let isLoggedIn = document.body.getAttribute("data-user-authenticated");
+    let isAdmin = document.body.getAttribute("data-user-role") === "admin";
+
+    if (!isLoggedIn || isLoggedIn === "false") {
+        alert("Vui lòng đăng nhập hoặc đăng ký tài khoản trước khi mua hàng!");
+        return;
+    }
+
+    if (isAdmin) {
+        alert("Tài khoản admin không thể mua hàng!");
+        return;
+    }
+
+    if (!selectedColor) {
+        alert("Vui lòng chọn màu sắc!");
+        return;
+    }
+    if (!selectedSize) {
+        alert("Vui lòng chọn size!");
+        return;
+    }
+    if (!paymentMethod) {
+        alert("Vui lòng chọn phương thức thanh toán!");
+        return;
+    }
+
+    fetch("/check-availability", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ product_id: productId, color_id: selectedColor, size_id: selectedSize })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "error") {
+            alert(data.message);
+            return;
+        }
+        showOrderSummary(productId, productName, selectedColor, selectedColorName, selectedSize, selectedSizeName, quantity, paymentMethod, data.new_price);
+    })
+    .catch(error => {
+        console.error("Lỗi kiểm tra sản phẩm:", error);
+        alert("Có lỗi xảy ra, vui lòng thử lại!");
+    });
+});
+
+function showOrderSummary(productId, productName, colorId, color, sizeId, size, quantity, paymentMethod, price) {
+    let existingPopup = document.getElementById("checkout-popup");
+    let existingOverlay = document.getElementById("checkout-overlay");
+    if (existingPopup) existingPopup.remove();
+    if (existingOverlay) existingOverlay.remove();
+
+    let overlay = document.createElement("div");
+    overlay.id = "checkout-overlay";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0, 0, 0, 0.6)";
+    overlay.style.zIndex = "999";
+    overlay.addEventListener("click", function () {
+        document.getElementById("checkout-popup")?.remove();
+        overlay.remove();
+    });
+
+    let checkoutPopup = document.createElement("div");
+    checkoutPopup.id = "checkout-popup";
+    checkoutPopup.style.position = "fixed";
+    checkoutPopup.style.top = "50%";
+    checkoutPopup.style.left = "50%";
+    checkoutPopup.style.transform = "translate(-50%, -50%)";
+    checkoutPopup.style.background = "#fff";
+    checkoutPopup.style.padding = "30px";
+    checkoutPopup.style.borderRadius = "10px";
+    checkoutPopup.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
+    checkoutPopup.style.zIndex = "1000";
+    checkoutPopup.style.width = "500px";
+    checkoutPopup.style.textAlign = "center";
+    checkoutPopup.style.fontSize = "16px";
+
+    let qrCodeHtml = paymentMethod === "bank_transfer" ? `
+        <p><strong>Quét mã QR để thanh toán:</strong></p>
+        <img src="/client/images/qr-code.png" alt="QR Code" style="width: 200px; height: 200px; margin-bottom: 10px;" />
+        <p style="color: red; font-size: 14px;">Vui lòng chuyển khoản và chờ xác nhận.</p>
+        <p id="payment-status" style="color: blue; font-size: 14px; font-weight: bold;">Đang kiểm tra thanh toán...</p>
+    ` : '';
+
+    checkoutPopup.innerHTML = `
+        <h2 style="margin-bottom: 15px; color: #333;">Thông tin đơn hàng</h2>
+        <p><strong>Sản phẩm:</strong> ${productName}</p>
+        <p><strong>Màu sắc:</strong> ${color}</p>
+        <p><strong>Size:</strong> ${size}</p>
+        <p><strong>Số lượng:</strong> ${quantity}</p>
+        <p><strong>Phương thức thanh toán:</strong> ${paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}</p>
+        <p><strong>Giá:</strong> <span style="color: red; font-size: 18px;">${price}đ</span></p>
+        ${qrCodeHtml}
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+            ${paymentMethod !== "bank_transfer" ? `<button id="confirm-order" style="background: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Xác nhận đặt hàng</button>` : ''}
+            <button id="close-order" style="background: #dc3545; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 15px;">Đóng</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(checkoutPopup);
+
+    document.getElementById("close-order").addEventListener("click", function () {
+        checkoutPopup.remove();
+        overlay.remove();
+    });
+
+    if (paymentMethod === "bank_transfer") {
+        let checkCount = 0;  // Giới hạn số lần kiểm tra
+        let interval = setInterval(() => {
+            checkCount++;
+            console.log("Checking payment status...");
+            checkPaymentStatus(productId, interval, checkCount);
+        }, 5000);
+    } else {
+        document.getElementById("confirm-order")?.addEventListener("click", function () {
+            placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod);
+        });
+    }
+}
+
+function checkPaymentStatus(productId, interval, checkCount, errorCount = 0) {
+    fetch(`/order/check-payment-status?product_id=${productId}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Lỗi API: ${response.status} ${response.statusText}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Dữ liệu từ API:", data); // Log dữ liệu nhận từ API
+            let statusText = document.getElementById("payment-status");
+
+            if (data.payment_status === "completed") {
+                alert(`✅ Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
+                document.getElementById("checkout-popup")?.remove();
+                document.getElementById("checkout-overlay")?.remove();
+                clearInterval(interval);  // Dừng kiểm tra khi thanh toán thành công
+            } else {
+                if (statusText) {
+                    statusText.textContent = `🔄 Đang kiểm tra... (${checkCount}/12)`;
+                    statusText.style.color = "blue";
+                }
+            }
+
+            // Nếu đã kiểm tra đủ 12 lần (60 giây) mà vẫn chưa nhận thanh toán, dừng lại
+            if (checkCount >= 12) {
+                clearInterval(interval);
+                if (statusText) {
+                    statusText.textContent = "⚠ Không thể xác nhận thanh toán. Vui lòng liên hệ hỗ trợ!";
+                    statusText.style.color = "red";
+                }
+            }
+        })
+        .catch(error => {
+            console.error("Lỗi kiểm tra trạng thái thanh toán:", error);
+            errorCount++;
+
+            let statusText = document.getElementById("payment-status");
+            if (statusText) {
+                statusText.textContent = `⚠ Lỗi kết nối đến hệ thống. Đang thử lại... (${errorCount}/3)`;
+                statusText.style.color = "orange";
+            }
+
+            // Nếu gặp lỗi API quá 3 lần liên tiếp, dừng kiểm tra
+            if (errorCount >= 3) {
+                clearInterval(interval);
+                if (statusText) {
+                    statusText.textContent = "❌ Không thể kết nối đến hệ thống. Vui lòng thử lại sau!";
+                    statusText.style.color = "red";
+                }
+            }
+        });
+}
+
+
+
+
+
+function placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod) {
+    let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    if (!csrfToken) {
+        alert("Lỗi bảo mật! Không tìm thấy CSRF Token.");
+        return;
+    }
+
+    let orderData = {
+        product_id: productId,
+        product_name: productName,
+        color: colorId,
+        size: sizeId,
+        quantity: parseInt(quantity),
+        price: parseFloat(price),
+        payment_method: paymentMethod
+    };
+
+    fetch("/order/save", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
+            document.getElementById("checkout-popup")?.remove();
+            document.getElementById("checkout-overlay")?.remove();
+        } else {
+            alert("Lỗi hệ thống: " + data.message);
+        }
+    })
+    .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
+}
+
+
+
+
+
+</script>
+
+
+<!-- CSS cho phần thanh toán -->
+<style>
+    .payment-method {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .payment-option {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .bank-details {
+        background: #fff;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+    }
+</style>
 @endsection

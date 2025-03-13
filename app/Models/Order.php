@@ -2,23 +2,32 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Order extends Model
 {
-    protected $primaryKey = 'order_id'; // Khóa chính là order_id
+    use HasFactory;
 
     protected $fillable = [
-        'order_date',
-        'total_amount',
-        'status',
-        'payment_method',
-        'shipping_cost'
+        'order_code',
+        'user_id',
+        'product_id',
+        'product_name',
+        'color',
+        'size',
+        'quantity',
+        'price',
+        'payment_method'
     ];
 
-    protected $casts = [
-        'order_date' => 'datetime',
-        'total_amount' => 'decimal:10,2',
-        'shipping_cost' => 'decimal:10,2',
-    ];
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($order) {
+            $order->order_code = 'OD' . strtoupper(Str::random(6)); // Ví dụ: OD3XG7FZ
+        });
+    }
 }

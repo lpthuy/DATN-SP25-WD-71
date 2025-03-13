@@ -550,8 +550,8 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-    35%
-    ">
+        35%
+        ">
                                                     <a class="image_thumb" href="tui-xach-nu-hoa-tiet-thoi-trang.html"
                                                         title="Túi xách nữ họa tiết thời trang">
                                                         <div class="product-image">
@@ -629,8 +629,8 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-    39%
-    ">
+        39%
+        ">
                                                     <a class="image_thumb"
                                                         href="quan-short-nu-cap-cao-4-cuc-cap-cheo-cach-dieu.html"
                                                         title="Quần Short Nữ Cạp Cao 4 Cúc Cạp Chéo Cách Điệu">
@@ -706,8 +706,8 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-    44%
-    ">
+        44%
+        ">
                                                     <a class="image_thumb" href="quan-short-dui-nu.html"
                                                         title="Quần short đũi nữ">
                                                         <div class="product-image">
@@ -780,8 +780,8 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-    40%
-    ">
+        40%
+        ">
                                                     <a class="image_thumb" href="quan-baggy-kaki-nu.html"
                                                         title="Quần baggy kaki nữ">
                                                         <div class="product-image">
@@ -931,8 +931,8 @@
                                         <div class="row">
                                             <div class="col-lg-5 col-md-5 col-12 pd-right-0">
                                                 <div class="product-thumbnail sale " data-sale="-
-    45%
-    ">
+        45%
+        ">
                                                     <a class="image_thumb" href="ao-phong-thun-nu-form-rong.html"
                                                         title="Áo Phông, Thun Nữ Form Rộng">
                                                         <div class="product-image">
@@ -1090,13 +1090,6 @@
                                                                                             title="Thêm vào yêu thích">
                                                                                             ❤️
                                                                                         </a>
-                                                                                        {{-- <button class="btn-cart btn-views add-to-cart"
-                                                                                            data-product-id="{{ $product->id }}" type="button"
-                                                                                            title="Thêm vào giỏ hàng"> 🛒
-
-                                                                                        </button> --}}
-
-
 
                                                                                         <a title="Xem nhanh"
                                                                                             href="{{ route('productDetail', $product->id) }}"
@@ -1126,9 +1119,28 @@
                                                                                                     {{ number_format($product->price, 0, ',', '.') }}₫
                                                                                                 </span>
                                                                                             @else
-                                                                                                <span class="price font-weight-bold">
-                                                                                                    {{ number_format($product->price, 0, ',', '.') }}₫
-                                                                                                </span>
+                                                                                                                                                @php
+                                                                                                                                                    $variant = $product->variants->first(); // Lấy một biến thể bất kỳ
+                                                                                                                                                @endphp
+
+                                                                                                                                                @if($variant)
+                                                                                                                                                    <div class="price-box">
+                                                                                                                                                        @if($variant->discount_price && $variant->discount_price < $variant->price)
+                                                                                                                                                            <span class="price text-success font-weight-bold">
+                                                                                                                                                                {{ number_format($variant->discount_price, 0, ',', '.') }}₫
+                                                                                                                                                            </span>
+                                                                                                                                                            <span class="compare-price text-danger"
+                                                                                                                                                                style="text-decoration: line-through;">
+                                                                                                                                                                {{ number_format($variant->price, 0, ',', '.') }}₫
+                                                                                                                                                            </span>
+                                                                                                                                                        @else
+                                                                                                                                                            <span class="price font-weight-bold">
+                                                                                                                                                                {{ number_format($variant->price, 0, ',', '.') }}₫
+                                                                                                                                                            </span>
+                                                                                                                                                        @endif
+                                                                                                                                                    </div>
+                                                                                                                                                @endif
+
                                                                                             @endif
                                                                                         </div>
                                                                                     </div>
@@ -1787,70 +1799,71 @@
         });
     </script>
 
-{{-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.addEventListener("click", function (event) {
-            // Kiểm tra nếu click vào phần tử hoặc icon bên trong nút giỏ hàng
-            const targetButton = event.target.closest(".add-to-cart");
+    {{--
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("click", function (event) {
+                // Kiểm tra nếu click vào phần tử hoặc icon bên trong nút giỏ hàng
+                const targetButton = event.target.closest(".add-to-cart");
 
-            if (!targetButton) {
-                console.warn("⚠ Click không phải vào nút giỏ hàng.");
-                return;
-            }
-
-            event.preventDefault(); // Ngăn trang reload nếu có
-
-            const productId = targetButton.getAttribute("data-product-id");
-
-            if (!productId) {
-                console.error("❌ Lỗi: `data-product-id` không tồn tại hoặc bị null.");
-                return;
-            }
-
-            console.log("✅ Đã nhấn vào nút giỏ hàng:", targetButton);
-            console.log("📌 Product ID:", productId);
-
-            // Kiểm tra xem thẻ CSRF token có tồn tại không
-            const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
-            if (!csrfTokenElement) {
-                console.error("❌ Lỗi: CSRF token không tìm thấy!");
-                alert("❌ Lỗi bảo mật! Không thể thêm vào giỏ hàng.");
-                return;
-            }
-
-            const csrfToken = csrfTokenElement.getAttribute("content");
-
-            // Gửi request thêm vào giỏ hàng
-            fetch("/add-to-cart", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRF-TOKEN": csrfToken
-                },
-                body: JSON.stringify({ product_id: productId })
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error("❌ Lỗi từ server: " + response.status);
+                if (!targetButton) {
+                    console.warn("⚠ Click không phải vào nút giỏ hàng.");
+                    return;
                 }
-                return response.json();
-            })
-            .then(data => {
-                console.log("📌 Server response:", data);
-                alert("✅ Sản phẩm đã được thêm vào giỏ hàng!");
 
-                // Cập nhật số lượng giỏ hàng trên giao diện nếu có phần tử .cart-count
-                const cartCountElement = document.querySelector(".cart-count");
-                if (cartCountElement && data.totalItems !== undefined) {
-                    cartCountElement.textContent = data.totalItems;
+                event.preventDefault(); // Ngăn trang reload nếu có
+
+                const productId = targetButton.getAttribute("data-product-id");
+
+                if (!productId) {
+                    console.error("❌ Lỗi: `data-product-id` không tồn tại hoặc bị null.");
+                    return;
                 }
-            })
-            .catch(error => {
-                console.error("❌ Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
-                alert("❌ Đã xảy ra lỗi, vui lòng thử lại!");
+
+                console.log("✅ Đã nhấn vào nút giỏ hàng:", targetButton);
+                console.log("📌 Product ID:", productId);
+
+                // Kiểm tra xem thẻ CSRF token có tồn tại không
+                const csrfTokenElement = document.querySelector('meta[name="csrf-token"]');
+                if (!csrfTokenElement) {
+                    console.error("❌ Lỗi: CSRF token không tìm thấy!");
+                    alert("❌ Lỗi bảo mật! Không thể thêm vào giỏ hàng.");
+                    return;
+                }
+
+                const csrfToken = csrfTokenElement.getAttribute("content");
+
+                // Gửi request thêm vào giỏ hàng
+                fetch("/add-to-cart", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({ product_id: productId })
+                })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error("❌ Lỗi từ server: " + response.status);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log("📌 Server response:", data);
+                        alert("✅ Sản phẩm đã được thêm vào giỏ hàng!");
+
+                        // Cập nhật số lượng giỏ hàng trên giao diện nếu có phần tử .cart-count
+                        const cartCountElement = document.querySelector(".cart-count");
+                        if (cartCountElement && data.totalItems !== undefined) {
+                            cartCountElement.textContent = data.totalItems;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("❌ Lỗi khi thêm sản phẩm vào giỏ hàng:", error);
+                        alert("❌ Đã xảy ra lỗi, vui lòng thử lại!");
+                    });
             });
         });
-    });
-</script> --}}
+    </script> --}}
 
 @endsection

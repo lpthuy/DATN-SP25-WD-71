@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -29,10 +30,11 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-public function index() {
-    $products = Product::all(); // Lấy tất cả sản phẩm từ database
-    return view('client.pages.home', compact('products')); 
-}
+    public function index()
+    {
+        $products = Product::all(); // Lấy tất cả sản phẩm từ database
+        return view('client.pages.home', compact('products'));
+    }
 
 
     public function about()
@@ -51,28 +53,77 @@ public function index() {
     }
 
     public function productDetail($id)
-{
-    $product = Product::find($id);
+    {
+        $product = Product::find($id);
 
-    if ($product) {
-        // Nếu cột `image` lưu nhiều ảnh dưới dạng chuỗi có dấu phẩy
-        $images = explode(',', $product->image);
+        if ($product) {
+            // Lấy danh sách hình ảnh sản phẩm (nếu lưu dạng chuỗi có dấu phẩy)
+            $images = explode(',', $product->image);
 
-        // Lấy danh mục của sản phẩm
-        $category = Category::find($product->category_id);
+            // Lấy danh mục của sản phẩm
+            $category = Category::find($product->category_id);
 
-        // Lấy danh sách màu sắc của sản phẩm từ bảng `colors`
-        $colors = Color::where('product_id', $id)->get();
+            // Lấy danh sách màu sắc có sẵn của sản phẩm từ bảng `product_variants`
+            $colors = DB::table('product_variants')
+                        ->join('colors', 'product_variants.color_id', '=', 'colors.id')
+                        ->where('product_variants.product_id', $id)
+                        ->select('colors.id', 'colors.color_name', 'colors.color_code')
+                        ->distinct()
+                        ->get();
 
-        // Truyền dữ liệu sản phẩm, hình ảnh và danh mục sang view
-        return view('client.pages.product-detail', compact('product', 'images', 'category', 'colors'));
+            // Lấy danh sách kích thước có sẵn của sản phẩm từ bảng `product_variants`
+            $sizes = DB::table('product_variants')
+                        ->join('sizes', 'product_variants.size_id', '=', 'sizes.id')
+                        ->where('product_variants.product_id', $id)
+                        ->select('sizes.id', 'sizes.size_name')
+                        ->distinct()
+                        ->get();
+
+            return view('client.pages.product-detail', compact('product', 'images', 'category', 'colors', 'sizes'));
+        }
+
+        return redirect()->route('home')->with('error', 'Sản phẩm không tồn tại');
     }
 
-    return redirect()->route('home')->with('error', 'Sản phẩm không tồn tại');
-}
+    public function checkAvailability(Request $request)
+    {
+        $productId = $request->input('product_id');
+        $colorId = $request->input('color_id');
+        $sizeId = $request->input('size_id');
+    
+        // Kiểm tra xem biến thể sản phẩm có tồn tại không
+        $variant = DB::table('product_variants')
+            ->where('product_id', $productId)
+            ->where('color_id', $colorId)
+            ->where('size_id', $sizeId)
+            ->first();
+    
+        if (!$variant) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Sản phẩm không có màu sắc và size này!',
+            ]);
+        }
+    
+        // Lấy giá cũ, giá mới và số lượng tồn kho
+        $oldPrice = $variant->price; // Giá gốc
+        $newPrice = $variant->discount_price ?? $variant->price; // Giá khuyến mãi (nếu có)
+        $stockQuantity = $variant->stock_quantity; // Số lượng tồn kho
+    
+        return response()->json([
+            'status' => 'success',
+            'old_price' => number_format($oldPrice, 0, ',', '.') . '₫',
+            'new_price' => number_format($newPrice, 0, ',', '.') . '₫',
+            'old_price_raw' => $oldPrice,
+            'new_price_raw' => $newPrice,
+            'stock_quantity' => $stockQuantity, // Trả về số lượng tồn kho
+        ]);
+    }
+    
+
 
     
-    
+
 
 
 
@@ -96,7 +147,7 @@ public function index() {
         return view('client.pages.wishlist');
     }
 
-    
+
 
     public function checkOrder()
     {
@@ -151,32 +202,32 @@ public function index() {
      * Xử lý đăng ký
      */
     public function doRegister(Request $request)
-{
-    $request->validate([
-        'name' => 'required|min:3',
-        'email' => 'required|email|unique:users',
-        'phone' => 'required|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
-        'password' => 'required|min:6|confirmed',
-    ]);
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users',
+            'phone' => 'required|unique:users|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'password' => 'required|min:6|confirmed',
+        ]);
 
-    $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone, // Lưu số điện thoại
-        'password' => Hash::make($request->password),
-        'role' => 'user'
-    ]);
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone, // Lưu số điện thoại
+            'password' => Hash::make($request->password),
+            'role' => 'user'
+        ]);
 
-    Auth::login($user);
+        Auth::login($user);
 
-    return redirect()->route('profile')->with('success', 'Đăng ký thành công!');
-}
+        return redirect()->route('profile')->with('success', 'Đăng ký thành công!');
+    }
 
 
     /**
      * Hiển thị trang đổi mật khẩu
      */
-    
+
 
     /**
      * Xử lý đổi mật khẩu
@@ -211,34 +262,34 @@ public function index() {
     }
 
     public function profile()
-{
-    $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
-    return view('auth.client.profile', compact('user'));
-}
+    {
+        $user = Auth::user(); // Lấy thông tin người dùng đang đăng nhập
+        return view('auth.client.profile', compact('user'));
+    }
 
 
-public function editProfile()
-{
-    return view('auth.client.edit-profile', ['user' => Auth::user()]);
-}
+    public function editProfile()
+    {
+        return view('auth.client.edit-profile', ['user' => Auth::user()]);
+    }
 
-public function updateProfile(Request $request)
-{
-    $request->validate([
-        'name' => 'required|min:3',
-        'email' => 'required|email|unique:users,email,' . Auth::id(),
-        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
-    ]);
+    public function updateProfile(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email,' . Auth::id(),
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
+        ]);
 
-    $user = Auth::user();
-    $user->update([
-        'name' => $request->name,
-        'email' => $request->email,
-        'phone' => $request->phone,
-    ]);
+        $user = Auth::user();
+        $user->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+        ]);
 
-    return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
-}
+        return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
+    }
 
 
     public function changePassword()
@@ -255,8 +306,4 @@ public function updateProfile(Request $request)
     {
         return view('client.pages.address');
     }
-
-
-
-    
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -17,42 +18,52 @@ class CartController extends Controller
     }
 
     public function addToCart(Request $request)
-    {
-        $product = Product::find($request->product_id);
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'color_id' => 'required|exists:colors,id',
+        'size_id' => 'required|exists:sizes,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
 
-        if (!$product) {
-            return response()->json(['message' => 'Sản phẩm không tồn tại!'], 404);
-        }
+    $product = Product::findOrFail($request->product_id);
+    $variant = ProductVariant::where('product_id', $product->id)
+                            ->where('color_id', $request->color_id)
+                            ->where('size_id', $request->size_id)
+                            ->first();
 
-        // Tạo khóa duy nhất cho sản phẩm dựa trên ID, màu sắc, size
-        $cartKey = "{$product->id}-{$request->color}-{$request->size}";
-
-        $cart = session()->get('cart', []);
-
-        if (isset($cart[$cartKey])) {
-            $cart[$cartKey]['quantity'] += $request->quantity;
-        } else {
-            $cart[$cartKey] = [
-                'id' => $product->id,
-                'name' => $product->name,
-                'price' => $product->discount_price ?? $product->price,
-                'quantity' => $request->quantity,
-                'color' => $request->color,
-                'size' => $request->size,
-                'image' => explode(',', $product->image)[0] ?? null
-            ];
-        }
-
-        session()->put('cart', $cart);
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Sản phẩm đã được thêm vào giỏ hàng!',
-            'totalItems' => count($cart)
-        ]);
+    if (!$variant) {
+        return redirect()->back()->with('error', 'Sản phẩm với màu sắc và size này không tồn tại.');
     }
 
-    public function removeItem(Request $request)
+    $cart = session()->get('cart', []);
+    
+    $cartKey = $product->id . '-' . $variant->id;
+
+    if (isset($cart[$cartKey])) {
+        $cart[$cartKey]['quantity'] += $request->quantity;
+    } else {
+        $cart[$cartKey] = [
+            'product_id' => $product->id,
+            'variant_id' => $variant->id,
+            'name' => $product->name,
+            'color' => $variant->color->color_name,
+            'size' => $variant->size->size_name,
+            'price' => $variant->discount_price ?? $variant->price,
+            'quantity' => $request->quantity,
+            'image' => $product->image
+        ];
+    }
+
+    session()->put('cart', $cart);
+// Tính tổng tiền
+$totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+    
+
+    return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+}
+
+public function removeItem(Request $request)
     {
         $cart = session()->get('cart', []);
 
@@ -69,4 +80,31 @@ class CartController extends Controller
             'totalItems' => count($cart)
         ]);
     }
+
+
+    public function updateCart(Request $request)
+{
+    $cart = session()->get('cart', []);
+
+    if (isset($cart[$request->cartKey])) {
+        $cart[$request->cartKey]['quantity'] = $request->quantity;
+        session()->put('cart', $cart);
+    }
+
+    // Tính tổng tiền
+    $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+    $itemTotal = number_format($cart[$request->cartKey]['price'] * $cart[$request->cartKey]['quantity'], 0, ',', '.');
+
+    return response()->json([
+        'success' => true,
+        'total_price' => number_format($totalPrice, 0, ',', '.'),
+        'item_total' => $itemTotal
+    ]);
+}
+public function countCart()
+{
+    $cartCount = session('cart') ? count(session('cart')) : 0;
+    return response()->json(['cart_count' => $cartCount]);
+}
+
 }

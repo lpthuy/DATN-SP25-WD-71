@@ -16,6 +16,8 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\Client\OrderController;
 
 Auth::routes();
 
@@ -43,6 +45,8 @@ Route::post('/dang-ky', [HomeController::class, 'doRegister'])->name('doRegister
 Route::get('/doi-mat-khau', [HomeController::class, 'changePassword'])->name('changePassword');
 Route::post('/doi-mat-khau', [HomeController::class, 'doChangePassword'])->name('doChangePassword');
 
+
+
 Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('home'); // Chuyển hướng về trang chủ sau khi logout
@@ -55,14 +59,59 @@ Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
 Route::get('/tai-khoan/chinh-sua', [HomeController::class, 'editProfile'])->name('editProfile');
 Route::post('/tai-khoan/chinh-sua', [HomeController::class, 'updateProfile'])->name('updateProfile');
 
+
 Route::get('/gio-hang', [CartController::class, 'showCart'])->name('cart.show');
 Route::post('/gio-hang/them', [CartController::class, 'addToCart'])->name('cart.add');
 Route::post('/gio-hang/xoa', [CartController::class, 'removeItem'])->name('cart.remove');
+Route::post('/gio-hang/cap-nhat', [CartController::class, 'updateCart'])->name('cart.update');
+Route::get('/cart/count', [CartController::class, 'countCart'])->name('cart.count');
+
+
+
+Route::post('/check-availability', [HomeController::class, 'checkAvailability'])->name('product.checkAvailability');
+Route::get('/check-availability', [HomeController::class, 'checkAvailability']); // Thêm GET để kiểm tra nhanh
+
+
+
+Route::get('/order/check-payment-status', [OrderController::class, 'checkPaymentStatus']);
 
 
 
 
 
+
+// Hiển thị danh sách đơn hàng
+Route::get('/don-hang', [OrderController::class, 'index'])->name('order.index');
+Route::get('/so-dia-chi', [HomeController::class, 'addressBook'])->name('addressBook');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/order/save', [OrderController::class, 'store']);
+});
+Route::get('/orders', [OrderController::class, 'index'])->name('order');
+
+
+
+
+
+
+
+
+
+
+
+// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
+
+
+
+
+
+
+
+
+Route::get('/check-login-status', function () {
+    return response()->json(['isAuthenticated' => Auth::check()]);
+});
 
 
 

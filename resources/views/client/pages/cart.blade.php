@@ -34,70 +34,73 @@
                     <div class="drawer__inner">
                         <div class="CartPageContainer">
                             <div class="row">
-                                <!-- Product Info Column -->
-                                <div class="col-md-8 col-xs-12 col-sm-8">
-                                    <div class="cart-header-info">
-                                        <div>Thông tin sản phẩm</div>
-                                        <div>Đơn giá</div>
-                                        <div>Số lượng</div>
-                                        <div>Thành tiền</div>
-                                    </div>
-                                    <div class="ajaxcart__inner ajaxcart__inner--has-fixed-footer cart_body items">
-                                        @if(session()->has('cart') && count(session('cart')) > 0)
-                                            @foreach(session('cart') as $index => $item)
-                                                <div class="cart-row" id="cart-item-{{ $item['id'] }}">
-                                                    <div class="cart-product">
-                                                        @php
-                                                            $images = explode(',', $item['image']);
-                                                            $firstImage = isset($images[0]) ? trim($images[0]) : null;
-                                                        @endphp
-                                                        @if($firstImage)
-                                                            <img src="{{ asset('storage/' . $firstImage) }}" alt="{{ $item['name'] }}" class="cart-image">
-                                                        @else
-                                                            <img src="{{ asset('images/no-image.png') }}" alt="Không có ảnh" class="cart-image">
-                                                        @endif
-                                                        <span>{{ $item['name'] }}</span>
-                                                    </div>
-                                                    <div class="cart-price">{{ number_format($item['price'], 0, ',', '.') }}₫</div>
-                                                    <div class="cart-quantity">{{ $item['quantity'] }}</div>
-                                                    <div class="cart-total">{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫</div>
-
-                                                    <!-- Nút xóa sản phẩm AJAX -->
-                                                    <button class="btn btn-danger remove-cart-item" data-id="{{ $item['id'] }}">Xóa</button>
-                                                </div>
-                                            @endforeach
-                                        @else
-                                            <p>Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <!-- Order Summary Column -->
-                                <div class="col-md-4 col-xs-12 col-sm-4">
-                                    <div class="ajaxcart__footer ajaxcart__footer--fixed cart-footer">
-                                        <div class="wamper_order_cart">
-                                            <div class="order_block">
-                                                <div class="order_title">
-                                                    <h2>Thông tin đơn hàng</h2>
-                                                </div>
-                                                <div class="ajaxcart__subtotal">
-                                                    <div class="cart__subtotal">
-                                                        <div class="cart__col-6">Tổng tiền:</div>
-                                                        <div class="text-right cart__totle">
-                                                            <span id="total-price" class="total-price">
-                                                                {{ number_format($totalPrice, 0, ',', '.') }}₫
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="cart__btn-proceed-checkout-dt">
-                                                    <button onclick="location.href='/checkout'" type="button" class="button btn btn-default cart__btn-proceed-checkout" id="btn-proceed-checkout" title="Thanh toán">Thanh toán</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <!-- Cột thông tin sản phẩm -->
+                                <div class="col-md-8">
+                                    <table class="table table-bordered cart-table">
+                                        <thead>
+                                            <tr>
+                                                <th><input type="checkbox" id="select-all"></th> <!-- Ô chọn tất cả -->
+                                                <th>Hình ảnh</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Màu sắc</th>
+                                                <th>Size</th>
+                                                <th>Đơn giá</th>
+                                                <th>Số lượng</th>
+                                                <th>Thành tiền</th>
+                                                <th>Hành động</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if(session()->has('cart') && count(session('cart')) > 0)
+                                                @foreach(session('cart') as $cartKey => $item)
+                                                    <tr id="cart-item-{{ $cartKey }}">
+                                                        <td>
+                                                            <input type="checkbox" class="cart-checkbox" data-id="{{ $cartKey }}">
+                                                        </td>
+                                                        <td>
+                                                            @php
+                                                                $image = isset($item['image']) ? explode(',', $item['image'])[0] : 'default.png';
+                                                            @endphp
+                                                            <img src="{{ asset('storage/' . $image) }}" alt="{{ $item['name'] }}" class="cart-image">
+                                                        </td>
+                                                        <td>{{ $item['name'] }}</td>
+                                                        <td>{{ $item['color'] }}</td>
+                                                        <td>{{ $item['size'] }}</td>
+                                                        <td>{{ number_format($item['price'], 0, ',', '.') }}₫</td>
+                                                        <td>
+                                                            <div class="quantity-container">
+                                                                <button class="btn-quantity btn-decrease" data-id="{{ $cartKey }}">-</button>
+                                                                <input type="number" value="{{ $item['quantity'] }}" min="1" class="quantity-input" data-id="{{ $cartKey }}">
+                                                                <button class="btn-quantity btn-increase" data-id="{{ $cartKey }}">+</button>
+                                                            </div>
+                                                        </td>
+                                                        <td class="cart-total">{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫</td>
+                                                        <td>
+                                                            <button class="btn btn-danger remove-cart-item" data-id="{{ $cartKey }}">Xóa</button>
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @else
+                                                <tr>
+                                                    <td colspan="9" class="text-center">Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</td>
+                                                </tr>
+                                            @endif
+                                        </tbody>
+                                        
+                                    </table>
                                 </div>
                             </div>
+                            
+                            <!-- Thanh toán hiển thị ở dưới giống Shopee -->
+                            <div class="fixed-total-container">
+                                <div class="total-price-container">
+                                    Tổng tiền: <span id="total-price">0₫</span>
+                                </div>
+                                <button onclick="location.href='/checkout'" class="btn btn-checkout">Thanh toán</button>
+                            </div>
+                            
+                            
+                            
                         </div>
                     </div>
                 </div>
@@ -107,48 +110,195 @@
 
     <!-- JavaScript xử lý xóa sản phẩm bằng AJAX -->
     <script>
-        document.addEventListener("DOMContentLoaded", function () {
+       document.addEventListener("DOMContentLoaded", function () {
+    let checkboxes = document.querySelectorAll(".cart-checkbox");
+    let selectAllCheckbox = document.getElementById("select-all");
+    let totalPriceElement = document.getElementById("total-price");
+
+    // Khôi phục trạng thái checkbox từ LocalStorage
+    function restoreCheckedItems() {
+        let checkedItems = JSON.parse(localStorage.getItem("checkedItems")) || {};
+        checkboxes.forEach(checkbox => {
+            let cartKey = checkbox.getAttribute("data-id");
+            if (checkedItems[cartKey]) {
+                checkbox.checked = true;
+            }
+        });
+        updateTotalPrice();
+    }
+
+    // Cập nhật tổng tiền khi tick checkbox
+    function updateTotalPrice() {
+        let total = 0;
+        let checkedItems = {};
+        checkboxes.forEach(checkbox => {
+            let cartKey = checkbox.getAttribute("data-id");
+            if (checkbox.checked) {
+                let itemTotal = parseFloat(document.querySelector(`#cart-item-${cartKey} .cart-total`).innerText.replace(/\D/g, ''));
+                total += itemTotal;
+                checkedItems[cartKey] = true;
+            } else {
+                checkedItems[cartKey] = false;
+            }
+        });
+        localStorage.setItem("checkedItems", JSON.stringify(checkedItems)); // Lưu vào LocalStorage
+        totalPriceElement.innerText = new Intl.NumberFormat('vi-VN').format(total) + "₫";
+    }
+
+    // Xử lý chọn tất cả sản phẩm
+    selectAllCheckbox.addEventListener("change", function () {
+        let isChecked = this.checked;
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = isChecked;
+        });
+        updateTotalPrice();
+    });
+
+    // Xử lý tick checkbox của từng sản phẩm
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            updateTotalPrice();
+            if (!this.checked) {
+                selectAllCheckbox.checked = false; // Bỏ chọn "Chọn tất cả" nếu bỏ tick một sản phẩm
+            }
+        });
+    });
+
+    // Xử lý xóa sản phẩm
     document.querySelectorAll(".remove-cart-item").forEach(button => {
         button.addEventListener("click", function () {
-            let productId = this.getAttribute("data-id");
-            let productRow = document.querySelector(`#cart-item-${productId}`);
-
-            fetch("/remove-cart-item", {
+            let cartKey = this.getAttribute("data-id");
+            fetch("/gio-hang/xoa", {
                 method: "POST",
                 headers: {
                     "X-Requested-With": "XMLHttpRequest",
                     "Content-Type": "application/json",
                     "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
                 },
-                body: JSON.stringify({ product_id: productId })
+                body: JSON.stringify({ cartKey: cartKey })
             })
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    // 🔥 Xóa sản phẩm khỏi giao diện ngay lập tức
-                    if (productRow) {
-                        productRow.remove();
-                    }
-
-                    // 🔥 Cập nhật tổng tiền ngay lập tức
-                    let totalPriceElement = document.querySelector("#total-price");
-                    if (totalPriceElement) {
-                        totalPriceElement.innerText = data.total_price + "₫";
-                    }
-
-                    // 🔥 Kiểm tra nếu giỏ hàng trống, hiển thị thông báo
-                    let cartItems = document.querySelectorAll(".cart-row");
-                    if (cartItems.length === 0) {
-                        document.querySelector(".cart_body").innerHTML = "<p>Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</p>";
-                    }
-                } else {
-                    alert("Lỗi khi xóa sản phẩm. Vui lòng thử lại!");
+                    document.querySelector(`#cart-item-${cartKey}`).remove();
+                    updateTotalPrice();
                 }
             })
             .catch(error => console.error("Lỗi:", error));
         });
     });
+
+    // Xử lý thay đổi số lượng sản phẩm
+    document.querySelectorAll(".btn-quantity").forEach(button => {
+        button.addEventListener("click", function () {
+            let cartKey = this.getAttribute("data-id");
+            let quantityInput = document.querySelector(`.quantity-input[data-id='${cartKey}']`);
+            let newQuantity = parseInt(quantityInput.value);
+
+            if (this.classList.contains("btn-increase")) {
+                newQuantity++;
+            } else if (this.classList.contains("btn-decrease") && newQuantity > 1) {
+                newQuantity--;
+            }
+
+            quantityInput.value = newQuantity;
+
+            fetch("/gio-hang/cap-nhat", {
+                method: "POST",
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Content-Type": "application/json",
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+                },
+                body: JSON.stringify({ cartKey: cartKey, quantity: newQuantity })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    document.querySelector(`#cart-item-${cartKey} .cart-total`).innerText = data.item_total + "₫";
+                    updateTotalPrice();
+                }
+            })
+            .catch(error => console.error("Lỗi:", error));
+        });
+    });
+
+    // Gọi hàm khôi phục trạng thái tick khi tải lại trang
+    restoreCheckedItems();
 });
 
     </script>
 @endsection
+
+    <style>
+        .fixed-total-container {
+    position: sticky;  /* Giữ cố định trong viewport */
+    bottom: 0;
+    background-color: white; /* Giữ nền trắng */
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+    width: 100%;
+    z-index: 1000; /* Đảm bảo không bị che phủ */
+}
+
+.total-price-container {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+}
+
+.btn-checkout {
+    background-color: #e40046;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    font-size: 16px;
+    width: 100%;
+}
+
+        .cart-table th, .cart-table td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        .cart-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+        }
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-quantity {
+            width: 30px;
+            height: 30px;
+            border: none;
+            background-color: #ddd;
+            cursor: pointer;
+        }
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: 1px solid #ccc;
+            margin: 0 5px;
+        }
+        .order-summary {
+            border: 1px solid #ddd;
+            padding: 15px;
+            text-align: center;
+        }
+        .order-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .btn-checkout {
+            background-color: #e40046;
+            color: white;
+            padding: 10px;
+            border: none;
+            width: 100%;
+        }
+    </style>
