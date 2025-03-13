@@ -301,90 +301,12 @@ return [
 
     'menu' => [
 
-    // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'Tìm kiếm',
-        'topnav_right' => true,
-    ],
-    [
-        'type' => 'fullscreen-widget',
-        'topnav_right' => true,
-    ],
-
-    // Quản lý Thanh toán
-    ['header' => 'QUẢN LÝ THANH TOÁN'],
-    [
-        'text'    => 'Quản lý Thanh toán',
-        'icon'    => 'fas fa-money-check-alt',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Phương thức',
-                'url'  => 'admin/payment_methods',
-                'icon' => 'fas fa-credit-card',
-            ],
+        // Navbar items:
+        [
+            'type' => 'navbar-search',
+            'text' => 'Tìm kiếm',
+            'topnav_right' => true,
         ],
-    ],
-
-    [
-        'header' => 'QUẢN LÝ DANH MỤC',
-    ],
-    [
-        'text'    => 'Quản lý Danh mục',
-        'icon'    => 'fas fa-list',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Danh mục',
-                'url'  => 'admin/categories',
-                'icon' => 'fas fa-th-list',
-            ],
-            [
-                'text' => 'Thêm Danh mục',
-                'url'  => 'admin/categories/create',
-                'icon' => 'fas fa-plus-circle',
-            ],
-        ],
-    ],
-    
-
-    [
-        'text'    => 'Quản lý Sản phẩm',
-        'icon'    => 'fas fa-box',
-        'submenu' => [
-            [
-                'text' => 'Danh sách sản phẩm',
-                'url'  => 'admin/products',
-                'icon' => 'fas fa-boxes',
-            ],
-            [
-                'text' => 'Thêm sản phẩm',
-                'url'  => 'admin/products/create',
-                'icon' => 'fas fa-plus-circle',
-            ],
-        ],
-    ],
-
-    [
-        'text'    => 'Kích thước & Màu sắc',
-        'icon'    => 'fas fa-ruler-combined',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Size',
-                'url'  => 'admin/sizes',
-                'icon' => 'fas fa-text-height',
-            ],
-            [
-                'text' => 'Danh sách Màu sắc',
-                'url'  => 'admin/colors',
-                'icon' => 'fas fa-palette',
-            ],
-        ],
-    ],
-
-    
-
-    [
-        
         [
             'type' => 'fullscreen-widget',
             'topnav_right' => true,
@@ -392,9 +314,6 @@ return [
 
         // Quản lý Thanh toán
         ['header' => 'QUẢN LÝ THANH TOÁN'],
-
-
-
         [
             'text'    => 'Quản lý Thanh toán',
             'icon'    => 'fas fa-money-check-alt',
@@ -404,28 +323,146 @@ return [
                     'url'  => 'admin/payment_methods',
                     'icon' => 'fas fa-credit-card',
                 ],
-
             ],
         ],
-        
-
-        //quan ly banner
-        ['header' => 'QUẢN LÝ BANNER'],
+        //quản lý thống kê
         [
-            'text'    => 'Quản lý Banner',
-            'icon'    => 'fas fa-images',
+            'header' => 'QUẢN LÝ THỐNG KÊ',
+        ],
+        [
+            'text'    => 'Quản lý Thống kê',
+            'icon'    => 'fas fa-chart-line',
             'submenu' => [
                 [
-                    'text' => 'Danh sách Banner',
-                    'url'  => 'admin/banners',
-                    'icon' => 'fas fa-photo-video',
+                    'text' => 'Thống kê đơn hàng',
+                    'url'  => 'admin/admin/order-statistics',
+                    'icon' => 'fas fa-chart-bar',
+                ],
+            ],
+        ],
+
+        //quản lý khuyến mãi
+        [
+            'header' => 'QUẢN LÝ KHUYẾN MÃI',
+        ],
+        [
+            'text'    => 'Quản lý Khuyến mãi',
+            'icon'    => 'fas fa-tags',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Khuyến mãi',
+                    'url'  => 'admin/promotions',
+                    'icon' => 'fas fa-list',
+                ],
+                [
+                    'text' => 'Thêm mới Khuyến mãi',
+                    'url'  => 'admin/promotions/create',
+                    'icon' => 'fas fa-plus',
+                ],
+            ],
+        ],
+
+        // quản lý danh mụcmục
+        [
+            'header' => 'QUẢN LÝ DANH MỤC',
+        ],
+        [
+            'text'    => 'Quản lý Danh mục',
+            'icon'    => 'fas fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Danh mục',
+                    'url'  => 'admin/categories',
+                    'icon' => 'fas fa-th-list',
+                ],
+                [
+                    'text' => 'Thêm Danh mục',
+                    'url'  => 'admin/categories/create',
+                    'icon' => 'fas fa-plus-circle',
+                ],
+            ],
+        ],
+
+
+        [
+            'text'    => 'Quản lý Sản phẩm',
+            'icon'    => 'fas fa-box',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách sản phẩm',
+                    'url'  => 'admin/products',
+                    'icon' => 'fas fa-boxes',
+                ],
+                [
+                    'text' => 'Thêm sản phẩm',
+                    'url'  => 'admin/products/create',
+                    'icon' => 'fas fa-plus-circle',
+                ],
+            ],
+        ],
+
+        [
+            'text'    => 'Kích thước & Màu sắc',
+            'icon'    => 'fas fa-ruler-combined',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Size',
+                    'url'  => 'admin/sizes',
+                    'icon' => 'fas fa-text-height',
+                ],
+                [
+                    'text' => 'Danh sách Màu sắc',
+                    'url'  => 'admin/colors',
+                    'icon' => 'fas fa-palette',
+                ],
+            ],
+        ],
+
+
+
+        [
+
+            [
+                'type' => 'fullscreen-widget',
+                'topnav_right' => true,
+            ],
+
+            // Quản lý Thanh toán
+            ['header' => 'QUẢN LÝ THANH TOÁN'],
+
+
+
+            [
+                'text'    => 'Quản lý Thanh toán',
+                'icon'    => 'fas fa-money-check-alt',
+                'submenu' => [
+                    [
+                        'text' => 'Danh sách Phương thức',
+                        'url'  => 'admin/payment_methods',
+                        'icon' => 'fas fa-credit-card',
+                    ],
+
                 ],
             ],
 
-    ],
-    ],
 
-],
+            //quan ly banner
+            ['header' => 'QUẢN LÝ BANNER'],
+            [
+                'text'    => 'Quản lý Banner',
+                'icon'    => 'fas fa-images',
+                'submenu' => [
+                    [
+                        'text' => 'Danh sách Banner',
+                        'url'  => 'admin/banners',
+                        'icon' => 'fas fa-photo-video',
+                    ],
+                ],
+
+            ],
+        ],
+
+    ],
 
 
 

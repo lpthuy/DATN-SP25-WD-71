@@ -13,7 +13,7 @@ class UserSeeder extends Seeder
         // Tạo tài khoản admin
         User::create([
             'name' => 'admin',
-            'email' => 'admin@gamil.com',
+            'email' => 'admin@gmail.com',
             'password' => Hash::make('quochieu'), // Mật khẩu mặc định
             'role' => 'admin', // Gán quyền admin
         ]);
