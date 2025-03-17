@@ -19,15 +19,13 @@ class Order extends Model
         'size',
         'quantity',
         'price',
-        'payment_method'
+        'payment_method',
+        'payment_status',
+        'transaction_id'
     ];
 
-    public static function boot()
+    public function paymentMethod()
     {
-        parent::boot();
-
-        static::creating(function ($order) {
-            $order->order_code = 'OD' . strtoupper(Str::random(6)); // Ví dụ: OD3XG7FZ
-        });
+        return $this->belongsTo(PaymentMethod::class, 'payment_method');
     }
 }

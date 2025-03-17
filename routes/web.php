@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\OrderStatisticController;
+use App\Http\Controllers\Admin\PaymentController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 
 use App\Http\Controllers\Admin\ProductController;
@@ -145,4 +146,38 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('promotions', PromotionController::class);
     // quản lý thống kê
     Route::get('/admin/order-statistics', [OrderStatisticController::class, 'index'])->name('admin.order.statistics');
+
+    // VNPAY
+    // Trang checkout
+    Route::get('payments/checkout/{productId}', [PaymentController::class, 'showCheckoutForm'])
+        ->name('payment.checkout');
+
+    // Xử lý thanh toán
+    Route::post('payments/process', [PaymentController::class, 'processPayment'])
+        ->name('payment.process');
+
+    // Kết quả thanh toán thành công
+    Route::get('payments/success', [PaymentController::class, 'paymentSuccess'])
+        ->name('payment.success');
+
+    // Kết quả thanh toán thất bại
+    Route::get('payments/fail', [PaymentController::class, 'paymentFail'])
+        ->name('payment.fail');
+
+    // Callback VNPay (return URL)
+    Route::get('payments/vnpay-return', [PaymentController::class, 'handleVNPayReturn'])
+        ->name('payment.vnpay.return');
 });
+
+Route::get('/checkout', function () {
+    return view('client.pages.checkout');
+})->name('checkout');
+
+Route::post('/order/save', [OrderController::class, 'store'])->name('order.store');
+
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+
+// Return URL cho VNPay
+Route::get('payment/return', [PaymentController::class, 'handleVNPayReturn'])
+    ->name('payment.vnpay.return');
+
