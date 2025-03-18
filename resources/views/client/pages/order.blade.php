@@ -55,9 +55,12 @@
                                                 <th>Số lượng</th>
                                                 <th>Giá</th>
                                                 <th>Thanh toán</th>
+
+                                                <th>Xem chi tiết</th>  <!-- ✅ Cột mới -->
+
                                             </tr>
                                         </thead>
-
+                                    
                                         <tbody>
                                             @if($orders->count() > 0)
                                                 @foreach ($orders as $order)
@@ -66,7 +69,8 @@
                                                         <td>{{ date('d/m/Y', strtotime($order->created_at)) }}</td>
                                                         <td>{{ $order->product_name }}</td>
                                                         <td>{{ $order->quantity }}</td>
-                                                        <td>{{ number_format($order->price, 2, ',', '.') }}VNĐ</td>
+
+                                                        <td>{{ number_format($order->price, 2, ',', '.') }} VNĐ</td>
 
                                                         <td>
                                                             @if($order->payment_method == 'cod')
@@ -75,11 +79,20 @@
                                                                 <span class="badge badge-success">Chuyển khoản</span>
                                                             @endif
                                                         </td>
+
+                                                        <td>
+                                                            <a href="{{ route('order.detail', ['id' => $order->id]) }}" class="btn btn-sm btn-primary">
+                                                                Xem chi tiết
+                                                            </a>
+                                                        </td>
+
                                                     </tr>
                                                 @endforeach
                                             @else
                                                 <tr>
-                                                    <td colspan="6">
+
+                                                    <td colspan="7">
+
                                                         <p class="text-center">Bạn chưa có đơn hàng nào.</p>
                                                     </td>
                                                 </tr>

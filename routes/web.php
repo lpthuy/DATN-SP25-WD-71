@@ -14,8 +14,13 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CheckoutController;
+
 use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\CheckoutController;
+
+use Illuminate\Http\Request;
+
 
 Auth::routes();
 
@@ -88,20 +93,7 @@ Route::middleware(['auth'])->group(function () {
 });
 Route::get('/orders', [OrderController::class, 'index'])->name('order');
 
-
-
-
-
-
-
-
-
-
-
-// Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
-
-
-
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
 
 
@@ -112,6 +104,21 @@ Route::get('/check-login-status', function () {
 });
 
 
+
+
+
+
+
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay.payment');
+Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
+
+
+Route::get('/check-login-status', function () {
+    return response()->json(['isAuthenticated' => Auth::check()]);
+});
+
+
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 
 

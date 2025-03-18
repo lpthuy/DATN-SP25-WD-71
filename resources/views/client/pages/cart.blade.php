@@ -96,7 +96,12 @@
                                 <div class="total-price-container">
                                     Tổng tiền: <span id="total-price">0₫</span>
                                 </div>
-                                <button onclick="location.href='/checkout'" class="btn btn-checkout">Thanh toán</button>
+                                <form id="checkout-form" action="{{ route('checkout') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="selected_products" id="selected-products">
+                                    <button type="submit" class="btn btn-checkout">Thanh toán</button>
+                                </form>
+                                
                             </div>
                             
                             
@@ -107,6 +112,34 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+    let checkboxes = document.querySelectorAll(".cart-checkbox");
+    let checkoutForm = document.getElementById("checkout-form");
+    let selectedProductsInput = document.getElementById("selected-products");
+
+    checkoutForm.addEventListener("submit", function (event) {
+        let selectedProducts = [];
+        checkboxes.forEach(checkbox => {
+            if (checkbox.checked) {
+                let cartKey = checkbox.getAttribute("data-id");
+                let quantity = document.querySelector(`.quantity-input[data-id='${cartKey}']`).value;
+                selectedProducts.push({ cartKey, quantity });
+            }
+        });
+
+        if (selectedProducts.length === 0) {
+            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+            event.preventDefault(); // Ngăn chặn submit nếu không có sản phẩm nào
+            return;
+        }
+
+        selectedProductsInput.value = JSON.stringify(selectedProducts);
+    });
+});
+
+    </script>
 
     <!-- JavaScript xử lý xóa sản phẩm bằng AJAX -->
     <script>
