@@ -14,6 +14,11 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\OrderController;
+use App\Http\Controllers\Client\PaymentController;
+use App\Http\Controllers\Client\CheckoutController;
+
+use Illuminate\Http\Request;
 
 Auth::routes();
 
@@ -41,6 +46,8 @@ Route::post('/dang-ky', [HomeController::class, 'doRegister'])->name('doRegister
 Route::get('/doi-mat-khau', [HomeController::class, 'changePassword'])->name('changePassword');
 Route::post('/doi-mat-khau', [HomeController::class, 'doChangePassword'])->name('doChangePassword');
 
+
+
 Route::post('/logout', function () {
     Auth::logout();
     return redirect()->route('home'); // Chuyển hướng về trang chủ sau khi logout
@@ -63,6 +70,35 @@ Route::get('/cart/count', [CartController::class, 'countCart'])->name('cart.coun
 
 
 Route::post('/check-availability', [HomeController::class, 'checkAvailability'])->name('product.checkAvailability');
+Route::get('/check-availability', [HomeController::class, 'checkAvailability']); // Thêm GET để kiểm tra nhanh
+
+
+
+Route::get('/order/check-payment-status', [OrderController::class, 'checkPaymentStatus']);
+
+
+
+
+
+
+// Hiển thị danh sách đơn hàng
+Route::get('/don-hang', [OrderController::class, 'index'])->name('order.index');
+Route::get('/so-dia-chi', [HomeController::class, 'addressBook'])->name('addressBook');
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::post('/order/save', [OrderController::class, 'store']);
+});
+Route::get('/orders', [OrderController::class, 'index'])->name('order');
+Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
+
+
+
+
+
+Route::get('/check-login-status', function () {
+    return response()->json(['isAuthenticated' => Auth::check()]);
+});
 
 
 
@@ -70,7 +106,13 @@ Route::post('/check-availability', [HomeController::class, 'checkAvailability'])
 
 
 
+Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay.payment');
+Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
 
+
+
+
+Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
 
 
 

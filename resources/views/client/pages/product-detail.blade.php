@@ -1,6 +1,16 @@
 @extends('client.layouts.main')
 
 @section('title', 'Chi tiết sản phẩm')
+@if(session('success'))
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+@if(session('error'))
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
 
 @section('content')
     <section class="bread-crumb">
@@ -210,7 +220,26 @@
                                         <li>Đổi trả trong 30 ngày nếu sản phẩm lỗi bất kì</li>
                                     </ul>
                                 </div>
-
+                                <!-- Thêm phần phương thức thanh toán -->
+                                <div class="payment-method rounded-sm">
+                                    <h3 class="payment-heading d-inline-flex align-items-center">
+                                        Phương thức thanh toán
+                                    </h3>
+                                    
+                                    <div class="payment-options">
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)
+                                        </label>
+                                        <label class="payment-option">
+                                            <input type="radio" name="payment_method" value="bank_transfer"> Chuyển khoản ngân hàng
+                                        </label>
+                                    </div>
+                                    
+                                    <div id="bank-details" class="bank-details" style="display: none;">
+                                        <p><strong>Thông tin chuyển khoản:</strong></p>
+                                        <p>Nội dung: Thanh toán đơn hàng: {{ $product->name }}</p>
+                                    </div>
+                                </div>
 
                             <div class="form-product">
 
@@ -259,10 +288,10 @@
                                         </div>
                                     
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
-                                        <div class="btn-mua button_actions clearfix">
-                                            <button type="submit" name="buy_now" value="1" class="btn btn-lg btn-gray btn_buy btn-buy-now">
-                                                Mua ngay
-                                            </button>
+                                            <div class="btn-mua button_actions clearfix">
+                                                <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
+                                                    Mua ngay
+                                                </button>
                                             <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
                                                 Thêm vào giỏ hàng
                                             </button>
@@ -1026,5 +1055,233 @@
 
 </script>
 
-    
+    <!-- JavaScript để hiển thị chi tiết tài khoản ngân hàng khi chọn chuyển khoản -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let paymentMethods = document.querySelectorAll("input[name='payment_method']");
+        let bankDetails = document.getElementById("bank-details");
+
+        paymentMethods.forEach(method => {
+            method.addEventListener("change", function () {
+                if (this.value === "bank_transfer") {
+                    bankDetails.style.display = "block";
+                } else {
+                    bankDetails.style.display = "none";
+                }
+            });
+        });
+    });
+</script>
+
+<script>
+    document.getElementById("buy-now-btn").addEventListener("click", function () {
+    let productId = document.querySelector("input[name='product_id']").value;
+    let productName = document.querySelector(".title-product h1").innerText;
+    let selectedColorElement = document.querySelector("input[name='option-0']:checked");
+    let selectedSizeElement = document.querySelector("input[name='option-1']:checked");
+    let quantity = parseInt(document.getElementById("qty").value);
+    let paymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
+
+    let selectedColor = selectedColorElement ? selectedColorElement.value : null;
+    let selectedSize = selectedSizeElement ? selectedSizeElement.value : null;
+
+    if (!selectedColor || !selectedSize || !paymentMethod) {
+        alert("Vui lòng chọn đầy đủ thông tin!");
+        return;
+    }
+
+    let priceText = document.querySelector(".price.product-price span").innerText;
+    let price = parseFloat(priceText.replace("₫", "").replace(/\./g, "").trim());
+    let totalPrice = price * quantity;
+
+    if (paymentMethod === "bank_transfer") {
+        fetch("/vnpay_payment", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                product_name: productName,
+                color: selectedColor,
+                size: selectedSize,
+                quantity: quantity,
+                price: price,
+                total_price: totalPrice, 
+                bank_code: ""
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.code === "00") {
+                window.location.href = data.data;
+            } else {
+                alert("Lỗi khi tạo thanh toán. Vui lòng thử lại!");
+            }
+        })
+        .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
+    } else {
+        fetch("/order/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                product_name: productName,
+                color: selectedColor,
+                size: selectedSize,
+                quantity: quantity,
+                price: price,
+                total_price: totalPrice, 
+                payment_method: paymentMethod
+            })
+        })
+        .then(response => response.json())
+        .then(data => alert(data.message))
+        .catch(error => alert("Lỗi khi lưu đơn hàng!"));
+    }
+});
+
+
+function showOrderSummary(productId, productName, colorId, color, sizeId, size, quantity, paymentMethod, price) {
+    let existingPopup = document.getElementById("checkout-popup");
+    let existingOverlay = document.getElementById("checkout-overlay");
+    if (existingPopup) existingPopup.remove();
+    if (existingOverlay) existingOverlay.remove();
+
+    let overlay = document.createElement("div");
+    overlay.id = "checkout-overlay";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100%";
+    overlay.style.height = "100%";
+    overlay.style.background = "rgba(0, 0, 0, 0.6)";
+    overlay.style.zIndex = "999";
+    overlay.addEventListener("click", function () {
+        document.getElementById("checkout-popup")?.remove();
+        overlay.remove();
+    });
+
+    let checkoutPopup = document.createElement("div");
+    checkoutPopup.id = "checkout-popup";
+    checkoutPopup.style.position = "fixed";
+    checkoutPopup.style.top = "50%";
+    checkoutPopup.style.left = "50%";
+    checkoutPopup.style.transform = "translate(-50%, -50%)";
+    checkoutPopup.style.background = "#fff";
+    checkoutPopup.style.padding = "30px";
+    checkoutPopup.style.borderRadius = "10px";
+    checkoutPopup.style.boxShadow = "0 0 15px rgba(0,0,0,0.3)";
+    checkoutPopup.style.zIndex = "1000";
+    checkoutPopup.style.width = "500px";
+    checkoutPopup.style.textAlign = "center";
+    checkoutPopup.style.fontSize = "16px";
+
+    checkoutPopup.innerHTML = `
+        <h2 style="margin-bottom: 15px; color: #333;">Thông tin đơn hàng</h2>
+        <p><strong>Sản phẩm:</strong> ${productName}</p>
+        <p><strong>Màu sắc:</strong> ${color}</p>
+        <p><strong>Size:</strong> ${size}</p>
+        <p><strong>Số lượng:</strong> ${quantity}</p>
+        <p><strong>Phương thức thanh toán:</strong> ${paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}</p>
+        <p><strong>Giá:</strong> <span style="color: red; font-size: 18px;">${price * quantity}đ</span></p>
+        <div style="margin-top: 20px; display: flex; justify-content: center;">
+            <button id="confirm-order" style="background: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Xác nhận đặt hàng</button>
+            <button id="close-order" style="background: #dc3545; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 15px;">Đóng</button>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(checkoutPopup);
+
+    document.getElementById("close-order").addEventListener("click", function () {
+        checkoutPopup.remove();
+        overlay.remove();
+    });
+
+    document.getElementById("confirm-order")?.addEventListener("click", function () {
+        placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod);
+    });
+}
+
+function placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod) {
+    let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+    if (!csrfToken) {
+        alert("Lỗi bảo mật! Không tìm thấy CSRF Token.");
+        return;
+    }
+
+    let orderData = {
+        product_id: productId,
+        product_name: productName,
+        color: colorId,
+        size: sizeId,
+        quantity: parseInt(quantity),
+        price: parseFloat(price),
+        payment_method: paymentMethod
+    };
+
+    fetch("/order/save", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-TOKEN": csrfToken
+        },
+        body: JSON.stringify(orderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "success") {
+            alert(`Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
+            document.getElementById("checkout-popup")?.remove();
+            document.getElementById("checkout-overlay")?.remove();
+        } else {
+            alert("Lỗi hệ thống: " + data.message);
+        }
+    })
+    .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
+}
+
+
+
+
+
+
+</script>
+
+
+<!-- CSS cho phần thanh toán -->
+<style>
+    .payment-method {
+        border: 1px solid #ddd;
+        padding: 15px;
+        margin-top: 20px;
+        background: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .payment-option {
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .bank-details {
+        background: #fff;
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 5px;
+        border-left: 4px solid #007bff;
+    }
+</style>
 @endsection
