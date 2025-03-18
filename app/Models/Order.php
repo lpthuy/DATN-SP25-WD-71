@@ -4,8 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+
 use App\Models\Color;
 use App\Models\Size;
+
 use Illuminate\Support\Str;
 
 class Order extends Model
@@ -21,8 +23,10 @@ class Order extends Model
         'size',
         'quantity',
         'price',
+
         'payment_method',
         'status'
+
     ];
 
     public static function boot()
@@ -33,6 +37,7 @@ class Order extends Model
             $order->order_code = 'OD' . strtoupper(Str::random(6)); // Ví dụ: OD3XG7FZ
         });
     }
+
 
     // ✅ Quan hệ để lấy tên màu sắc
     public function colorName()
@@ -46,6 +51,4 @@ class Order extends Model
         return $this->belongsTo(Size::class, 'size', 'id'); 
     }
 }
-
-
 

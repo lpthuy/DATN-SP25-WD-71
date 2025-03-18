@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 class OrderController extends Controller
 {
     public function store(Request $request)
+
 {
     try {
         // Kiểm tra nếu người dùng chưa đăng nhập
@@ -103,6 +104,7 @@ class OrderController extends Controller
         ]);
     }
 
+
     public function show($id)
 {
     $order = Order::where('id', $id)
@@ -118,6 +120,7 @@ class OrderController extends Controller
 }
 
     
+
 
 
 }
