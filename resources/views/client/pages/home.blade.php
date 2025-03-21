@@ -7,59 +7,33 @@
         2016, LOFISTYLE luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tin và năng lượng
         tích cực cho khách hàng.</h1>
 
-    <section class="awe-section-1">
-        <div class="section_slider">
-            <div class="home-slider swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <a href="collections/all.html" class="clearfix" title="Lofi Style">
-                            <picture>
-                                <source media="(min-width: 1200px)" srcset="{{ asset('client/images/slider_14d9c.jpg') }}">
-                                <source media="(min-width: 992px)" srcset="{{ asset('client/images/slider_14d9c.jpg') }}">
-                                <source media="(min-width: 569px)" srcset="{{ asset('client/images/slider_14d9c.jpg') }}">
-                                <source media="(max-width: 567px)" srcset="{{ asset('client/images/slider_14d9c.jpg') }}">
-                                <img width="1903" height="694"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
-                                    data-src="{{ asset('client/images/slider_1.jpg') }}" alt="Lofi Style"
-                                    class="img-responsive lazy" />
-                            </picture>
-                        </a>
+        <section class="awe-section-1">
+            <div class="section_slider">
+                <div class="home-slider swiper-container">
+                    <div class="swiper-wrapper">
+                        @foreach($banners as $banner)
+                            <div class="swiper-slide">
+                                <a href="{{ $banner->link ?? '#' }}" class="clearfix" title="{{ $banner->title }}">
+                                    <picture>
+                                        <source media="(min-width: 1200px)" srcset="{{ asset('storage/' . $banner->image) }}">
+                                        <source media="(min-width: 992px)" srcset="{{ asset('storage/' . $banner->image) }}">
+                                        <source media="(min-width: 569px)" srcset="{{ asset('storage/' . $banner->image) }}">
+                                        <source media="(max-width: 567px)" srcset="{{ asset('storage/' . $banner->image) }}">
+                                        <img width="1903" height="694"
+                                            src="{{ asset('storage/' . $banner->image) }}" 
+                                            alt="{{ $banner->title }}"
+                                            class="img-responsive lazy" />
+                                    </picture>
+                                </a>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="swiper-slide">
-                        <a href="collections/all.html" class="clearfix" title="Lofi Style">
-                            <picture>
-                                <source media="(min-width: 1200px)" srcset="{{ asset('client/images/slider_24d9c.jpg') }}">
-                                <source media="(min-width: 992px)" srcset="{{ asset('client/images/slider_24d9c.jpg') }}">
-                                <source media="(min-width: 569px)" srcset="{{ asset('client/images/slider_24d9c.jpg') }}">
-                                <source media="(max-width: 567px)" srcset="{{ asset('client/images/slider_24d9c.jpg') }}">
-                                <img width="1903" height="694"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
-                                    data-src="{{ asset('client/images/slider_2.jpg') }}" alt="Lofi Style"
-                                    class="img-responsive lazy" />
-                            </picture>
-                        </a>
-                    </div>
-                    <div class="swiper-slide">
-                        <a href="collections/all.html" class="clearfix" title="Lofi Style">
-                            <picture>
-                                <source media="(min-width: 1200px)" srcset="{{ asset('client/images/slider_34d9c.jpg') }}">
-                                <source media="(min-width: 992px)" srcset="{{ asset('client/images/slider_34d9c.jpg') }}">
-                                <source media="(min-width: 569px)" srcset="{{ asset('client/images/slider_34d9c.jpg') }}">
-                                <source media="(max-width: 567px)" srcset="{{ asset('client/images/slider_34d9c.jpg') }}">
-                                <img width="1903" height="694"
-                                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"
-                                    data-src="{{ asset('client/images/slider_3.jpg') }}" alt="Lofi Style"
-                                    class="img-responsive lazy" />
-                            </picture>
-                        </a>
-                    </div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
                 </div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
             </div>
-        </div>
-
-    </section>
+        </section>
+        
 
     <section class="awe-section-2">
         <section class="section_service">
