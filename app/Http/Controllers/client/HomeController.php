@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Color;
+use App\Models\Banner;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -30,11 +31,14 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
 
-    public function index()
-    {
-        $products = Product::all(); // Lấy tất cả sản phẩm từ database
-        return view('client.pages.home', compact('products'));
-    }
+     public function index()
+     {
+         $products = Product::all(); // Lấy tất cả sản phẩm
+         $banners = Banner::where('status', 1)->orderBy('position', 'asc')->get(); // Lấy banner theo thứ tự position
+     
+         return view('client.pages.home', compact('products', 'banners'));
+     }
+     
 
 
     public function about()
