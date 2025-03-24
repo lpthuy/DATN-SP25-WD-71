@@ -82,110 +82,26 @@
                             <div id="main-nav-menu">
                                 <ul class="menuList-main">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="index.html" title="Trang chủ">Trang chủ</a>
+                                        <a class="nav-link" href="{{ route('home') }}" title="Trang chủ">Trang chủ</a>
                                     </li>
                                     <li class="nav-item ">
                                         <a class="nav-link" href="{{ route('about') }}" title="Giới thiệu">Giới
                                             thiệu</a>
                                     </li>
-                                    <li class="nav-item has-submenu ">
-                                        <a class="nav-link caret-down" href="collections/all.html"
-                                            title="Sản phẩm">
-                                            Sản phẩm
-                                        </a>
+                                    <li class="nav-item has-submenu">
+                                        <a class="nav-link caret-down" href="{{ route('products.all') }}" title="Sản phẩm">Sản phẩm</a>
                                         <i class="fa ic-caret-down"></i>
                                         <ul class="menuList-submain level-1">
-                                            <li class="has-submenu">
-                                                <a class="caret-down" href="{{ route('productbycategory') }}"
-                                                    title="Sản phẩm áo">
-                                                    Sản phẩm áo
-                                                </a>
-                                                <i class="fa ic-caret-down"></i>
-                                                <ul class="menuList-submain level-2">
-                                                    <li>
-                                                        <a href="{{ route('productbycategory') }}" title="Áo phông">Áo phông</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('productbycategory') }}" title="Áo sơ mi">Áo sơ mi</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('productbycategory') }}" title="Áo kiểu">Áo kiểu</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('productbycategory') }}" title="Áo len">Áo len</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="{{ route('productbycategory') }}" title="Áo khoác">Áo khoác</a>
-                                                    </li>
-                                                </ul>
+                                            @foreach ($categories as $category)
+                                            <li>
+                                                <a href="{{ route('productbycategory', ['id' => $category->id]) }}">{{ $category->name }}</a>
                                             </li>
-                                            <li class="has-submenu">
-                                                <a class="caret-down" href="san-pham-quan.html"
-                                                    title="Sản phẩm quần">
-                                                    Sản phẩm quần
-                                                </a>
-                                                <i class="fa ic-caret-down"></i>
-                                                <ul class="menuList-submain level-2">
-                                                    <li>
-                                                        <a href="quan-jeans.html" title="Quần jeans">Quần
-                                                            jeans</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-kaki.html" title="Quần kaki">Quần kaki</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-short.html" title="Quần short">Quần
-                                                            short</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-lung.html" title="Quần lửng">Quần lửng</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu">
-                                                <a class="caret-down" href="san-pham-vay.html"
-                                                    title="Sản phẩm váy">
-                                                    Sản phẩm váy
-                                                </a>
-                                                <i class="fa ic-caret-down"></i>
-                                                <ul class="menuList-submain level-2">
-                                                    <li>
-                                                        <a href="vay-bo.html" title="Váy bó">Váy bó</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="vay-xuong.html" title="Váy xuông">Váy xuông</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="vay-chu-a.html" title="Váy chữ A">Váy chữ A</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="dam-om.html" title="Đầm ôm">Đầm ôm</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu">
-                                                <a class="caret-down" href="tui-phu-kien.html" title="Túi xách">
-                                                    Túi xách
-                                                </a>
-                                                <i class="fa ic-caret-down"></i>
-                                                <ul class="menuList-submain level-2">
-                                                    <li>
-                                                        <a href="vi.html" title="Ví">Ví</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu">
-                                                <a class="" href="giay-dep.html" title="Giày dép">
-                                                    Giày dép
-                                                </a>
-                                            </li>
-                                            <li class="has-submenu">
-                                                <a class="" href="phu-kien-1.html" title="Phụ kiện">
-                                                    Phụ kiện
-                                                </a>
-                                            </li>
+                                            @endforeach
                                         </ul>
+                                        
                                     </li>
+                                    
+                                    
                                     <li class="nav-item ">
                                         <a class="nav-link" href="{{ route('post') }}" title="Tin tức">Tin tức</a>
                                     </li>

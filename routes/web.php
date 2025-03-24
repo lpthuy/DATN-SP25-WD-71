@@ -27,10 +27,19 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('about');
+
 Route::get('/san-pham', [HomeController::class, 'product'])->name('product');
 // Route::get('/chi-tiet-san-pham', [HomeController::class, 'productDetail'])->name('productDetail');
 Route::get('/chi-tiet-san-pham/{id}', [HomeController::class, 'productDetail'])->name('productDetail');
-Route::get('/danh-muc', [HomeController::class, 'productbycategory'])->name('productbycategory');
+//thu muc , sp lq toi thu mucmuc
+Route::get('/san-pham/{id}', [HomeController::class, 'productDetail'])
+    ->name('product.detail');
+Route::get('/danh-muc', [HomeController::class, 'productByCategory'])
+    ->name('productbycategory');
+//in ra toan bo spsp
+Route::get('/products', [HomeController::class, 'allProducts'])->name('products.all');
+
+
 Route::get('/tin-tuc', [HomeController::class, 'post'])->name('post');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
