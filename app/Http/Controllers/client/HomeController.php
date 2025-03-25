@@ -38,23 +38,42 @@ class HomeController extends Controller
      
          return view('client.pages.home', compact('products', 'banners'));
      }
-     
+    //   lấy toàn bộ sản phẩm in ra 
+     public function allProducts()
+{
+    $products = Product::all(); // Lấy tất cả sản phẩm
+    return view('client.pages.product-by-category', compact('products'));
+}
 
 
-    public function about()
-    {
-        return view('client.pages.about');
-    }
+public function about()
+{
+
+    $categories = Category::whereNull('parent_category_id')->where('is_active', 1)->get();
+    return view('client.pages.about', compact('categories'));
+}
+
 
     public function product()
     {
         return view('client.pages.product');
     }
 
-    public function productbycategory()
+
+    public function productByCategory(Request $request)
     {
-        return view('client.pages.product-by-category');
+        $id = $request->query('id'); // Lấy ID từ query string (?id=1)
+        
+        if (!$id) {
+            return redirect()->route('home')->with('error', 'Danh mục không hợp lệ.');
+        }
+
+        $category = Category::findOrFail($id);
+        $products = Product::where('category_id', $id)->get();
+
+        return view('client.pages.product-by-category', compact('category', 'products'));
     }
+
 
     public function productDetail($id)
     {

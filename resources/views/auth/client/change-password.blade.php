@@ -28,7 +28,7 @@
                 <div class="col-xs-12 col-sm-12 col-lg-3 col-left-ac">
                     <div class="block-account">
                         <h5 class="title-account">Trang tài khoản</h5>
-                        <p>Xin chào, <span style="color:#f02757;">Trần Việt Anh (PH39998)</span>&nbsp;!</p>
+                        <p>Xin chào, <span style="color:#f02757;">hoang van long</span>&nbsp;!</p>
                         <ul>
                             <li>
                                 <a disabled="disabled" class="title-info" href="/account">Thông tin tài khoản</a>
