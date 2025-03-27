@@ -13,6 +13,8 @@ class ProductController extends Controller
         // Lấy sản phẩm theo ID kèm theo danh sách kích thước và màu sắc
         $product = Product::with(['sizes', 'colors'])->findOrFail($id);
 
-        return view('client.products.detail', compact('product'));
+        $comments = $product->comments()->get();
+
+        return view('client.products.detail', compact('product', 'comments'));
     }
 }

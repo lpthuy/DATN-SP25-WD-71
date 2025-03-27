@@ -98,7 +98,7 @@
                                 <div class="swiper-button-next"></div>
                                 <div class="swiper-button-prev"></div>
                             </div>
-                        
+
                             <!-- Ảnh nhỏ - Hiển thị tất cả ảnh -->
                             <div class="swiper-container gallery-thumbs">
                                 <div class="swiper-wrapper">
@@ -119,14 +119,14 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                     <div class="details-pro col-12 col-md-12 col-lg-6 col-center">
                         <div class="title-product">
                             <h1>{{ $product->name }}</h1>
                         </div>
-                        
+
                         <div class="inventory_quantity">
                             <span class="mb-break">
                                 <span class="stock-brand-title">Thương hiệu:</span>
@@ -203,7 +203,7 @@
                                 </div>
 
 
-                            
+
                                 <div class='product-promotion rounded-sm' id='lofi-salebox'>
                                     <h3 class='product-promotion__heading rounded-sm d-inline-flex align-items-center'>
                                         <img src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
@@ -225,7 +225,7 @@
                                     <h3 class="payment-heading d-inline-flex align-items-center">
                                         Phương thức thanh toán
                                     </h3>
-                                    
+
                                     <div class="payment-options">
                                         <label class="payment-option">
                                             <input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)
@@ -234,7 +234,7 @@
                                             <input type="radio" name="payment_method" value="bank_transfer"> Chuyển khoản ngân hàng
                                         </label>
                                     </div>
-                                    
+
                                     <div id="bank-details" class="bank-details" style="display: none;">
                                         <p><strong>Thông tin chuyển khoản:</strong></p>
                                         <p>Nội dung: Thanh toán đơn hàng: {{ $product->name }}</p>
@@ -249,7 +249,7 @@
                                     <input type="hidden" name="color_id" id="selected_color" value="">
                                     <input type="hidden" name="size_id" id="selected_size" value="">
                                     <input type="hidden" name="quantity" id="selected_quantity" value="1">
-                                
+
                                     <div class="select-swatch">
                                         <!-- Hiển thị màu sắc -->
                                         <div class="swatch-color swatch clearfix">
@@ -273,7 +273,7 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                
+
                                     <!-- Chọn số lượng -->
                                     <div class="clearfix form-group">
                                         <div class="flex-quantity">
@@ -286,7 +286,7 @@
                                             </div>
                                             <span id="stock-info" class="stock-info">Số lượng: --</span> <!-- Hiển thị số lượng tồn kho -->
                                         </div>
-                                    
+
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
                                             <div class="btn-mua button_actions clearfix">
                                                 <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
@@ -297,9 +297,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                 </form>
-                                
+
                                 <div class="product-hotline ">
                                     <p>
                                         Gọi đặt mua <a class="link" href="tel:19006750">19006750</a> (9:00 -
@@ -356,7 +356,7 @@
                             <div class="accordion-title">
                                 Mô tả sản phẩm
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -403,7 +403,7 @@
                             <div class="accordion-title">
                                 Chính sách giao hàng
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -439,7 +439,7 @@
                             <div class="accordion-title">
                                 Chính sách đổi trả
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -470,6 +470,75 @@
                             </div>
                         </div>
 
+                        <div class="accordion-item" id="product_tabs-4">
+                            <div class="accordion-title">
+                                Bình luận
+                                <i class="icon">
+                                    
+                                    <!DOCTYPE svg
+                                        PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
+                                    <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
+                                        version="1.1" viewBox="0 0 512 512" width="15px" xml:space="preserve"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 " />
+                                    </svg>
+                                </i>
+                            </div>
+                            <div class="accordion-contant">
+                                <div class="rte">
+                                    <div class="ba-text-fpt">
+                                        @if ($comments->where('is_visible', true)->isEmpty())
+                                            <p>Chưa có bình luận nào</p>
+                                        @else
+                                            @foreach ($comments->where('is_visible', true) as $comment)
+                                                <div class="comment-box">
+                                                    <div class="comment-info">
+                                                        <p>Tên khách hàng: {{ $comment->user_id ? optional($comment->user)->name : ($comment->name ?? 'Khách') }}</p>
+                                                    </div>
+                                                    <div style="display: flex">
+                                                        <div style="padding-right: 10px;">
+                                                            <p>{{ $comment->content }}</p>
+                                                        </div>
+                                                        <div style="padding-right: 12px !important">
+                                                            <p style="font: 12px">{{ $comment->created_at->format('d/m/Y H:i') }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <form action="{{ route('comment.store', $product->id) }}" method="POST">
+                                                    @csrf
+                                                    @auth
+                                                        <div class="form-group">
+                                                            <label for="content">Nội dung:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                                                        </div>
+                                                    @else
+                                                        <div class="form-group">
+                                                            <label for="name">Tên:</label>
+                                                            <input type="text" class="form-control" id="name" name="name" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email">Email:</label>
+                                                            <input type="email" class="form-control" id="email" name="email" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="content">Nội dung:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                                                        </div>
+                                                    @endauth
+                                                    <button type="submit" class="btn btn-lg btn-gray">Gửi</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
                     </div>
                 </div>
                 <script>
@@ -754,7 +823,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
@@ -898,7 +967,7 @@
     let oldPriceDisplay = document.querySelector(".product-price-old");
     let priceMeta = document.querySelector("meta[itemprop='price']");
     let stockInfo = document.getElementById("stock-info");
-    let stockQuantity = 0; 
+    let stockQuantity = 0;
 
     function showAlert(message) {
         let alertBox = document.getElementById("alert-message");
@@ -930,11 +999,11 @@
                     newPriceDisplay.innerHTML = `<span style="color: red; font-weight: bold;">${data.message}</span>`;
                     oldPriceDisplay.innerHTML = "";
                     priceMeta.setAttribute("content", "0");
-                    stockInfo.innerHTML = "Số lượng: --"; 
+                    stockInfo.innerHTML = "Số lượng: --";
                 } else {
                     newPriceDisplay.innerHTML = `<span style="color: green; font-weight: bold;">${data.new_price}</span>`;
-                    oldPriceDisplay.innerHTML = data.old_price_raw > data.new_price_raw 
-                        ? `<del class="price product-price-old">${data.old_price}</del>` 
+                    oldPriceDisplay.innerHTML = data.old_price_raw > data.new_price_raw
+                        ? `<del class="price product-price-old">${data.old_price}</del>`
                         : "";
                     priceMeta.setAttribute("content", data.new_price_raw);
 
@@ -1111,7 +1180,7 @@
                 size: selectedSize,
                 quantity: quantity,
                 price: price,
-                total_price: totalPrice, 
+                total_price: totalPrice,
                 bank_code: ""
             })
         })
@@ -1138,7 +1207,7 @@
                 size: selectedSize,
                 quantity: quantity,
                 price: price,
-                total_price: totalPrice, 
+                total_price: totalPrice,
                 payment_method: paymentMethod
             })
         })
