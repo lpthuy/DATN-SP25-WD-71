@@ -379,7 +379,7 @@ return [
     ],
 
     // Quản lý Banner
-    ['header' => 'QUẢN LÝ BANNER'],
+   
     [
         'text'    => 'Quản lý Banner',
         'icon'    => 'fas fa-images',
@@ -391,6 +391,19 @@ return [
             ],
         ],
     ],
+    // Quản lý Bình luận
+
+[
+    'text'    => 'Quản lý Bình luận',
+    'icon'    => 'fas fa-comments',
+    'submenu' => [
+        [
+            'text' => 'Danh sách Bình luận',
+            'url'  => 'admin/comments',
+            'icon' => 'fas fa-comment-dots',
+        ],
+    ],
+],
 
 ],
 
