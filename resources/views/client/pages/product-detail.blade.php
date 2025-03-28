@@ -469,14 +469,10 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="accordion-item" id="product_tabs-4">
                             <div class="accordion-title">
-                                Bình luận
+                                Đánh giá & Bình luận
                                 <i class="icon">
-                                    
-                                    <!DOCTYPE svg
-                                        PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
                                         version="1.1" viewBox="0 0 512 512" width="15px" xml:space="preserve"
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -487,38 +483,79 @@
                             <div class="accordion-contant">
                                 <div class="rte">
                                     <div class="ba-text-fpt">
+                                        <!-- Hiển thị rating trung bình -->
+                                        @php
+                                            $productRating = App\Models\Comment::getAverageStarRating($product->id);
+                                        @endphp
+                                        <div class="product-rating-summary mb-4">
+                                            <div class="average-rating">
+                                                {!! $productRating['html'] !!}
+                                                <span class="rating-value">{{ $productRating['average'] }}/5</span>
+                                            </div>
+                                            <div class="rating-count">
+                                                Dựa trên {{ $productRating['count'] }} đánh giá
+                                            </div>
+                                        </div>
+                        
+                                        <!-- Danh sách bình luận -->
                                         @if ($comments->where('is_visible', true)->isEmpty())
-                                            <p>Chưa có bình luận nào</p>
+                                            <p class="no-comments">Chưa có đánh giá nào</p>
                                         @else
                                             @foreach ($comments->where('is_visible', true) as $comment)
                                                 <div class="comment-box">
-                                                    <div class="comment-info">
-                                                        <p>Tên khách hàng: {{ $comment->user_id ? optional($comment->user)->name : ($comment->name ?? 'Khách') }}</p>
+                                                    <div class="comment-header">
+                                                        <div class="comment-info">
+                                                            <p class="comment-author">
+                                                                {{ $comment->user_id ? optional($comment->user)->name : ($comment->name ?? 'Khách') }}
+                                                            </p>
+                                                            <div class="comment-meta">
+                                                                <span class="comment-date">{{ $comment->created_at_formatted }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-rating">
+                                                            {!! $comment->star_rating !!}
+                                                        </div>
                                                     </div>
-                                                    <div style="display: flex">
-                                                        <div style="padding-right: 10px;">
-                                                            <p>{{ $comment->content }}</p>
-                                                        </div>
-                                                        <div style="padding-right: 12px !important">
-                                                            <p style="font: 12px">{{ $comment->created_at->format('d/m/Y H:i') }}</p>
-                                                        </div>
+                                                    <div class="comment-content">
+                                                        <p>{{ $comment->content }}</p>
                                                     </div>
                                                 </div>
                                             @endforeach
                                         @endif
-                                        <hr>
+                        
+                                        <hr class="comment-divider">
+                        
+                                        <!-- Form đánh giá -->
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <h4 class="review-title">Viết đánh giá của bạn</h4>
                                                 <form action="{{ route('comment.store', $product->id) }}" method="POST">
                                                     @csrf
+                                                    
+                                                    <div class="form-group rating-group">
+                                                        <label class="rating-label">Đánh giá của bạn:</label>
+                                                        <div class="star-rating-input">
+                                                            <input type="radio" id="star5" name="rating" value="5" required />
+                                                            <label for="star5" title="5 sao">★</label>
+                                                            <input type="radio" id="star4" name="rating" value="4" />
+                                                            <label for="star4" title="4 sao">★</label>
+                                                            <input type="radio" id="star3" name="rating" value="3" />
+                                                            <label for="star3" title="3 sao">★</label>
+                                                            <input type="radio" id="star2" name="rating" value="2" />
+                                                            <label for="star2" title="2 sao">★</label>
+                                                            <input type="radio" id="star1" name="rating" value="1" />
+                                                            <label for="star1" title="1 sao">★</label>
+                                                        </div>
+                                                    </div>
+                        
                                                     @auth
                                                         <div class="form-group">
-                                                            <label for="content">Nội dung:</label>
-                                                            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                                                            <label for="content">Nội dung đánh giá:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
                                                         </div>
                                                     @else
                                                         <div class="form-group">
-                                                            <label for="name">Tên:</label>
+                                                            <label for="name">Tên của bạn:</label>
                                                             <input type="text" class="form-control" id="name" name="name" required>
                                                         </div>
                                                         <div class="form-group">
@@ -526,31 +563,173 @@
                                                             <input type="email" class="form-control" id="email" name="email" required>
                                                         </div>
                                                         <div class="form-group">
-                                                            <label for="content">Nội dung:</label>
-                                                            <textarea class="form-control" id="content" name="content" rows="5" required></textarea>
+                                                            <label for="content">Nội dung đánh giá:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
                                                         </div>
                                                     @endauth
-                                                    <button type="submit" class="btn btn-lg btn-gray">Gửi</button>
+                                                    
+                                                    <button type="submit" class="btn btn-submit">Gửi đánh giá</button>
                                                 </form>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
-                    </div>
-                </div>
-                <script>
-                    $(document).ready(() => {
-                        $('.accordion-title').click(function() {
-                            const accordionItem = $(this).parent('.accordion-item')
-                            const scrollHeight = accordionItem.find('.accordion-contant').prop("scrollHeight");
-                            accordionItem[0].style.setProperty('--max-height', scrollHeight + 'px')
-                            accordionItem.toggleClass('current')
-                        })
-                    })
-                </script>
+                        
+                        <style>
+                            /* Rating styles */
+                            .product-rating-summary {
+                                background: #f9f9f9;
+                                padding: 15px;
+                                border-radius: 5px;
+                                margin-bottom: 20px;
+                            }
+                            
+                            .average-rating {
+                                font-size: 24px;
+                                margin-bottom: 5px;
+                            }
+                            
+                            .rating-value {
+                                font-size: 18px;
+                                font-weight: bold;
+                                color: #333;
+                                margin-left: 10px;
+                                vertical-align: middle;
+                            }
+                            
+                            .rating-count {
+                                font-size: 14px;
+                                color: #666;
+                            }
+                            
+                            /* Comment box styles */
+                            .comment-box {
+                                border-bottom: 1px solid #eee;
+                                padding: 15px 0;
+                            }
+                            
+                            .comment-header {
+                                display: flex;
+                                justify-content: space-between;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .comment-author {
+                                font-weight: 600;
+                                margin: 0;
+                                color: #333;
+                            }
+                            
+                            .comment-meta {
+                                font-size: 12px;
+                                color: #888;
+                            }
+                            
+                            .comment-content {
+                                color: #555;
+                                line-height: 1.6;
+                            }
+                            
+                            /* Star rating styles */
+                            .star-rating, .star-rating-input {
+                                display: inline-block;
+                                font-size: 20px;
+                            }
+                            
+                            .star-rating .fa-star, 
+                            .star-rating-input label {
+                                color: #ffc107;
+                            }
+                            
+                            .star-rating .far,
+                            .star-rating-input input:not(:checked) ~ label {
+                                color: #ccc;
+                            }
+                            
+                            .star-rating-input input {
+                                display: none;
+                            }
+                            
+                            .star-rating-input label {
+                                float: right;
+                                padding: 0 5px;
+                                cursor: pointer;
+                                transition: all 0.2s;
+                            }
+                            
+                            .star-rating-input label:hover,
+                            .star-rating-input label:hover ~ label {
+                                color: #ffc107;
+                            }
+                            
+                            /* Form styles */
+                            .review-title {
+                                font-size: 18px;
+                                margin-bottom: 20px;
+                                color: #333;
+                            }
+                            
+                            .rating-group {
+                                margin-bottom: 20px;
+                            }
+                            
+                            .rating-label {
+                                display: block;
+                                margin-bottom: 8px;
+                                font-weight: 600;
+                            }
+                            
+                            .btn-submit {
+                                background: #ff6b6b;
+                                color: white;
+                                padding: 10px 25px;
+                                border: none;
+                                border-radius: 4px;
+                                font-weight: 600;
+                                transition: all 0.3s;
+                            }
+                            
+                            .btn-submit:hover {
+                                background: #ff5252;
+                            }
+                            
+                            .no-comments {
+                                color: #888;
+                                font-style: italic;
+                                text-align: center;
+                                padding: 20px 0;
+                            }
+                            
+                            .comment-divider {
+                                margin: 25px 0;
+                                border-color: #eee;
+                            }
+                        </style>
+                        
+                        <script>
+                            $(document).ready(() => {
+                                // Accordion functionality
+                                $('.accordion-title').click(function() {
+                                    const accordionItem = $(this).parent('.accordion-item');
+                                    const scrollHeight = accordionItem.find('.accordion-contant').prop("scrollHeight");
+                                    accordionItem[0].style.setProperty('--max-height', scrollHeight + 'px');
+                                    accordionItem.toggleClass('current');
+                                });
+                                
+                                // Star rating interaction
+                                $('.star-rating-input label').hover(function() {
+                                    $(this).prevAll('label').addBack().css('color', '#ffc107');
+                                    $(this).nextAll('label').css('color', '#ccc');
+                                });
+                                
+                                $('.star-rating-input').mouseleave(function() {
+                                    $(this).find('label').css('color', '#ccc');
+                                    $(this).find('input:checked').nextAll('label').addBack().css('color', '#ffc107');
+                                });
+                            });
+                        </script>
 
 
             </div>
