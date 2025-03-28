@@ -37,31 +37,28 @@ class CartController extends Controller
     }
 
     $cart = session()->get('cart', []);
-    
     $cartKey = $product->id . '-' . $variant->id;
 
-    if (isset($cart[$cartKey])) {
-        $cart[$cartKey]['quantity'] += $request->quantity;
-    } else {
-        $cart[$cartKey] = [
-            'product_id' => $product->id,
-            'variant_id' => $variant->id,
-            'name' => $product->name,
-            'color' => $variant->color->color_name,
-            'size' => $variant->size->size_name,
-            'price' => $variant->discount_price ?? $variant->price,
-            'quantity' => $request->quantity,
-            'image' => $product->image
-        ];
-    }
+    // ✅ Sửa tại đây: Ghi đè đúng số lượng mới nhập
+    $cart[$cartKey] = [
+        'product_id' => $product->id,
+        'variant_id' => $variant->id,
+        'name' => $product->name,
+        'color' => $variant->color->color_name,
+        'size' => $variant->size->size_name,
+        'price' => $variant->discount_price ?? $variant->price,
+        'quantity' => $request->quantity,
+        'image' => $product->image
+    ];
 
     session()->put('cart', $cart);
-// Tính tổng tiền
-$totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
-    
 
-    return redirect()->back()->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
+    // Tính tổng tiền nếu cần dùng
+    $totalPrice = array_sum(array_map(fn($item) => $item['price'] * $item['quantity'], $cart));
+
+    return redirect()->route('cart')->with('success', 'Sản phẩm đã được thêm vào giỏ hàng!');
 }
+
 
 public function removeItem(Request $request)
     {
@@ -107,4 +104,12 @@ public function countCart()
     return response()->json(['cart_count' => $cartCount]);
 }
 
+public function index()
+    {
+        // Lấy dữ liệu giỏ hàng từ session
+        $cartItems = session('cart', []);
+
+        // Trả về view giỏ hàng
+        return view('client.pages.cart', compact('cartItems'));
+    }
 }

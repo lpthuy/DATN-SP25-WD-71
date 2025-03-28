@@ -75,6 +75,8 @@ Route::get('/check-availability', [HomeController::class, 'checkAvailability']);
 
 
 Route::get('/order/check-payment-status', [OrderController::class, 'checkPaymentStatus']);
+Route::post('/order-cod', [OrderController::class, 'store'])->name('order.cod');
+
 
 
 
@@ -95,7 +97,6 @@ Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail'
 
 
 
-
 Route::get('/check-login-status', function () {
     return response()->json(['isAuthenticated' => Auth::check()]);
 });
@@ -109,10 +110,16 @@ Route::get('/check-login-status', function () {
 Route::post('/vnpay_payment', [PaymentController::class, 'vnpay_payment'])->name('vnpay.payment');
 Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vnpay.return');
 
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::get('/thanh-toan', [CheckoutController::class, 'show'])->name('checkout.show');
 
 
 
-Route::post('/checkout', [CheckoutController::class, 'checkout'])->name('checkout');
+
+
+
+Route::match(['get', 'post'], '/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
 
 

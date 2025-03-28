@@ -288,7 +288,7 @@
                                         </div>
                                     
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
-                                            <div class="btn-mua button_actions clearfix">
+                                        <div class="btn-mua button_actions clearfix">
                                                 <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
                                                     Mua ngay
                                                 </button>
@@ -1084,6 +1084,8 @@
 
     let selectedColor = selectedColorElement ? selectedColorElement.value : null;
     let selectedSize = selectedSizeElement ? selectedSizeElement.value : null;
+    let selectedColorId = selectedColorElement?.dataset.id || null;
+    let selectedSizeId = selectedSizeElement?.dataset.id || null;
 
     if (!selectedColor || !selectedSize || !paymentMethod) {
         alert("Vui lòng chọn đầy đủ thông tin!");
@@ -1095,6 +1097,7 @@
     let totalPrice = price * quantity;
 
     if (paymentMethod === "bank_transfer") {
+        // Gửi thanh toán VNPay như cũ
         fetch("/vnpay_payment", {
             method: "POST",
             headers: {
@@ -1122,28 +1125,11 @@
         })
         .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
     } else {
-        fetch("/order/save", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
-            },
-            body: JSON.stringify({
-                product_id: productId,
-                product_name: productName,
-                color: selectedColor,
-                size: selectedSize,
-                quantity: quantity,
-                price: price,
-                total_price: totalPrice, 
-                payment_method: paymentMethod
-            })
-        })
-        .then(response => response.json())
-        .then(data => alert(data.message))
-        .catch(error => alert("Lỗi khi lưu đơn hàng!"));
+        // ✅ Gọi popup xác nhận đơn hàng trước khi gửi đơn COD
+        showOrderSummary(productId, productName, selectedColorId, selectedColor, selectedSizeId, selectedSize, quantity, paymentMethod, price);
     }
 });
+
 
 
 function showOrderSummary(productId, productName, colorId, color, sizeId, size, quantity, paymentMethod, price) {
@@ -1208,7 +1194,7 @@ function showOrderSummary(productId, productName, colorId, color, sizeId, size, 
     });
 }
 
-function placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod) {
+function placeOrder(productId, productName, color, size, quantity, price, paymentMethod) {
     let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
     if (!csrfToken) {
         alert("Lỗi bảo mật! Không tìm thấy CSRF Token.");
@@ -1216,10 +1202,10 @@ function placeOrder(productId, productName, colorId, sizeId, quantity, price, pa
     }
 
     let orderData = {
-        product_id: productId,
+        product_id: parseInt(productId),
         product_name: productName,
-        color: colorId,
-        size: sizeId,
+        color: String(color),
+        size: String(size),
         quantity: parseInt(quantity),
         price: parseFloat(price),
         payment_method: paymentMethod
@@ -1233,18 +1219,21 @@ function placeOrder(productId, productName, colorId, sizeId, quantity, price, pa
         },
         body: JSON.stringify(orderData)
     })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok) throw new Error("Bad Request");
+        return response.json();
+    })
     .then(data => {
         if (data.status === "success") {
             alert(`Đơn hàng đã được đặt thành công! Mã đơn hàng: ${data.order_code}`);
-            document.getElementById("checkout-popup")?.remove();
-            document.getElementById("checkout-overlay")?.remove();
+            window.location.href = "/orders";
         } else {
-            alert("Lỗi hệ thống: " + data.message);
+            alert("Lỗi: " + data.message);
         }
     })
     .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
 }
+
 
 
 
