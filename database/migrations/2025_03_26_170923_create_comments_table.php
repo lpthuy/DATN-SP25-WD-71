@@ -13,16 +13,21 @@ return new class extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('product_id');
-            $table->bigInteger('user_id')->nullable();
+            $table->foreignId('product_id')->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('set null');
             $table->string('name', 60)->nullable();
-            $table->string('email', 255)->nullable();
+            $table->string('email', 100)->nullable();
             $table->text('content');
-            $table->boolean('is_visible')->default(true); // Ẩn/Hiện bình luận
+            $table->unsignedTinyInteger('rating')->default(0); // Thêm cột rating (1-5 sao)
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
+            
+            // Thêm index cho các trường thường dùng để tìm kiếm
+            $table->index('product_id');
+            $table->index('user_id');
+            $table->index('is_visible');
         });
     }
-    
 
     /**
      * Reverse the migrations.
