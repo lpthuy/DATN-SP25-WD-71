@@ -14,11 +14,13 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
 
 use Illuminate\Http\Request;
+
 
 Auth::routes();
 
@@ -92,6 +94,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/order/save', [OrderController::class, 'store']);
 });
 Route::get('/orders', [OrderController::class, 'index'])->name('order');
+
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
 
@@ -113,6 +116,9 @@ Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vn
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/thanh-toan', [CheckoutController::class, 'show'])->name('checkout.show');
 
+Route::get('/check-login-status', function () {
+    return response()->json(['isAuthenticated' => Auth::check()]);
+});
 
 
 

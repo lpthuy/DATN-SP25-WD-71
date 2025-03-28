@@ -1079,13 +1079,16 @@
     let productName = document.querySelector(".title-product h1").innerText;
     let selectedColorElement = document.querySelector("input[name='option-0']:checked");
     let selectedSizeElement = document.querySelector("input[name='option-1']:checked");
+
     let quantity = parseInt(document.getElementById("qty").value);
+
     let paymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
 
     let selectedColor = selectedColorElement ? selectedColorElement.value : null;
     let selectedSize = selectedSizeElement ? selectedSizeElement.value : null;
     let selectedColorId = selectedColorElement?.dataset.id || null;
     let selectedSizeId = selectedSizeElement?.dataset.id || null;
+
 
     if (!selectedColor || !selectedSize || !paymentMethod) {
         alert("Vui lòng chọn đầy đủ thông tin!");
@@ -1174,9 +1177,11 @@ function showOrderSummary(productId, productName, colorId, color, sizeId, size, 
         <p><strong>Size:</strong> ${size}</p>
         <p><strong>Số lượng:</strong> ${quantity}</p>
         <p><strong>Phương thức thanh toán:</strong> ${paymentMethod === "cod" ? "Thanh toán khi nhận hàng (COD)" : "Chuyển khoản ngân hàng"}</p>
+
         <p><strong>Giá:</strong> <span style="color: red; font-size: 18px;">${price * quantity}đ</span></p>
         <div style="margin-top: 20px; display: flex; justify-content: center;">
             <button id="confirm-order" style="background: #28a745; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px;">Xác nhận đặt hàng</button>
+
             <button id="close-order" style="background: #dc3545; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 15px;">Đóng</button>
         </div>
     `;
@@ -1189,12 +1194,16 @@ function showOrderSummary(productId, productName, colorId, color, sizeId, size, 
         overlay.remove();
     });
 
+
     document.getElementById("confirm-order")?.addEventListener("click", function () {
         placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod);
     });
 }
 
-function placeOrder(productId, productName, color, size, quantity, price, paymentMethod) {
+
+
+function placeOrder(productId, productName, colorId, sizeId, quantity, price, paymentMethod) {
+
     let csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
     if (!csrfToken) {
         alert("Lỗi bảo mật! Không tìm thấy CSRF Token.");

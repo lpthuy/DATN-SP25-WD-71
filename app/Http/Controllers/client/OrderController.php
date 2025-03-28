@@ -14,6 +14,7 @@ class OrderController extends Controller
 {
     
     public function store(Request $request)
+
 {
     $user = Auth::user();
     $checkoutItems = session('checkout_items', []);
@@ -85,7 +86,8 @@ class OrderController extends Controller
     }
 
 
-public function show($id)
+
+    public function show($id)
 {
     $user = Auth::user();
 
@@ -100,6 +102,7 @@ public function show($id)
 
 
     
+
 
 
 }

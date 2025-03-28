@@ -52,7 +52,9 @@
                                                 <th>Mã đơn hàng</th>
                                                 <th>Ngày</th>
                                                 <th>Thanh toán</th>
+
                                                 <th>Xem chi tiết</th>  <!-- ✅ Cột mới -->
+
                                             </tr>
                                         </thead>
                                     
@@ -62,7 +64,6 @@
                                                     <tr>
                                                         <td>#{{ $order->order_code }}</td>
                                                         <td>{{ date('d/m/Y', strtotime($order->created_at)) }}</td>
-                                                        
                                                         <td>
                                                             @php
                                                                 $method = strtolower($order->payment_method);
@@ -77,23 +78,26 @@
                                                             @endif
 
                                                         </td>
+
                                                         <td>
                                                             <a href="{{ route('order.detail', ['id' => $order->id]) }}" class="btn btn-sm btn-primary">
                                                                 Xem chi tiết
                                                             </a>
                                                         </td>
+
                                                     </tr>
                                                 @endforeach
                                             @else
                                                 <tr>
+
                                                     <td colspan="7">
+
                                                         <p class="text-center">Bạn chưa có đơn hàng nào.</p>
                                                     </td>
                                                 </tr>
                                             @endif
                                         </tbody>
                                     </table>
-                                    
                                 </div>
 
                                 <div class="paginate-pages pull-right page-account text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
