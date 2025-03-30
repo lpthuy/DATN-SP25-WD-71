@@ -96,7 +96,7 @@
                                 <div class="total-price-container">
                                     Tổng tiền: <span id="total-price">0₫</span>
                                 </div>
-                                <form id="checkout-form" action="{{ route('checkout') }}" method="POST">
+                                <form id="checkout-form" action="{{ route('checkout.show') }}" method="GET">
                                     @csrf
                                     <input type="hidden" name="selected_products" id="selected-products">
                                     <button type="submit" class="btn btn-checkout">Thanh toán</button>
