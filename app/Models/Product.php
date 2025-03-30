@@ -20,17 +20,21 @@ class Product extends Model {
     public function colors() {
         return $this->belongsToMany(Color::class, 'product_color', 'product_id', 'color_id');
     }
-    
+
 
     public function sizes() {
         return $this->belongsToMany(Size::class, 'product_size', 'product_id', 'size_id');
     }
-    
+
     public function images() {
         return $this->hasMany(ProductImage::class);
+    }
+
+    public function comments() {
+        return $this->hasMany(Comment::class);
     }
     protected $attributes = [
         'price' => 0, // Giá mặc định là 0 nếu không có giá trị
     ];
-    
+
 }

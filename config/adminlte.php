@@ -298,8 +298,7 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-
-    'menu' => [
+'menu' => [
 
     // Navbar items:
     [
@@ -326,9 +325,8 @@ return [
         ],
     ],
 
-    [
-        'header' => 'QUẢN LÝ DANH MỤC',
-    ],
+    // Quản lý Danh mục
+    ['header' => 'QUẢN LÝ DANH MỤC'],
     [
         'text'    => 'Quản lý Danh mục',
         'icon'    => 'fas fa-list',
@@ -345,7 +343,6 @@ return [
             ],
         ],
     ],
-    
 
     [
         'text'    => 'Quản lý Sản phẩm',
@@ -381,52 +378,34 @@ return [
         ],
     ],
 
-    
-
+    // Quản lý Banner
+   
     [
-        
-        [
-            'type' => 'fullscreen-widget',
-            'topnav_right' => true,
-        ],
-
-        // Quản lý Thanh toán
-        ['header' => 'QUẢN LÝ THANH TOÁN'],
-
-
-
-        [
-            'text'    => 'Quản lý Thanh toán',
-            'icon'    => 'fas fa-money-check-alt',
-            'submenu' => [
-                [
-                    'text' => 'Danh sách Phương thức',
-                    'url'  => 'admin/payment_methods',
-                    'icon' => 'fas fa-credit-card',
-                ],
-
+        'text'    => 'Quản lý Banner',
+        'icon'    => 'fas fa-images',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Banner',
+                'url'  => 'admin/banners',
+                'icon' => 'fas fa-photo-video',
             ],
         ],
-        
+    ],
+    // Quản lý Bình luận
 
-        //quan ly banner
-        ['header' => 'QUẢN LÝ BANNER'],
+[
+    'text'    => 'Quản lý Bình luận',
+    'icon'    => 'fas fa-comments',
+    'submenu' => [
         [
-            'text'    => 'Quản lý Banner',
-            'icon'    => 'fas fa-images',
-            'submenu' => [
-                [
-                    'text' => 'Danh sách Banner',
-                    'url'  => 'admin/banners',
-                    'icon' => 'fas fa-photo-video',
-                ],
-            ],
-
+            'text' => 'Danh sách Bình luận',
+            'url'  => 'admin/comments',
+            'icon' => 'fas fa-comment-dots',
+        ],
     ],
-    ],
-
 ],
 
+],
 
 
 

@@ -98,7 +98,7 @@
                                 <div class="swiper-button-next"></div>
                                 <div class="swiper-button-prev"></div>
                             </div>
-                        
+
                             <!-- Ảnh nhỏ - Hiển thị tất cả ảnh -->
                             <div class="swiper-container gallery-thumbs">
                                 <div class="swiper-wrapper">
@@ -119,14 +119,14 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                     <div class="details-pro col-12 col-md-12 col-lg-6 col-center">
                         <div class="title-product">
                             <h1>{{ $product->name }}</h1>
                         </div>
-                        
+
                         <div class="inventory_quantity">
                             <span class="mb-break">
                                 <span class="stock-brand-title">Thương hiệu:</span>
@@ -203,7 +203,7 @@
                                 </div>
 
 
-                            
+
                                 <div class='product-promotion rounded-sm' id='lofi-salebox'>
                                     <h3 class='product-promotion__heading rounded-sm d-inline-flex align-items-center'>
                                         <img src="{{ asset('client/images/icon-product-promotion4d9c.png') }}"
@@ -225,7 +225,7 @@
                                     <h3 class="payment-heading d-inline-flex align-items-center">
                                         Phương thức thanh toán
                                     </h3>
-                                    
+
                                     <div class="payment-options">
                                         <label class="payment-option">
                                             <input type="radio" name="payment_method" value="cod" checked> Thanh toán khi nhận hàng (COD)
@@ -234,7 +234,7 @@
                                             <input type="radio" name="payment_method" value="bank_transfer"> Chuyển khoản ngân hàng
                                         </label>
                                     </div>
-                                    
+
                                     <div id="bank-details" class="bank-details" style="display: none;">
                                         <p><strong>Thông tin chuyển khoản:</strong></p>
                                         <p>Nội dung: Thanh toán đơn hàng: {{ $product->name }}</p>
@@ -249,7 +249,7 @@
                                     <input type="hidden" name="color_id" id="selected_color" value="">
                                     <input type="hidden" name="size_id" id="selected_size" value="">
                                     <input type="hidden" name="quantity" id="selected_quantity" value="1">
-                                
+
                                     <div class="select-swatch">
                                         <!-- Hiển thị màu sắc -->
                                         <div class="swatch-color swatch clearfix">
@@ -273,7 +273,7 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                
+
                                     <!-- Chọn số lượng -->
                                     <div class="clearfix form-group">
                                         <div class="flex-quantity">
@@ -286,7 +286,7 @@
                                             </div>
                                             <span id="stock-info" class="stock-info">Số lượng: --</span> <!-- Hiển thị số lượng tồn kho -->
                                         </div>
-                                    
+
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
                                         <div class="btn-mua button_actions clearfix">
                                                 <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
@@ -297,9 +297,9 @@
                                             </button>
                                         </div>
                                     </div>
-                                    
+
                                 </form>
-                                
+
                                 <div class="product-hotline ">
                                     <p>
                                         Gọi đặt mua <a class="link" href="tel:19006750">19006750</a> (9:00 -
@@ -356,7 +356,7 @@
                             <div class="accordion-title">
                                 Mô tả sản phẩm
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -403,7 +403,7 @@
                             <div class="accordion-title">
                                 Chính sách giao hàng
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -439,7 +439,7 @@
                             <div class="accordion-title">
                                 Chính sách đổi trả
                                 <i class="icon">
-                                    <?xml version="1.0" ?>
+                                    
                                     <!DOCTYPE svg
                                         PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
                                     <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
@@ -469,19 +469,267 @@
                                 </div>
                             </div>
                         </div>
-
-                    </div>
-                </div>
-                <script>
-                    $(document).ready(() => {
-                        $('.accordion-title').click(function() {
-                            const accordionItem = $(this).parent('.accordion-item')
-                            const scrollHeight = accordionItem.find('.accordion-contant').prop("scrollHeight");
-                            accordionItem[0].style.setProperty('--max-height', scrollHeight + 'px')
-                            accordionItem.toggleClass('current')
-                        })
-                    })
-                </script>
+                        <div class="accordion-item" id="product_tabs-4">
+                            <div class="accordion-title">
+                                Đánh giá & Bình luận
+                                <i class="icon">
+                                    <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
+                                        version="1.1" viewBox="0 0 512 512" width="15px" xml:space="preserve"
+                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                        <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 " />
+                                    </svg>
+                                </i>
+                            </div>
+                            <div class="accordion-contant">
+                                <div class="rte">
+                                    <div class="ba-text-fpt">
+                                        <!-- Hiển thị rating trung bình -->
+                                        @php
+                                            $productRating = App\Models\Comment::getAverageStarRating($product->id);
+                                        @endphp
+                                        <div class="product-rating-summary mb-4">
+                                            <div class="average-rating">
+                                                {!! $productRating['html'] !!}
+                                                <span class="rating-value">{{ $productRating['average'] }}/5</span>
+                                            </div>
+                                            <div class="rating-count">
+                                                Dựa trên {{ $productRating['count'] }} đánh giá
+                                            </div>
+                                        </div>
+                        
+                                        <!-- Danh sách bình luận -->
+                                        @if ($comments->where('is_visible', true)->isEmpty())
+                                            <p class="no-comments">Chưa có đánh giá nào</p>
+                                        @else
+                                            @foreach ($comments->where('is_visible', true) as $comment)
+                                                <div class="comment-box">
+                                                    <div class="comment-header">
+                                                        <div class="comment-info">
+                                                            <p class="comment-author">
+                                                                {{ $comment->user_id ? optional($comment->user)->name : ($comment->name ?? 'Khách') }}
+                                                            </p>
+                                                            <div class="comment-meta">
+                                                                <span class="comment-date">{{ $comment->created_at_formatted }}</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comment-rating">
+                                                            {!! $comment->star_rating !!}
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment-content">
+                                                        <p>{{ $comment->content }}</p>
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        @endif
+                        
+                                        <hr class="comment-divider">
+                        
+                                        <!-- Form đánh giá -->
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <h4 class="review-title">Viết đánh giá của bạn</h4>
+                                                <form action="{{ route('comment.store', $product->id) }}" method="POST">
+                                                    @csrf
+                                                    
+                                                    <div class="form-group rating-group">
+                                                        <label class="rating-label">Đánh giá của bạn:</label>
+                                                        <div class="star-rating-input">
+                                                            <input type="radio" id="star5" name="rating" value="5" required />
+                                                            <label for="star5" title="5 sao">★</label>
+                                                            <input type="radio" id="star4" name="rating" value="4" />
+                                                            <label for="star4" title="4 sao">★</label>
+                                                            <input type="radio" id="star3" name="rating" value="3" />
+                                                            <label for="star3" title="3 sao">★</label>
+                                                            <input type="radio" id="star2" name="rating" value="2" />
+                                                            <label for="star2" title="2 sao">★</label>
+                                                            <input type="radio" id="star1" name="rating" value="1" />
+                                                            <label for="star1" title="1 sao">★</label>
+                                                        </div>
+                                                    </div>
+                        
+                                                    @auth
+                                                        <div class="form-group">
+                                                            <label for="content">Nội dung đánh giá:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
+                                                        </div>
+                                                    @else
+                                                        <div class="form-group">
+                                                            <label for="name">Tên của bạn:</label>
+                                                            <input type="text" class="form-control" id="name" name="name" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="email">Email:</label>
+                                                            <input type="email" class="form-control" id="email" name="email" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label for="content">Nội dung đánh giá:</label>
+                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
+                                                        </div>
+                                                    @endauth
+                                                    
+                                                    <button type="submit" class="btn btn-submit">Gửi đánh giá</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <style>
+                            /* Rating styles */
+                            .product-rating-summary {
+                                background: #f9f9f9;
+                                padding: 15px;
+                                border-radius: 5px;
+                                margin-bottom: 20px;
+                            }
+                            
+                            .average-rating {
+                                font-size: 24px;
+                                margin-bottom: 5px;
+                            }
+                            
+                            .rating-value {
+                                font-size: 18px;
+                                font-weight: bold;
+                                color: #333;
+                                margin-left: 10px;
+                                vertical-align: middle;
+                            }
+                            
+                            .rating-count {
+                                font-size: 14px;
+                                color: #666;
+                            }
+                            
+                            /* Comment box styles */
+                            .comment-box {
+                                border-bottom: 1px solid #eee;
+                                padding: 15px 0;
+                            }
+                            
+                            .comment-header {
+                                display: flex;
+                                justify-content: space-between;
+                                margin-bottom: 10px;
+                            }
+                            
+                            .comment-author {
+                                font-weight: 600;
+                                margin: 0;
+                                color: #333;
+                            }
+                            
+                            .comment-meta {
+                                font-size: 12px;
+                                color: #888;
+                            }
+                            
+                            .comment-content {
+                                color: #555;
+                                line-height: 1.6;
+                            }
+                            
+                            /* Star rating styles */
+                            .star-rating, .star-rating-input {
+                                display: inline-block;
+                                font-size: 20px;
+                            }
+                            
+                            .star-rating .fa-star, 
+                            .star-rating-input label {
+                                color: #ffc107;
+                            }
+                            
+                            .star-rating .far,
+                            .star-rating-input input:not(:checked) ~ label {
+                                color: #ccc;
+                            }
+                            
+                            .star-rating-input input {
+                                display: none;
+                            }
+                            
+                            .star-rating-input label {
+                                float: right;
+                                padding: 0 5px;
+                                cursor: pointer;
+                                transition: all 0.2s;
+                            }
+                            
+                            .star-rating-input label:hover,
+                            .star-rating-input label:hover ~ label {
+                                color: #ffc107;
+                            }
+                            
+                            /* Form styles */
+                            .review-title {
+                                font-size: 18px;
+                                margin-bottom: 20px;
+                                color: #333;
+                            }
+                            
+                            .rating-group {
+                                margin-bottom: 20px;
+                            }
+                            
+                            .rating-label {
+                                display: block;
+                                margin-bottom: 8px;
+                                font-weight: 600;
+                            }
+                            
+                            .btn-submit {
+                                background: #ff6b6b;
+                                color: white;
+                                padding: 10px 25px;
+                                border: none;
+                                border-radius: 4px;
+                                font-weight: 600;
+                                transition: all 0.3s;
+                            }
+                            
+                            .btn-submit:hover {
+                                background: #ff5252;
+                            }
+                            
+                            .no-comments {
+                                color: #888;
+                                font-style: italic;
+                                text-align: center;
+                                padding: 20px 0;
+                            }
+                            
+                            .comment-divider {
+                                margin: 25px 0;
+                                border-color: #eee;
+                            }
+                        </style>
+                        
+                        <script>
+                            $(document).ready(() => {
+                                // Accordion functionality
+                                $('.accordion-title').click(function() {
+                                    const accordionItem = $(this).parent('.accordion-item');
+                                    const scrollHeight = accordionItem.find('.accordion-contant').prop("scrollHeight");
+                                    accordionItem[0].style.setProperty('--max-height', scrollHeight + 'px');
+                                    accordionItem.toggleClass('current');
+                                });
+                                
+                                // Star rating interaction
+                                $('.star-rating-input label').hover(function() {
+                                    $(this).prevAll('label').addBack().css('color', '#ffc107');
+                                    $(this).nextAll('label').css('color', '#ccc');
+                                });
+                                
+                                $('.star-rating-input').mouseleave(function() {
+                                    $(this).find('label').css('color', '#ccc');
+                                    $(this).find('input:checked').nextAll('label').addBack().css('color', '#ffc107');
+                                });
+                            });
+                        </script>
 
 
             </div>
@@ -754,7 +1002,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                     <div class="swiper-button-prev"></div>
                     <div class="swiper-button-next"></div>
@@ -898,7 +1146,7 @@
     let oldPriceDisplay = document.querySelector(".product-price-old");
     let priceMeta = document.querySelector("meta[itemprop='price']");
     let stockInfo = document.getElementById("stock-info");
-    let stockQuantity = 0; 
+    let stockQuantity = 0;
 
     function showAlert(message) {
         let alertBox = document.getElementById("alert-message");
@@ -930,11 +1178,11 @@
                     newPriceDisplay.innerHTML = `<span style="color: red; font-weight: bold;">${data.message}</span>`;
                     oldPriceDisplay.innerHTML = "";
                     priceMeta.setAttribute("content", "0");
-                    stockInfo.innerHTML = "Số lượng: --"; 
+                    stockInfo.innerHTML = "Số lượng: --";
                 } else {
                     newPriceDisplay.innerHTML = `<span style="color: green; font-weight: bold;">${data.new_price}</span>`;
-                    oldPriceDisplay.innerHTML = data.old_price_raw > data.new_price_raw 
-                        ? `<del class="price product-price-old">${data.old_price}</del>` 
+                    oldPriceDisplay.innerHTML = data.old_price_raw > data.new_price_raw
+                        ? `<del class="price product-price-old">${data.old_price}</del>`
                         : "";
                     priceMeta.setAttribute("content", data.new_price_raw);
 
@@ -1114,7 +1362,7 @@
                 size: selectedSize,
                 quantity: quantity,
                 price: price,
-                total_price: totalPrice, 
+                total_price: totalPrice,
                 bank_code: ""
             })
         })
@@ -1128,8 +1376,30 @@
         })
         .catch(error => alert("Có lỗi xảy ra, vui lòng thử lại!"));
     } else {
+
         // ✅ Gọi popup xác nhận đơn hàng trước khi gửi đơn COD
         showOrderSummary(productId, productName, selectedColorId, selectedColor, selectedSizeId, selectedSize, quantity, paymentMethod, price);
+
+       /*     method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content
+            },
+            body: JSON.stringify({
+                product_id: productId,
+                product_name: productName,
+                color: selectedColor,
+                size: selectedSize,
+                quantity: quantity,
+                price: price,
+                total_price: totalPrice,
+                payment_method: paymentMethod
+            })
+        })
+        .then(response => response.json())
+        .then(data => alert(data.messae))
+        .catch(error => alert("Lỗi khi lưu đơn hàng!"));
+*/
     }
 });
 

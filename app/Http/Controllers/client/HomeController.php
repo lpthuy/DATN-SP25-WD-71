@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Color;
-use App\Models\Product;
 use App\Models\User;
+use App\Models\Color;
+use App\Models\Banner;
+use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
@@ -32,25 +33,47 @@ class HomeController extends Controller
 
     public function index()
     {
-        $products = Product::all(); // Lấy tất cả sản phẩm từ database
-        return view('client.pages.home', compact('products'));
+        $products = Product::all(); // Lấy tất cả sản phẩm
+        $banners = Banner::where('status', 1)->orderBy('position', 'asc')->get(); // Lấy banner theo thứ tự position
+
+        return view('client.pages.home', compact('products', 'banners'));
+    }
+    //   lấy toàn bộ sản phẩm in ra
+    public function allProducts()
+    {
+        $products = Product::all(); // Lấy tất cả sản phẩm
+        return view('client.pages.product-by-category', compact('products'));
     }
 
 
     public function about()
     {
-        return view('client.pages.about');
+
+        $categories = Category::whereNull('parent_category_id')->where('is_active', 1)->get();
+        return view('client.pages.about', compact('categories'));
     }
+
 
     public function product()
     {
         return view('client.pages.product');
     }
 
-    public function productbycategory()
+
+    public function productByCategory(Request $request)
     {
-        return view('client.pages.product-by-category');
+        $id = $request->query('id'); // Lấy ID từ query string (?id=1)
+
+        if (!$id) {
+            return redirect()->route('home')->with('error', 'Danh mục không hợp lệ.');
+        }
+
+        $category = Category::findOrFail($id);
+        $products = Product::where('category_id', $id)->get();
+
+        return view('client.pages.product-by-category', compact('category', 'products'));
     }
+
 
     public function productDetail($id)
     {
@@ -65,21 +88,23 @@ class HomeController extends Controller
 
             // Lấy danh sách màu sắc có sẵn của sản phẩm từ bảng `product_variants`
             $colors = DB::table('product_variants')
-                        ->join('colors', 'product_variants.color_id', '=', 'colors.id')
-                        ->where('product_variants.product_id', $id)
-                        ->select('colors.id', 'colors.color_name', 'colors.color_code')
-                        ->distinct()
-                        ->get();
+                ->join('colors', 'product_variants.color_id', '=', 'colors.id')
+                ->where('product_variants.product_id', $id)
+                ->select('colors.id', 'colors.color_name', 'colors.color_code')
+                ->distinct()
+                ->get();
 
             // Lấy danh sách kích thước có sẵn của sản phẩm từ bảng `product_variants`
             $sizes = DB::table('product_variants')
-                        ->join('sizes', 'product_variants.size_id', '=', 'sizes.id')
-                        ->where('product_variants.product_id', $id)
-                        ->select('sizes.id', 'sizes.size_name')
-                        ->distinct()
-                        ->get();
+                ->join('sizes', 'product_variants.size_id', '=', 'sizes.id')
+                ->where('product_variants.product_id', $id)
+                ->select('sizes.id', 'sizes.size_name')
+                ->distinct()
+                ->get();
 
-            return view('client.pages.product-detail', compact('product', 'images', 'category', 'colors', 'sizes'));
+            $comments = $product->comments()->get();
+
+            return view('client.pages.product-detail', compact('product', 'images', 'category', 'colors', 'sizes', 'comments'));
         }
 
         return redirect()->route('home')->with('error', 'Sản phẩm không tồn tại');
@@ -90,26 +115,26 @@ class HomeController extends Controller
         $productId = $request->input('product_id');
         $colorId = $request->input('color_id');
         $sizeId = $request->input('size_id');
-    
+
         // Kiểm tra xem biến thể sản phẩm có tồn tại không
         $variant = DB::table('product_variants')
             ->where('product_id', $productId)
             ->where('color_id', $colorId)
             ->where('size_id', $sizeId)
             ->first();
-    
+
         if (!$variant) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Sản phẩm không có màu sắc và size này!',
             ]);
         }
-    
+
         // Lấy giá cũ, giá mới và số lượng tồn kho
         $oldPrice = $variant->price; // Giá gốc
         $newPrice = $variant->discount_price ?? $variant->price; // Giá khuyến mãi (nếu có)
         $stockQuantity = $variant->stock_quantity; // Số lượng tồn kho
-    
+
         return response()->json([
             'status' => 'success',
             'old_price' => number_format($oldPrice, 0, ',', '.') . '₫',
@@ -119,10 +144,10 @@ class HomeController extends Controller
             'stock_quantity' => $stockQuantity, // Trả về số lượng tồn kho
         ]);
     }
-    
 
 
-    
+
+
 
 
 

@@ -5,7 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PaymentMethodController;
-
+use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
-
+use App\Http\Controllers\Client\CommentController;
 use Illuminate\Http\Request;
 
 
@@ -27,10 +27,21 @@ Auth::routes();
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('about');
+
 Route::get('/san-pham', [HomeController::class, 'product'])->name('product');
 // Route::get('/chi-tiet-san-pham', [HomeController::class, 'productDetail'])->name('productDetail');
 Route::get('/chi-tiet-san-pham/{id}', [HomeController::class, 'productDetail'])->name('productDetail');
-Route::get('/danh-muc', [HomeController::class, 'productbycategory'])->name('productbycategory');
+//thu muc , sp lq toi thu mucmuc
+Route::get('/san-pham/{id}', [HomeController::class, 'productDetail'])
+    ->name('product.detail');
+Route::get('/danh-muc', [HomeController::class, 'productByCategory'])
+    ->name('productbycategory');
+//in ra toan bo spsp
+Route::get('/products', [HomeController::class, 'allProducts'])->name('products.all');
+
+Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment.store');
+
+
 Route::get('/tin-tuc', [HomeController::class, 'post'])->name('post');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
@@ -153,7 +164,9 @@ Route::resource('colors', ColorController::class);
 Route::resource('products_variants', ProductVariantController::class);
  // Quản lý hình ảnh sản phẩm (Product Images)
  Route::resource('products_images', ProductImageController::class);
+//quan ly binh lua
+Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
+Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
+Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
 
-
-    
 });

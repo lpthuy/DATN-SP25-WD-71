@@ -1420,8 +1420,6 @@
         <div id="popupCartModal" class="modal fade" role="dialog">
         </div>
 
-        
-
         <script>
             $('.popup-sapo .icon').click(function () {
                 $(".popup-sapo").toggleClass("active");

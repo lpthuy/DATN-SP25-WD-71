@@ -250,7 +250,7 @@
                                         <a class="nav-link" href="gioi-thieu.html" title="Giới thiệu">Giới
                                             thiệu</a>
                                     </li>
-                                    <li class="has-submenu level0 ">
+                                    {{-- <li class="has-submenu level0 ">
                                         <a class="nav-link" href="collections/all.html" title="Sản phẩm">
                                             Sản phẩm
                                             <span class="icon-plus-submenu plus-nClick1"></span>
@@ -343,7 +343,29 @@
                                                 </a>
                                             </li>
                                         </ul>
+                                    </li> --}}
+                                    <li class="has-submenu level0">
+                                        <a class="nav-link" href="{{ route('products.all') }}" title="Sản phẩm">
+                                            Sản phẩm
+                                            <span class="icon-plus-submenu plus-nClick1"></span> <!-- Nút "+" -->
+                                        </a>
+                                        <ul class="submenu-links" style="display: none;">
+                                            @foreach ($categories as $category)
+                                                <li class="has-submenu level1">
+                                                    <a href="{{ route('productbycategory', ['id' => $category->id]) }}" title="{{ $category->name }}">
+                                                        {{ $category->name }}
+                                                       
+                                                    </a>
+                                                    <ul class="submenu-links" style="display: none;">
+                                                        @foreach ($category->subcategories ?? [] as $subcategory)
+                                                            <li><a href="{{ route('productbycategory', ['id' => $subcategory->id]) }}">{{ $subcategory->name }}</a></li>
+                                                        @endforeach
+                                                    </ul>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </li>
+                                    
                                     <li class="nav-item active">
                                         <a class="nav-link" href="tin-tuc.html" title="Tin tức">Tin tức</a>
                                     </li>
