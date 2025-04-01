@@ -11,128 +11,153 @@ use App\Models\ProductVariant;
 use App\Models\Size;
 use Illuminate\Support\Facades\Storage;
 
-class ProductController extends Controller {
-    public function index() {
+class ProductController extends Controller
+{
+    public function index()
+    {
         $products = Product::with(['category', 'variants.size', 'variants.color'])->paginate(10);
-        return view('admin.products.index', compact('products'));
+        $colors = Color::all();
+        $sizes = Size::all();
+
+        return view('admin.products.index', compact('products', 'colors', 'sizes'));
     }
 
-    public function create() {
+    public function create()
+    {
         $categories = Category::all();
         $colors = Color::all();
         $sizes = Size::all();
         return view('admin.products.create', compact('categories', 'colors', 'sizes'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'name'        => 'required|string|max:255',
             'category_id' => 'nullable|exists:categories,id',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'variants' => 'required|array|min:1', // Ít nhất một biến thể
+            'description' => 'nullable|string',
+            'images.*'    => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'variants'    => 'required|array|min:1',
         ]);
-    
-        // Lưu thông tin sản phẩm
+
         $data = $request->except(['images', 'variants']);
         $imagePaths = [];
-    
+
         if ($request->hasFile('images')) {
-            $imagePaths = array_map(fn($image) => $image->store('products', 'public'), $request->file('images'));
+            foreach ($request->file('images') as $image) {
+                $imagePaths[] = $image->store('products', 'public');
+            }
             $data['image'] = implode(',', $imagePaths);
         }
-    
-        // Tạo sản phẩm trước để lấy ID
+
         $product = Product::create($data);
-    
-        // Lưu từng biến thể với giá riêng
+
         $variants = [];
-    
-        foreach ($request->variants as $sizeId => $colors) {
-            foreach ($colors as $colorId => $variant) {
-                if (!isset($variant['selected']) || !isset($variant['price'])) continue;
-    
-                $variants[] = [
-                    'product_id' => $product->id,
-                    'size_id' => $sizeId,
-                    'color_id' => $colorId,
-                    'stock_quantity' => (int) ($variant['stock_quantity'] ?? 0),
-                    'price' => (float) $variant['price'],
-                    'discount_price' => isset($variant['discount_price']) ? (float) $variant['discount_price'] : null,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+        foreach ($request->variants as $variant) {
+            if (!isset($variant['color_id'], $variant['size_id'], $variant['price'])) {
+                continue;
             }
+
+            $variants[] = [
+                'product_id'     => $product->id,
+                'size_id'        => $variant['size_id'],
+                'color_id'       => $variant['color_id'],
+                'price'          => (float) $variant['price'],
+                'discount_price' => $variant['discount_price'] ?? 0,
+                'stock_quantity' => $variant['stock_quantity'] ?? 1,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ];
         }
-    
+
         if (!empty($variants)) {
             ProductVariant::insert($variants);
         }
-    
-        return redirect()->route('products.index')->with('success', 'Sản phẩm và biến thể đã được tạo thành công!');
+
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được tạo thành công!');
     }
 
-    public function edit(Product $product) {
+    public function edit(Product $product)
+    {
         $categories = Category::all();
         $colors = Color::all();
         $sizes = Size::all();
         return view('admin.products.edit', compact('product', 'categories', 'colors', 'sizes'));
     }
 
-    public function update(Request $request, Product $product) {
+    public function update(Request $request, Product $product)
+    {
         $request->validate([
             'name' => 'required|string|max:255',
-            'category_id' => 'nullable|exists:categories,id',
-            'images' => 'nullable|array',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'variants' => 'nullable|array',
+            'category_id' => 'required|exists:categories,id',
+            'description' => 'nullable|string',
+            'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'variants.*.color_id' => 'required|exists:colors,id',
+            'variants.*.size_id' => 'required|exists:sizes,id',
+            'variants.*.price' => 'required|numeric|min:0',
+            'variants.*.discount_price' => 'nullable|numeric|min:0',
+            'variants.*.stock_quantity' => 'required|integer|min:1',
         ]);
     
-        // Cập nhật thông tin sản phẩm (trừ ảnh)
-        $data = $request->except(['images', 'variants']);
+        $product->update($request->only(['name', 'category_id', 'description']));
     
-        // Xử lý hình ảnh
+        // Cập nhật hình ảnh
         if ($request->hasFile('images')) {
-            $imagePaths = [];
-            foreach ($request->file('images') as $image) {
-                $imagePaths[] = $image->store('products', 'public');
-            }
-            $data['image'] = implode(',', $imagePaths);
-        } else {
-            // Giữ nguyên ảnh cũ nếu không có ảnh mới
-            $data['image'] = $product->image;
-        }
-    
-        $product->update($data);
-    
-        // ✅ Cập nhật biến thể mà không xóa toàn bộ dữ liệu cũ
-        foreach ($request->variants as $sizeId => $colors) {
-            foreach ($colors as $colorId => $variant) {
-                if (isset($variant['selected']) && isset($variant['price'])) {
-                    ProductVariant::updateOrCreate(
-                        ['product_id' => $product->id, 'size_id' => $sizeId, 'color_id' => $colorId],
-                        [
-                            'stock_quantity' => (int) ($variant['stock_quantity'] ?? 0),
-                            'price' => (float) $variant['price'],
-                            'discount_price' => isset($variant['discount_price']) ? (float) $variant['discount_price'] : null,
-                        ]
-                    );
+            if ($product->image) {
+                foreach (explode(',', $product->image) as $oldImage) {
+                    Storage::disk('public')->delete($oldImage);
                 }
             }
+    
+            $newImages = [];
+            foreach ($request->file('images') as $image) {
+                $newImages[] = $image->store('products', 'public');
+            }
+            $product->update(['image' => implode(',', $newImages)]);
         }
     
-        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được cập nhật!');
+        // Xóa biến thể được đánh dấu xóa
+        if ($request->deleted_variants) {
+            $variantIds = explode(',', $request->deleted_variants);
+            ProductVariant::whereIn('id', $variantIds)->delete();
+        }
+    
+        // Xử lý cập nhật và thêm mới biến thể
+        foreach ($request->variants as $variantData) {
+            if (!empty($variantData['id'])) {
+                ProductVariant::where('id', $variantData['id'])->update([
+                    'color_id' => $variantData['color_id'],
+                    'size_id' => $variantData['size_id'],
+                    'price' => $variantData['price'],
+                    'discount_price' => $variantData['discount_price'] ?? null,
+                    'stock_quantity' => $variantData['stock_quantity'],
+                ]);
+            } else {
+                ProductVariant::create([
+                    'product_id' => $product->id,
+                    'color_id' => $variantData['color_id'],
+                    'size_id' => $variantData['size_id'],
+                    'price' => $variantData['price'],
+                    'discount_price' => $variantData['discount_price'] ?? null,
+                    'stock_quantity' => $variantData['stock_quantity'],
+                ]);
+            }
+        }
+    
+        return redirect()->route('products.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
-    
-    
-    public function destroy(Product $product) {
+    public function destroy(Product $product)
+    {
         if ($product->image) {
-            Storage::disk('public')->delete($product->image);
+            $images = explode(',', $product->image);
+            foreach ($images as $image) {
+                Storage::disk('public')->delete($image);
+            }
         }
-        $product->colors()->detach();
-        $product->sizes()->detach();
+
+        $product->variants()->delete();
         $product->delete();
+
         return redirect()->route('products.index')->with('success', 'Sản phẩm đã bị xóa!');
     }
 }
