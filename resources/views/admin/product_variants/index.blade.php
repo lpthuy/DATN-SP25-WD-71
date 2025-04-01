@@ -41,7 +41,7 @@
                             {{ number_format($variant->price, 0, ',', '.') }} VND
                         </span>
                     @else
-                        --
+                        
                     @endif
                 </td>
                 <td>{{ $variant->stock_quantity }}</td>
