@@ -51,10 +51,10 @@
 
             {{-- Mô tả --}}
             <div class="mb-3">
-                <label class="form-label fw-bold">Mô tả sản phẩm</label>
-                <textarea name="description" class="form-control" rows="4">{{ old('description', $product->description) }}</textarea>
+                <label for="description" class="form-label fw-bold">Mô tả sản phẩm</label>
+                <textarea id="description" name="description" class="form-control">{{ old('description', $product->description) }}</textarea>
             </div>
-
+            
             {{-- Input lưu biến thể bị xóa --}}
             <input type="hidden" name="deleted_variants" id="deletedVariants">
 
@@ -406,6 +406,39 @@ document.querySelector("form").addEventListener("submit", function (event) {
         alert("❌ Vui lòng điền đầy đủ tất cả các trường!");
     }
     return isValid;
+});
+
+    </script>
+@endsection
+@section('css')
+    <!-- Summernote CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+@endsection
+
+@section('js')
+    <!-- Summernote JS -->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+    <script>
+          $(document).ready(function() {
+$('#description').summernote({
+    height: 250,
+    placeholder: 'Nhập mô tả sản phẩm ở đây...',
+    tabsize: 2,
+    toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['table', ['table']],
+        ['insert', ['link', 'picture', 'video']],
+        ['view', ['fullscreen', 'codeview', 'help']]
+    ]
+});
+
+// Sửa lỗi event listener không passive
+document.addEventListener('wheel', function(event) {}, { passive: true });
 });
 
     </script>

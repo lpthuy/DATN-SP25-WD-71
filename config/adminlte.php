@@ -360,7 +360,26 @@ return [
             ],
         ],
     ],
-
+    [
+        'header' => 'QUẢN LÝ BÀI VIẾT',
+    ],
+    [
+        'text'    => 'Quản lý Bài Viết',
+        'icon'    => 'fas fa-newspaper',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Bài Viết',
+                'url'  => 'admin/posts',
+                'icon' => 'fas fa-list-alt',
+            ],
+            [
+                'text' => 'Thêm Bài Viết',
+                'url'  => 'admin/posts/create',
+                'icon' => 'fas fa-plus',
+            ],
+        ],
+    ],
+    
     [
         'text'    => 'Kích thước & Màu sắc',
         'icon'    => 'fas fa-ruler-combined',

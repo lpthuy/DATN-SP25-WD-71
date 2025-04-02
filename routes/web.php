@@ -9,7 +9,10 @@ use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
+use App\Http\Controllers\Admin\PostController;
+
 use App\Http\Controllers\Admin\SizeController;
+
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -19,6 +22,7 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\CommentController;
+
 use Illuminate\Http\Request;
 
 
@@ -164,6 +168,10 @@ Route::resource('colors', ColorController::class);
 Route::resource('products_variants', ProductVariantController::class);
  // Quản lý hình ảnh sản phẩm (Product Images)
  Route::resource('products_images', ProductImageController::class);
+//quản lý banner
+
+Route::resource('posts', PostController::class);
+
 //quan ly binh lua
 Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
 Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
