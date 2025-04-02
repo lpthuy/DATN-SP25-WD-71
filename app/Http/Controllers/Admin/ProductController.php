@@ -18,6 +18,7 @@ class ProductController extends Controller
         $products = Product::with(['category', 'variants.size', 'variants.color'])->paginate(10);
         $colors = Color::all();
         $sizes = Size::all();
+        
 
         return view('admin.products.index', compact('products', 'colors', 'sizes'));
     }
@@ -147,17 +148,42 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Sản phẩm đã được cập nhật thành công!');
     }
     public function destroy(Product $product)
-    {
-        if ($product->image) {
-            $images = explode(',', $product->image);
-            foreach ($images as $image) {
-                Storage::disk('public')->delete($image);
-            }
+{
+    // Xóa ảnh nếu có
+    if ($product->image) {
+        $images = explode(',', $product->image);
+        foreach ($images as $image) {
+            Storage::disk('public')->delete($image);
         }
-
-        $product->variants()->delete();
-        $product->delete();
-
-        return redirect()->route('products.index')->with('success', 'Sản phẩm đã bị xóa!');
     }
+
+    // Xóa các biến thể sản phẩm
+    $product->variants()->delete();
+
+    // ❗ Không xóa OrderItem để giữ thông tin hóa đơn
+
+    // ❗ Kiểm tra và xóa sản phẩm ra khỏi session giỏ hàng (nếu tồn tại)
+    $cart = session()->get('cart', []);
+    $cart = array_filter($cart, function ($item) use ($product) {
+        return $item['product_id'] != $product->id;
+    });
+
+    session()->put('cart', $cart); // Ghi đè lại giỏ hàng đã lọc
+
+    // Xóa chính sản phẩm
+    $product->delete();
+
+    return redirect()->route('products.index')->with('success', 'Sản phẩm đã bị xóa và loại khỏi giỏ hàng!');
+}
+
+public function toggleActive($id)
+{
+    $product = Product::findOrFail($id);
+    $product->is_active = !$product->is_active;
+    $product->save();
+
+    return back()->with('success', 'Cập nhật trạng thái sản phẩm thành công!');
+}
+
+
 }

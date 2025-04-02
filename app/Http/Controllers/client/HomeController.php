@@ -34,6 +34,7 @@ class HomeController extends Controller
     public function index()
     {
         $products = Product::all(); // Lấy tất cả sản phẩm
+        $products = Product::where('is_active', true)->latest()->take(8)->get();
         $banners = Banner::where('status', 1)->orderBy('position', 'asc')->get(); // Lấy banner theo thứ tự position
 
         return view('client.pages.home', compact('products', 'banners'));
@@ -299,22 +300,25 @@ class HomeController extends Controller
     }
 
     public function updateProfile(Request $request)
-    {
-        $request->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,' . Auth::id(),
-            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
-        ]);
+{
+    $request->validate([
+        'name' => 'required|min:3',
+        'email' => 'required|email|unique:users,email,' . Auth::id(),
+        'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15',
+        'address' => 'required|string|max:255', // validate địa chỉ
+    ]);
 
-        $user = Auth::user();
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-        ]);
+    $user = Auth::user();
+    $user->update([
+        'name' => $request->name,
+        'email' => $request->email,
+        'phone' => $request->phone,
+        'address' => $request->address, // thêm dòng này
+    ]);
 
-        return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
-    }
+    return redirect()->route('profile')->with('success', 'Cập nhật thông tin thành công!');
+}
+
 
 
     public function changePassword()

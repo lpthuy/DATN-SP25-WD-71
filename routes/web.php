@@ -6,10 +6,14 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\SizeController;
+
+
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -21,8 +25,33 @@ use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\CommentController;
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OrderSuccessMail;
+use App\Models\Order;
+
+
+
 
 Auth::routes();
+
+// Route::get('/test-mail', function () {
+//     $order = \App\Models\Order::latest()->first();
+//     return Mail::to('nguyenvanquochieu311104@gmail.com')->send(new OrderSuccessMail($order));
+
+// });
+
+
+Route::get('/api/order-status/{id}', function ($id) {
+    $order = Order::find($id);
+    
+    if (!$order) {
+        return response()->json(['error' => 'Không tìm thấy đơn hàng'], 404);
+    }
+
+    return response()->json([
+        'status' => $order->status
+    ]);
+});
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -38,6 +67,9 @@ Route::get('/danh-muc', [HomeController::class, 'productByCategory'])
     ->name('productbycategory');
 //in ra toan bo spsp
 Route::get('/products', [HomeController::class, 'allProducts'])->name('products.all');
+
+Route::post('/admin/products/{id}/toggle-active', [ProductController::class, 'toggleActive'])->name('products.toggleActive');
+
 
 Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment.store');
 
@@ -61,14 +93,21 @@ Route::post('/doi-mat-khau', [HomeController::class, 'doChangePassword'])->name(
 
 
 
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect()->route('home'); // Chuyển hướng về trang chủ sau khi logout
+Route::post('/logout', function (Request $request) {
+    session()->forget('cart'); // ✅ Xoá session giỏ hàng
+    Auth::logout();            // Đăng xuất
+    return redirect()->route('home'); // Chuyển về trang chủ hoặc tuỳ bạn
 })->name('logout');
+
 
 Route::get('/tai-khoan', [HomeController::class, 'profile'])->name('profile');
 Route::get('/don-hang', [HomeController::class, 'order'])->name('order');
 Route::get('/dia-chi', [HomeController::class, 'address'])->name('address');
+
+
+
+
+
 
 Route::get('/tai-khoan/chinh-sua', [HomeController::class, 'editProfile'])->name('editProfile');
 Route::post('/tai-khoan/chinh-sua', [HomeController::class, 'updateProfile'])->name('updateProfile');
@@ -108,6 +147,7 @@ Route::get('/orders', [OrderController::class, 'index'])->name('order');
 
 Route::get('/order/{id}', [OrderController::class, 'show'])->name('order.detail');
 
+Route::post('/order/cancel', [OrderController::class, 'cancelOrder'])->name('order.cancel');
 
 
 
@@ -126,6 +166,9 @@ Route::get('/vnpay_return', [PaymentController::class, 'vnpayReturn'])->name('vn
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart');
 Route::get('/thanh-toan', [CheckoutController::class, 'show'])->name('checkout.show');
+// routes/web.php
+Route::post('/cart/recheck', [CartController::class, 'recheckCart'])->name('cart.recheck');
+
 
 Route::get('/check-login-status', function () {
     return response()->json(['isAuthenticated' => Auth::check()]);
@@ -138,6 +181,9 @@ Route::get('/check-login-status', function () {
 Route::match(['get', 'post'], '/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
 Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('checkout.process');
 
+
+
+Route::get('/admin/orders/{id}/pdf', [OrderController::class, 'exportPDF'])->name('orders.exportPDF');
 
 
 
@@ -168,5 +214,9 @@ Route::resource('products_variants', ProductVariantController::class);
 Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
 Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
 Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+
+Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
+Route::get('orders/{id}', [OrdersController::class, 'show'])->name('orders.show');
+Route::post('orders/{id}/update-status', [OrdersController::class, 'updateStatus'])->name('orders.updateStatus');
 
 });

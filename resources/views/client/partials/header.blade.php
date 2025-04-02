@@ -35,10 +35,11 @@
                                     <li><a class="dropdown-item" href="{{ route('order.index') }}">Đơn hàng của tôi</a></li>
                                 @endif
                                 <li>
-                                    <form method="POST" action="{{ route('logout') }}">
+                                    <form id="logout-form" method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <button type="submit" class="dropdown-item">Đăng xuất</button>
                                     </form>
+                                    
                                 </li>
                             </ul>
                         </div>
@@ -230,10 +231,30 @@
     // Cập nhật ngay khi thêm vào giỏ hàng
     document.querySelectorAll('.btn-cart').forEach(button => {
         button.addEventListener('click', function () {
-            setTimeout(updateCartCount, 1000); // Đợi 1s để cập nhật giỏ hàng
+            setTimeout(updateCartCount, 1000);
         });
     });
 
     // Cập nhật khi tải trang
     document.addEventListener("DOMContentLoaded", updateCartCount);
+
+    // ✅ Tự động kiểm tra mỗi 5 giây nếu có sản phẩm bị ẩn
+    setInterval(() => {
+        fetch("{{ route('cart.recheck') }}", {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                'Content-Type': 'application/json',
+            },
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // ✅ Cập nhật số lượng hiển thị ở giỏ hàng header
+                document.querySelector('.count_item_pr.count').innerText = Object.keys(data.cart).length;
+            }
+        });
+    }, 5000); // mỗi 5 giây
 </script>
+
+
