@@ -46,4 +46,5 @@ class OrdersController extends Controller
 
         return redirect()->back()->with('success', 'Cập nhật trạng thái đơn hàng thành công.');
     }
+    
 }

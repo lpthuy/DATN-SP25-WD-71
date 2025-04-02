@@ -26,7 +26,12 @@
 <form action="{{ route('orders.updateStatus', $order->id) }}" method="POST" class="mb-4">
     @csrf
     <label for="status">Cập nhật trạng thái:</label>
-    <input type="text" name="status" value="{{ $order->status }}" class="form-control mb-2" />
+    <select name="status" class="form-control mb-2">
+        <option value="đang xác nhận" {{ $order->status == 'đang xác nhận' ? 'selected' : '' }}>Đang xác nhận</option>
+        <option value="đang giao hàng" {{ $order->status == 'đang giao hàng' ? 'selected' : '' }}>đang giao hàng</option>
+        <option value="đã giao thành công" {{ $order->status == 'đã giao thành công' ? 'selected' : '' }}>Đã giao thành công</option>
+        <option value="đã hủy" {{ $order->status == 'đã hủy' ? 'selected' : '' }}>Đã hủy</option>
+    </select>
     <button type="submit" class="btn btn-primary">Cập nhật</button>
 </form>
 
