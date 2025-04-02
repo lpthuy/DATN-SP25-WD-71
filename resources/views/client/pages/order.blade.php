@@ -52,9 +52,9 @@
                                                 <th>Mã đơn hàng</th>
                                                 <th>Ngày</th>
                                                 <th>Thanh toán</th>
-
-                                                <th>Xem chi tiết</th>  <!-- ✅ Cột mới -->
-
+                                                <th>Xem chi tiết</th>
+                                                <th>Trạng thái</th> <!-- thêm mới -->
+                                                <th>Hành động</th>
                                             </tr>
                                         </thead>
                                     
@@ -84,6 +84,34 @@
                                                                 Xem chi tiết
                                                             </a>
                                                         </td>
+                                                        <td>
+                                                            @if ($order->status === 'processing')
+                                                                <span class="badge badge-info">Đang xử lý</span>
+                                                            @elseif ($order->status === 'shipping')
+                                                                <span class="badge badge-primary">Đang giao hàng</span>
+                                                            @elseif ($order->status === 'completed')
+                                                                <span class="badge badge-success">Đã giao hàng</span>
+                                                            @elseif ($order->status === 'cancelled')
+                                                                <span class="badge badge-danger">Đã hủy</span>
+                                                            @else
+                                                                <span class="badge badge-secondary">{{ ucfirst($order->status) }}</span>
+                                                            @endif
+                                                        </td>
+                                                        
+                                                        
+                                                        <td>
+                                                            @if($order->status !== 'cancelled')
+                                                            <button class="btn btn-cancel-order" onclick="showCancelModal({{ $order->id }})">
+                                                                <i class="fas fa-times-circle"></i> Huỷ đơn
+                                                            </button>
+                                                            
+                                                            @else
+                                                                <span class="badge badge-danger">Đã huỷ</span>
+                                                            @endif
+                                                        </td>
+                                                        
+                                                        
+                                                        
 
                                                     </tr>
                                                 @endforeach
@@ -111,4 +139,213 @@
             </div>
         </div>
     </section>
+    
+
+<!-- Modal chọn lý do hủy -->
+<div id="cancelModal" class="cancel-modal" style="display: none;">
+    <div class="cancel-modal-content">
+        <h5 class="cancel-title">📝 Lý do hủy đơn hàng</h5>
+        <form id="cancelForm">
+            <div class="cancel-reason">
+                <label><input type="radio" name="reason" value="Tôi không còn nhu cầu"> Tôi không còn nhu cầu</label>
+                <label><input type="radio" name="reason" value="Tôi đặt nhầm"> Tôi đặt nhầm</label>
+                <label><input type="radio" name="reason" value="Thời gian giao hàng quá lâu"> Thời gian giao hàng quá lâu</label>
+                <label><input type="radio" name="reason" value="Lý do khác" id="other-reason-radio"> Lý do khác</label>
+                <textarea id="customReason" placeholder="Nhập lý do khác..." rows="3" style="display: none;"></textarea>
+            </div>
+
+            <input type="hidden" id="cancelOrderId">
+
+            <div class="cancel-actions">
+                <button type="button" onclick="submitCancelReason()" class="btn btn-danger">Xác nhận</button>
+                <button type="button" onclick="closeCancelModal()" class="btn btn-secondary">Đóng</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+
+<script>
+    function showCancelModal(orderId) {
+        document.getElementById('cancelOrderId').value = orderId;
+        document.getElementById('cancelModal').style.display = 'block';
+    }
+    
+    function closeCancelModal() {
+        document.getElementById('cancelModal').style.display = 'none';
+        document.querySelectorAll('input[name="reason"]').forEach(el => el.checked = false);
+        document.getElementById('customReason').value = '';
+        document.getElementById('customReason').style.display = 'none';
+    }
+    
+    document.querySelectorAll('input[name="reason"]').forEach(radio => {
+        radio.addEventListener('change', function () {
+            const custom = document.getElementById('customReason');
+            if (this.value === 'Lý do khác') {
+                custom.style.display = 'block';
+            } else {
+                custom.style.display = 'none';
+            }
+        });
+    });
+    
+    function submitCancelReason() {
+        const orderId = document.getElementById('cancelOrderId').value;
+        const selected = document.querySelector('input[name="reason"]:checked');
+        let reason = '';
+    
+        if (!selected) {
+            alert('Vui lòng chọn lý do hủy đơn!');
+            return;
+        }
+    
+        if (selected.value === 'Lý do khác') {
+            reason = document.getElementById('customReason').value.trim();
+            if (!reason) {
+                alert('Vui lòng nhập lý do cụ thể!');
+                return;
+            }
+        } else {
+            reason = selected.value;
+        }
+    
+        fetch("{{ route('order.cancel') }}", {
+    method: "POST",
+    headers: {
+        "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        order_id: orderId,
+        cancel_reason: reason
+    })
+})
+.then(response => response.json())
+.then(data => {
+    if (data.status === 'success') {
+        alert(data.message);
+        location.reload();
+    } else {
+        alert(data.message || 'Huỷ thất bại!');
+    }
+})
+.catch(error => {
+    alert('Có lỗi xảy ra khi gửi yêu cầu.');
+    console.error(error);
+});
+
+    }
+    </script>
+    
+
+
+    
+
+<style>
+    .btn-cancel-order {
+        background-color: #ffe6e6;
+        color: #d9534f;
+        border: 1px solid #d9534f;
+        padding: 5px 12px;
+        font-size: 14px;
+        border-radius: 4px;
+        transition: 0.3s ease;
+        font-weight: bold;
+    }
+    
+    .btn-cancel-order i {
+        margin-right: 5px;
+    }
+    
+    .btn-cancel-order:hover {
+        background-color: #d9534f;
+        color: white;
+        box-shadow: 0 0 5px rgba(217, 83, 79, 0.5);
+    }
+
+    </style>
+    
+    <style>
+        .cancel-modal {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4); /* nền mờ tối */
+            z-index: 9999;
+        }
+        
+        .cancel-modal-content {
+            background-color: #fff;
+            padding: 24px 28px;
+            border-radius: 12px;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            animation: slideIn .3s ease;
+        }
+        
+        .cancel-title {
+            margin-bottom: 16px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .cancel-reason label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .cancel-reason textarea {
+            margin-top: 8px;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            resize: vertical;
+        }
+        
+        .cancel-actions {
+            text-align: right;
+            margin-top: 16px;
+        }
+        
+        .cancel-actions .btn {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        
+        .cancel-actions .btn-danger {
+            background-color: #e3342f;
+            color: white;
+            border: none;
+        }
+        
+        .cancel-actions .btn-secondary {
+            background-color: #f1f1f1;
+            color: #333;
+            border: 1px solid #ccc;
+        }
+        
+        /* Hiệu ứng */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        </style>
+        
+        
 @endsection

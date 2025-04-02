@@ -289,9 +289,9 @@
 
                                         <!-- Nút Mua Ngay & Thêm vào Giỏ Hàng -->
                                         <div class="btn-mua button_actions clearfix">
-                                                <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
+                                                {{-- <button type="button" class="btn btn-lg btn-gray btn_buy btn-buy-now" id="buy-now-btn">
                                                     Mua ngay
-                                                </button>
+                                                </button> --}}
                                             <button type="submit" class="btn btn_base normal_button btn_add_cart add_to_cart btn-cart">
                                                 Thêm vào giỏ hàng
                                             </button>
