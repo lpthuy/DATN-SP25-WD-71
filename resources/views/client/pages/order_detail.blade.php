@@ -86,7 +86,7 @@
                 .catch(error => {
                     console.error("Lỗi khi lấy trạng thái đơn hàng:", error);
                 });
-        }, 3000); // Gọi mỗi 3 giây
+        }, 2000); // Gọi mỗi 3 giây
     });
 </script>
 

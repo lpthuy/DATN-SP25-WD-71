@@ -85,34 +85,50 @@
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            @if ($order->status === 'processing')
-                                                                <span class="badge badge-info">Đang xử lý</span>
-                                                            @elseif ($order->status === 'shipping')
-                                                                <span class="badge badge-primary">Đang giao hàng</span>
-                                                            @elseif ($order->status === 'completed')
-                                                                <span class="badge badge-success">Đã giao hàng</span>
-                                                            @elseif ($order->status === 'cancelled')
-                                                                <span class="badge badge-danger">Đã hủy</span>
-                                                            @else
-                                                                <span class="badge badge-secondary">{{ ucfirst($order->status) }}</span>
-                                                            @endif
+                                                            <span class="badge order-status-badge" id="order-status-{{ $order->id }}">
+                                                                @if ($order->status === 'processing')
+                                                                    Đang xử lý
+                                                                @elseif ($order->status === 'shipping')
+                                                                    Đang giao hàng
+                                                                @elseif ($order->status === 'completed')
+                                                                    Đã giao hàng
+                                                                @elseif ($order->status === 'cancelled')
+                                                                    Đã hủy
+                                                                @else
+                                                                    {{ ucfirst($order->status) }}
+                                                                @endif
+                                                            </span>
                                                         </td>
                                                         
                                                         
-                                                        <td>
-                                                            @if($order->status !== 'cancelled')
-                                                            <button class="btn btn-cancel-order" onclick="showCancelModal({{ $order->id }})">
-                                                                <i class="fas fa-times-circle"></i> Huỷ đơn
-                                                            </button>
-                                                            
-                                                            @else
+                                                        
+                                                        <td id="order-action-{{ $order->id }}">
+                                                            @php
+                                                                $status = strtolower($order->status);
+                                                            @endphp
+                                                        
+                                                            @if($status === 'processing' || $status === 'đang xử lý')
+                                                                <button class="btn btn-sm btn-danger" onclick="showCancelModal({{ $order->id }})">
+                                                                    <i class="fas fa-times-circle"></i> Huỷ đơn
+                                                                </button>
+                                                        
+                                                            @elseif($status === 'completed' || $status === 'đã giao thành công')
+                                                                <form action="{{ route('order.received', $order->id) }}" method="POST" style="display:inline-block;">
+                                                                    @csrf
+                                                                    <button type="submit" class="btn btn-sm btn-success">
+                                                                        <i class="fas fa-check-circle"></i> Đã nhận hàng
+                                                                    </button>
+                                                                </form>
+                                                        
+                                                            @elseif($status === 'cancelled' || $status === 'đã huỷ')
                                                                 <span class="badge badge-danger">Đã huỷ</span>
+                                                        
+                                                            @else
+                                                                <span class="text-muted">Không có hành động</span>
                                                             @endif
                                                         </td>
                                                         
                                                         
-                                                        
-
                                                     </tr>
                                                 @endforeach
                                             @else
@@ -139,6 +155,50 @@
             </div>
         </div>
     </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll(".order-status-badge").forEach(function (badge) {
+                const orderId = badge.id.replace("order-status-", "");
+                const actionCell = document.getElementById("order-action-" + orderId);
+        
+                function renderActionByStatus(statusText) {
+                    const status = statusText.trim().toLowerCase();
+        
+                    if (status.includes("đang xử lý")) {
+                        actionCell.innerHTML = `
+                            <button class="btn btn-sm btn-danger" onclick="showCancelModal(${orderId})">
+                                <i class="fas fa-times-circle"></i> Huỷ đơn
+                            </button>
+                        `;
+                    } else if (status.includes("giao thành công") || status.includes("đã giao") || status.includes("hoàn tất")) {
+                        actionCell.innerHTML = `
+                            <form action="/orders/${orderId}/received" method="POST" style="display:inline-block;">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button type="submit" class="btn btn-sm btn-success">
+                                    <i class="fas fa-check-circle"></i> Đã nhận hàng
+                                </button>
+                            </form>
+                        `;
+                    } else if (status.includes("hủy") || status.includes("đã huỷ")) {
+                        actionCell.innerHTML = `<span class="badge badge-danger">Đã huỷ</span>`;
+                    } else {
+                        actionCell.innerHTML = `<span class="text-muted">Không có hành động</span>`;
+                    }
+                }
+        
+                // Gọi lần đầu
+                renderActionByStatus(badge.innerText);
+        
+                // Kiểm tra định kỳ mỗi 2 giây nếu có thay đổi nội dung trạng thái
+                setInterval(() => {
+                    renderActionByStatus(badge.innerText);
+                }, 2000);
+            });
+        });
+        </script>
+        
+        
     
 
 <!-- Modal chọn lý do hủy -->
@@ -164,6 +224,52 @@
     </div>
 </div>
 
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const badges = document.querySelectorAll('.order-status-badge');
+
+        setInterval(() => {
+            badges.forEach(badge => {
+                const id = badge.id.replace('order-status-', '');
+
+                fetch(`/api/order-status/${id}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status) {
+                            let text = '';
+                            let classList = 'badge order-status-badge ';
+
+                            switch (data.status) {
+                                case 'processing':
+                                    text = 'Đang xử lý';
+                                    classList += 'badge-info';
+                                    break;
+                                case 'shipping':
+                                    text = 'Đang giao hàng';
+                                    classList += 'badge-primary';
+                                    break;
+                                case 'completed':
+                                    text = 'Đã giao hàng';
+                                    classList += 'badge-success';
+                                    break;
+                                case 'cancelled':
+                                    text = 'Đã hủy';
+                                    classList += 'badge-danger';
+                                    break;
+                                default:
+                                    text = data.status;
+                                    classList += 'badge-secondary';
+                            }
+
+                            badge.innerText = text;
+                            badge.className = classList;
+                        }
+                    });
+            });
+        }, 3000); // Cập nhật mỗi 3 giây
+    });
+</script>
 
 
 
