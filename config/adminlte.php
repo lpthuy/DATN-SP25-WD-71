@@ -431,6 +431,20 @@ return [
         ],
     ],
 
+    [
+        'header' => 'QUẢN LÝ KHUYẾN MÃI',
+    ],
+    [
+        'text'    => 'Quản lý Khuyến mãi',
+        'icon'    => 'fas fa-tags',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Khuyến mãi',
+                'url'  => 'admin/promotions',
+                'icon' => 'fas fa-gift',
+            ],
+        ],
+    ],
     // Quản lý Bình luận
     [
         'text'    => 'Quản lý Bình luận',

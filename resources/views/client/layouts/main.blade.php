@@ -4,6 +4,9 @@
 <meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 
 <head>
+    <!-- Swiper CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css">
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>@yield('title')</title>
@@ -1421,7 +1424,27 @@
 
         <div id="popupCartModal" class="modal fade" role="dialog">
         </div>
-
+        <script>
+            var swiper = new Swiper(".mySwiper", {
+                slidesPerView: 3, // Hiển thị 3 coupon mỗi lần
+                spaceBetween: 20, // Khoảng cách giữa các slide
+                loop: true, // Lặp lại slider
+                pagination: {
+                    el: ".swiper-pagination",
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+                breakpoints: {
+                    1024: { slidesPerView: 3 },
+                    768: { slidesPerView: 2 },
+                    480: { slidesPerView: 1 }
+                }
+            });
+        </script>
+        
         <script>
             $('.popup-sapo .icon').click(function () {
                 $(".popup-sapo").toggleClass("active");
@@ -1436,6 +1459,7 @@
                 alt="Messenger">
         </a>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
 </body>
 @yield('js')
 </html>

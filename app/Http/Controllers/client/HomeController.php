@@ -7,6 +7,7 @@ use App\Models\Color;
 use App\Models\Banner;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Promotion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
@@ -33,18 +34,22 @@ class HomeController extends Controller
 
     public function index()
     {
+        $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã đã bật
         $products = Product::all(); // Lấy tất cả sản phẩm
         $products = Product::where('is_active', true)->latest()->take(8)->get();
         $banners = Banner::where('status', 1)->orderBy('position', 'asc')->get(); // Lấy banner theo thứ tự position
 
-        return view('client.pages.home', compact('products', 'banners'));
+        return view('client.pages.home', compact('products', 'banners','promotions'));
     }
     //   lấy toàn bộ sản phẩm in ra
     public function allProducts()
     {
-        $products = Product::all(); // Lấy tất cả sản phẩm
-        return view('client.pages.product-by-category', compact('products'));
+        $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã khuyến mãi
+        $products = Product::paginate(9);
+    
+        return view('client.pages.product-by-category', compact('products', 'promotions'));
     }
+
 
 
     public function about()
@@ -63,17 +68,22 @@ class HomeController extends Controller
 
     public function productByCategory(Request $request)
     {
-        $id = $request->query('id'); // Lấy ID từ query string (?id=1)
-
+        $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã khuyến mãi
+        $id = $request->query('id'); // Lấy ID danh mục từ query string (?id=1)
+    
         if (!$id) {
             return redirect()->route('home')->with('error', 'Danh mục không hợp lệ.');
         }
-
+    
         $category = Category::findOrFail($id);
-        $products = Product::where('category_id', $id)->get();
-
-        return view('client.pages.product-by-category', compact('category', 'products'));
+    
+        // Phân trang sản phẩm trong danh mục
+        $products = Product::where('category_id', $id)->paginate(9); // Thêm phân trang ở đây
+    
+        return view('client.pages.product-by-category', compact('category', 'products', 'promotions'));
     }
+    
+    
 
 
     public function productDetail($id)
