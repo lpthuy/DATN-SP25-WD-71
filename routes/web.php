@@ -13,10 +13,10 @@ use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
 
 use App\Http\Controllers\Admin\PostController;
-
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\RevenueStatisticsController;
 use App\Http\Controllers\Admin\SizeController;
-
-
+use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 use Illuminate\Support\Facades\Auth;
@@ -26,7 +26,6 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\CommentController;
-
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
@@ -212,25 +211,32 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     // Quản lý danh mục sản phẩm
 
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');//sửa sản phẩm
-// Quản lý sản phẩm
-Route::resource('products', ProductController::class);
-// Quản lý kích thước sản phẩm (Size)
-Route::resource('sizes', SizeController::class);
-// Quản lý màu sắc sản phẩm (Color)
-Route::resource('colors', ColorController::class);
-// Quản lý biến thể sản phẩm (Product Variants)
-Route::resource('products_variants', ProductVariantController::class);
- // Quản lý hình ảnh sản phẩm (Product Images)
- Route::resource('products_images', ProductImageController::class);
-//quản lý banner
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update'); //sửa sản phẩm
+    // Quản lý sản phẩm
+    Route::resource('products', ProductController::class);
+    // Quản lý kích thước sản phẩm (Size)
+    Route::resource('sizes', SizeController::class);
+    // Quản lý màu sắc sản phẩm (Color)
+    Route::resource('colors', ColorController::class);
+    // Quản lý biến thể sản phẩm (Product Variants)
+    Route::resource('products_variants', ProductVariantController::class);
+    // Quản lý hình ảnh sản phẩm (Product Images)
+    Route::resource('products_images', ProductImageController::class);
+    //quản lý banner
 
-Route::resource('posts', PostController::class);
+    Route::resource('posts', PostController::class);
 
-//quan ly binh lua
-Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
-Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
-Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
-
-
+    //quan ly binh lua
+    Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
+    Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
+    Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+    //quan lý đơn hàng
+    Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
+    Route::get('orders/{id}', [OrdersController::class, 'show'])->name('orders.show');
+    Route::post('orders/{id}/update-status', [OrdersController::class, 'updateStatus'])->name('orders.updateStatus');
+    // quản lý khuyến mãi
+    Route::resource('promotions', PromotionController::class);
+    // quan ly thong ke
+    Route::get('statistics', action: [StatisticsController::class, 'index']);
+    Route::get('revenue', [RevenueStatisticsController::class, 'statistics'])->name('admin.revenue.statistics');
 });
