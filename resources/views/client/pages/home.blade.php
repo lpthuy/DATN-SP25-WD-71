@@ -3,6 +3,9 @@
 @section('title', 'Trang chủ')
 
 @section('content')
+<!-- Swiper CSS -->
+
+
     <h1 class="d-none">Lofi Style - LOFI STYLE - Thương hiệu thời trang của người trẻ hiện đại! Ra đời vào năm
         2016, LOFISTYLE luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tin và năng lượng
         tích cực cho khách hàng.</h1>
@@ -279,84 +282,44 @@
 
     </section>
 
-    <section class="awe-section-4">
+
+     <section class="awe-section-4">
         <section class="section_coupons">
             <div class="container">
                 <div class="coupon-initial">
-                    <div class="listCoupon">
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-4 coupon-item">
-                            <div class="coupon-item__inner">
-                                <div class="coupon-item__right">
-                                    <div class="cp-top">
-                                        <div class="cp-top-title">
-                                            <h3>Miễn phí vận chuyển</h3>
-                                            <p>Đơn hàng từ 300k</p>
-                                        </div>
-                                        <div class="cp-top-detail">
-                                            <p>Mã: <strong>LOFIFREESHIP</strong></p>
-                                            <p>HSD: 08/03/2023</p>
-                                        </div>
-                                    </div>
-                                    <div class="cp-bottom">
-                                        <div class="cp-bottom-btn">
-                                            <button class="dis_copy_2" data-copy="LOFIFREESHIP">Sao
-                                                chép</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-4 coupon-item">
-                            <div class="coupon-item__inner">
-                                <div class="coupon-item__right">
-                                    <div class="cp-top">
-                                        <div class="cp-top-title">
-                                            <h3>Giảm 20%</h3>
-                                            <p>Đơn hàng từ 200k</p>
-                                        </div>
-                                        <div class="cp-top-detail">
-                                            <p>Mã: <strong>LOFI20</strong></p>
-                                            <p>HSD: 13/05/2023</p>
-                                        </div>
-                                    </div>
-                                    <div class="cp-bottom">
-                                        <div class="cp-bottom-btn">
-                                            <button class="dis_copy_2" data-copy="LOFI20">Sao chép</button>
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($promotions as $promo)
+                                <div class="swiper-slide coupon-item">
+                                    <div class="coupon-item__inner">
+                                        <div class="coupon-item__right">
+                                            <div class="cp-top">
+                                                <div class="cp-top-title">
+                                                    <h3>{{ $promo->discount_type == 'percentage' ? 'Giảm ' . $promo->discount_value . '%' : 'Giảm ' . number_format($promo->discount_value) . '₫' }}</h3>
+                                                    <p>Đơn hàng từ {{ number_format($promo->min_purchase_amount) }}₫</p>
+                                                </div>
+                                                <div class="cp-top-detail">
+                                                    <p>Mã: <strong>{{ $promo->code }}</strong></p>
+                                                    <p>HSD: {{ \Carbon\Carbon::parse($promo->end_date)->format('d/m/Y') }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="cp-bottom">
+                                                <div class="cp-bottom-btn">
+                                                    <button class="dis_copy_2" data-copy="{{ $promo->code }}">Sao chép</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-
-                        <div class="col-12 col-md-6 col-lg-4 col-xl-4 coupon-item">
-                            <div class="coupon-item__inner">
-                                <div class="coupon-item__right">
-                                    <div class="cp-top">
-                                        <div class="cp-top-title">
-                                            <h3>Giảm 30%</h3>
-                                            <p>Đơn hàng từ 500k</p>
-                                        </div>
-                                        <div class="cp-top-detail">
-                                            <p>Mã: <strong>LOFI30</strong></p>
-                                            <p>HSD: 13/05/2023</p>
-                                        </div>
-                                    </div>
-                                    <div class="cp-bottom">
-                                        <div class="cp-bottom-btn">
-                                            <button class="dis_copy_2" data-copy="LOFI30">Sao chép</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
+                        <div class="swiper-pagination"></div> <!-- Vẫn giữ phân trang -->
                     </div>
                 </div>
             </div>
         </section>
     </section>
-
+    
     <section class="awe-section-5">
         <link rel="preload" as="script" href="{{ asset('client/js/count-down4d9c.js') }}" />
         <script src="{{ asset('client/js/count-down4d9c.js') }}" type="text/javascript"></script>

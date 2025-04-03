@@ -22,7 +22,7 @@
                 </ul>
             </div>
         </section>
-        <section class="section_coupons">
+        {{-- <section class="section_coupons">
             <div class="container">
                 <div class="coupon-initial">
                     <div class="listCoupon">
@@ -95,7 +95,44 @@
                     </div>
                 </div>
             </div>
+        </section> --}}
+        <section class="awe-section-4">
+            <section class="section_coupons">
+                <div class="container">
+                    <div class="coupon-initial">
+                        <div class="swiper mySwiper">
+                            <div class="swiper-wrapper">
+                                @foreach ($promotions as $promo)
+                                    <div class="swiper-slide coupon-item">
+                                        <div class="coupon-item__inner">
+                                            <div class="coupon-item__right">
+                                                <div class="cp-top">
+                                                    <div class="cp-top-title">
+                                                        <h3>{{ $promo->discount_type == 'percentage' ? 'Giảm ' . $promo->discount_value . '%' : 'Giảm ' . number_format($promo->discount_value) . '₫' }}</h3>
+                                                        <p>Đơn hàng từ {{ number_format($promo->min_purchase_amount) }}₫</p>
+                                                    </div>
+                                                    <div class="cp-top-detail">
+                                                        <p>Mã: <strong>{{ $promo->code }}</strong></p>
+                                                        <p>HSD: {{ \Carbon\Carbon::parse($promo->end_date)->format('d/m/Y') }}</p>
+                                                    </div>
+                                                </div>
+                                                <div class="cp-bottom">
+                                                    <div class="cp-bottom-btn">
+                                                        <button class="dis_copy_2" data-copy="{{ $promo->code }}">Sao chép</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
+                            <div class="swiper-pagination"></div> <!-- Vẫn giữ phân trang -->
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
+        
         <div class="container">
             <div class="row">
                 <aside class="left-sidebar sidebar dqdt-sidebar col-lg-3 col-12">
@@ -449,13 +486,8 @@
                     </div>
 
                     <div class="category-products products category-products-grids clearfix">
-
-
                         <div class="products-view products-view-grid list_hover_pro">
                             <div class="row">
-                             
-                                {{-- <h1>{{ $category->name }}</h1> --}}
-
                                 @if ($products->count() > 0)
                                     <div class="row">
                                         @foreach ($products as $product)
@@ -471,13 +503,9 @@
                                                                         $firstImage = isset($images[0]) ? trim($images[0]) : null;
                                                                     @endphp
                                                                     @if($firstImage)
-                                                                        <img class="lazy img-responsive" width="300" height="300"
-                                                                            src="{{ asset('storage/' . $firstImage) }}"
-                                                                            alt="{{ $product->name }}" />
+                                                                        <img class="lazy img-responsive" width="300" height="300" src="{{ asset('storage/' . $firstImage) }}" alt="{{ $product->name }}" />
                                                                     @else
-                                                                        <img class="lazy img-responsive" width="300" height="300"
-                                                                            src="{{ asset('images/no-image.png') }}"
-                                                                            alt="Không có ảnh" />
+                                                                        <img class="lazy img-responsive" width="300" height="300" src="{{ asset('images/no-image.png') }}" alt="Không có ảnh" />
                                                                     @endif
                                                                 </div>
                                                             </a>
@@ -533,34 +561,16 @@
                                 @else
                                     <p>Không có sản phẩm nào.</p>
                                 @endif
-                                
-                           
+                            </div>
                         </div>
                         <div class="pagenav">
                             <nav class="text-center nav_pagi">
-                                <ul class="pagination clearfix">
-                                    <li class="page-item disabled"><a class="page-link" href="#"
-                                            title="«">«</a>
-                                    </li>
-
-                                    <li class="active page-item disabled"><a class="page-link" href="javascript:;"
-                                            title="1">1</a></li>
-
-                                    <li class="page-item"><a class="page-link" onclick="doSearch(2)"
-                                            href="javascript:;" title="2">2</a></li>
-
-                                    <li class="page-item"><a class="page-link" onclick="doSearch(3)"
-                                            href="javascript:;" title="3">3</a></li>
-
-                                    <li class="page-item"><a class="page-link" onclick="doSearch(2)"
-                                            href="javascript:;" title="»">»</a></li>
-                                </ul>
+                                <!-- Hiển thị phân trang -->
+                                {{ $products->links() }}
                             </nav>
-
                         </div>
-
-
                     </div>
+                    
                 </section>
             </div>
         </div>

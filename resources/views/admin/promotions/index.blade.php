@@ -19,6 +19,7 @@
                 <th>Loại Giảm Giá</th>
                 <th>Giá Trị Giảm</th>
                 <th>Giới Hạn Sử Dụng</th>
+                <th>Số tiền tối thiểu để áp dụng</th>
                 <th>Ngày Bắt Đầu</th>
                 <th>Ngày Kết Thúc</th>
                 <th>Trạng Thái</th>
@@ -33,6 +34,7 @@
                     <td>{{ ucfirst($promo->discount_type) }}</td>
                     <td>{{ $promo->discount_value }}</td>
                     <td>{{ $promo->usage_limit }}</td>
+                    <td>{{ $promo->min_purchase_amount }}</td>
                     <td>{{ $promo->start_date }}</td>
                     <td>{{ $promo->end_date }}</td>
                     <td>{{ $promo->is_active ? 'Active' : 'Inactive' }}</td>
