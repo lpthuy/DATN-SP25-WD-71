@@ -298,183 +298,186 @@ return [
     | https://github.com/jeroennoten/Laravel-AdminLTE/wiki/Menu-Configuration
     |
     */
-'menu' => [
+    'menu' => [
 
-    // Navbar items:
-    [
-        'type' => 'navbar-search',
-        'text' => 'Tìm kiếm',
-        'topnav_right' => true,
-    ],
-    [
-        'type' => 'fullscreen-widget',
-        'topnav_right' => true,
-    ],
+        // Navbar items:
+        [
+            'type' => 'navbar-search',
+            'text' => 'Tìm kiếm',
+            'topnav_right' => true,
+        ],
+        [
+            'type' => 'fullscreen-widget',
+            'topnav_right' => true,
+        ],
 
-    // Quản lý Thanh toán
-    ['header' => 'QUẢN LÝ THANH TOÁN'],
-    [
-        'text'    => 'Quản lý Thanh toán',
-        'icon'    => 'fas fa-money-check-alt',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Phương thức',
-                'url'  => 'admin/payment_methods',
-                'icon' => 'fas fa-credit-card',
+        // Quản lý Thanh toán
+        ['header' => 'QUẢN LÝ THANH TOÁN'],
+        [
+            'text'    => 'Quản lý Thanh toán',
+            'icon'    => 'fas fa-money-check-alt',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Phương thức',
+                    'url'  => 'admin/payment_methods',
+                    'icon' => 'fas fa-credit-card',
+                ],
             ],
         ],
-    ],
-    //quản lý khuyễn mãi
-    [
-        'header' => 'QUẢN LÝ KHUYẾN MÃI',
-    ],
-    [
-        'text'    => 'Quản lý Khuyến mãi',
-        'icon'    => 'fas fa-tags',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Khuyến mãi',
-                'url'  => 'admin/promotions',
-                'icon' => 'fas fa-gift',
+        //quản lý khuyễn mãi
+        [
+            'header' => 'QUẢN LÝ KHUYẾN MÃI',
+        ],
+        [
+            'text'    => 'Quản lý Khuyến mãi',
+            'icon'    => 'fas fa-tags',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Khuyến mãi',
+                    'url'  => 'admin/promotions',
+                    'icon' => 'fas fa-gift',
+                ],
             ],
         ],
-    ],
-    
 
-    // Quản lý Đơn hàng
-    ['header' => 'QUẢN LÝ ĐƠN HÀNG'],
-    [
-        'text'    => 'Quản lý Đơn hàng',
-        'icon'    => 'fas fa-shopping-cart',
-        'submenu' => [
-            [
-                'text' => 'Danh sách đơn hàng',
-                'url'  => 'admin/orders',
-                'icon' => 'fas fa-list',
+
+        // Quản lý Đơn hàng
+        ['header' => 'QUẢN LÝ ĐƠN HÀNG'],
+        [
+            'text'    => 'Quản lý Đơn hàng',
+            'icon'    => 'fas fa-shopping-cart',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách đơn hàng',
+                    'url'  => 'admin/orders',
+                    'icon' => 'fas fa-list',
+                ],
             ],
         ],
-    ],
-    
 
-    // Quản lý Danh mục
-    ['header' => 'QUẢN LÝ DANH MỤC'],
-    [
-        'text'    => 'Quản lý Danh mục',
-        'icon'    => 'fas fa-list',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Danh mục',
-                'url'  => 'admin/categories',
-                'icon' => 'fas fa-th-list',
-            ],
-            [
-                'text' => 'Thêm Danh mục',
-                'url'  => 'admin/categories/create',
-                'icon' => 'fas fa-plus-circle',
+
+        // Quản lý Danh mục
+        ['header' => 'QUẢN LÝ DANH MỤC'],
+        [
+            'text'    => 'Quản lý Danh mục',
+            'icon'    => 'fas fa-list',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Danh mục',
+                    'url'  => 'admin/categories',
+                    'icon' => 'fas fa-th-list',
+                ],
+                [
+                    'text' => 'Thêm Danh mục',
+                    'url'  => 'admin/categories/create',
+                    'icon' => 'fas fa-plus-circle',
+                ],
             ],
         ],
-    ],
 
-    // Quản lý Sản phẩm
-    [
-        'text'    => 'Quản lý Sản phẩm',
-        'icon'    => 'fas fa-box',
-        'submenu' => [
-            [
-                'text' => 'Danh sách sản phẩm',
-                'url'  => 'admin/products',
-                'icon' => 'fas fa-boxes',
-            ],
-            [
-                'text' => 'Thêm sản phẩm',
-                'url'  => 'admin/products/create',
-                'icon' => 'fas fa-plus-circle',
+        // Quản lý Sản phẩm
+        [
+            'text'    => 'Quản lý Sản phẩm',
+            'icon'    => 'fas fa-box',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách sản phẩm',
+                    'url'  => 'admin/products',
+                    'icon' => 'fas fa-boxes',
+                ],
+                [
+                    'text' => 'Thêm sản phẩm',
+                    'url'  => 'admin/products/create',
+                    'icon' => 'fas fa-plus-circle',
+                ],
             ],
         ],
-    ],
 
-   [
-        'header' => 'QUẢN LÝ BÀI VIẾT',
-    ],
-    [
-        'text'    => 'Quản lý Bài Viết',
-        'icon'    => 'fas fa-newspaper',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Bài Viết',
-                'url'  => 'admin/posts',
-                'icon' => 'fas fa-list-alt',
-            ],
-            [
-                'text' => 'Thêm Bài Viết',
-                'url'  => 'admin/posts/create',
-                'icon' => 'fas fa-plus',
+        [
+            'header' => 'QUẢN LÝ BÀI VIẾT',
+        ],
+        [
+            'text'    => 'Quản lý Bài Viết',
+            'icon'    => 'fas fa-newspaper',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Bài Viết',
+                    'url'  => 'admin/posts',
+                    'icon' => 'fas fa-list-alt',
+                ],
+                [
+                    'text' => 'Thêm Bài Viết',
+                    'url'  => 'admin/posts/create',
+                    'icon' => 'fas fa-plus',
+                ],
             ],
         ],
-    ],
-    
 
 
-    // Quản lý Size & Color
 
-    [
-        'text'    => 'Kích thước & Màu sắc',
-        'icon'    => 'fas fa-ruler-combined',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Size',
-                'url'  => 'admin/sizes',
-                'icon' => 'fas fa-text-height',
-            ],
-            [
-                'text' => 'Danh sách Màu sắc',
-                'url'  => 'admin/colors',
-                'icon' => 'fas fa-palette',
-            ],
-        ],
-    ],
+        // Quản lý Size & Color
 
-    // Quản lý Banner
-    [
-        'text'    => 'Quản lý Banner',
-        'icon'    => 'fas fa-images',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Banner',
-                'url'  => 'admin/banners',
-                'icon' => 'fas fa-photo-video',
+        [
+            'text'    => 'Kích thước & Màu sắc',
+            'icon'    => 'fas fa-ruler-combined',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Size',
+                    'url'  => 'admin/sizes',
+                    'icon' => 'fas fa-text-height',
+                ],
+                [
+                    'text' => 'Danh sách Màu sắc',
+                    'url'  => 'admin/colors',
+                    'icon' => 'fas fa-palette',
+                ],
             ],
         ],
-    ],
 
-    [
-        'header' => 'QUẢN LÝ KHUYẾN MÃI',
-    ],
-    [
-        'text'    => 'Quản lý Khuyến mãi',
-        'icon'    => 'fas fa-tags',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Khuyến mãi',
-                'url'  => 'admin/promotions',
-                'icon' => 'fas fa-gift',
+        // Quản lý Banner
+        [
+            'text'    => 'Quản lý Banner',
+            'icon'    => 'fas fa-images',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Banner',
+                    'url'  => 'admin/banners',
+                    'icon' => 'fas fa-photo-video',
+                ],
             ],
         ],
-    ],
-    // Quản lý Bình luận
-    [
-        'text'    => 'Quản lý Bình luận',
-        'icon'    => 'fas fa-comments',
-        'submenu' => [
-            [
-                'text' => 'Danh sách Bình luận',
-                'url'  => 'admin/comments',
-                'icon' => 'fas fa-comment-dots',
+
+        // Quản lý Bình luận
+        [
+            'text'    => 'Quản lý Bình luận',
+            'icon'    => 'fas fa-comments',
+            'submenu' => [
+                [
+                    'text' => 'Danh sách Bình luận',
+                    'url'  => 'admin/comments',
+                    'icon' => 'fas fa-comment-dots',
+                ],
             ],
         ],
-    ],
+        // quản lý thông báo
+        [
+            'text'    => 'Quản lý Thông báo',
+            'icon'    => 'fas fa-chart-line',
+            'submenu' => [
+                [
+                    'text' => 'Thống kê doanh thuthu',
+                    'url'  => 'admin/revenue',  // Đây là URL bạn sẽ định nghĩa cho trang thống kê doanh thu
+                    'icon' => 'fas fa-plus-circle',
+                ],
+                [
+                    'text' => 'Thống kê trạng thái',
+                    'url'  => 'admin/statistics',  // Đây là URL cho trang trạng thái thống kêkê
+                    'icon' => 'fas fa-plus-circle',
+                ],
+            ],
+        ],
 
-],
+    ],
 
 
 
