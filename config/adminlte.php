@@ -324,6 +324,22 @@ return [
             ],
         ],
     ],
+    //quản lý khuyễn mãi
+    [
+        'header' => 'QUẢN LÝ KHUYẾN MÃI',
+    ],
+    [
+        'text'    => 'Quản lý Khuyến mãi',
+        'icon'    => 'fas fa-tags',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Khuyến mãi',
+                'url'  => 'admin/promotions',
+                'icon' => 'fas fa-gift',
+            ],
+        ],
+    ],
+    
 
     // Quản lý Đơn hàng
     ['header' => 'QUẢN LÝ ĐƠN HÀNG'],
