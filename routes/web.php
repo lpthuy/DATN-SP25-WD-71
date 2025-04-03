@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
-use App\Http\Controllers\Admin\PromotionController;
+
+use App\Http\Controllers\Admin\PostController;
+
 use App\Http\Controllers\Admin\SizeController;
 
 
@@ -24,6 +26,7 @@ use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Client\PaymentController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Client\CommentController;
+
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Mail;
@@ -53,6 +56,8 @@ Route::get('/api/order-status/{id}', function ($id) {
         'status' => $order->status
     ]);
 });
+
+
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -187,6 +192,12 @@ Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('
 Route::get('/admin/orders/{id}/pdf', [OrderController::class, 'exportPDF'])->name('orders.exportPDF');
 
 
+// web.php
+Route::post('/don-hang/{id}/da-nhan', [OrderController::class, 'markAsReceived'])->name('order.received');
+Route::post('/don-hang/{id}/hoan-hang', [OrderController::class, 'markAsReturned'])->name('order.return');
+
+
+
 
 // Chỉ Admin mới có quyền vào Dashboard
 
@@ -200,25 +211,26 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
 
     // Quản lý danh mục sản phẩm
-    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update'); //sửa sản phẩm
-    // Quản lý sản phẩm
-    Route::resource('products', ProductController::class);
-    // Quản lý kích thước sản phẩm (Size)
-    Route::resource('sizes', SizeController::class);
-    // Quản lý màu sắc sản phẩm (Color)
-    Route::resource('colors', ColorController::class);
-    // Quản lý biến thể sản phẩm (Product Variants)
-    Route::resource('products_variants', ProductVariantController::class);
-    // Quản lý hình ảnh sản phẩm (Product Images)
-    Route::resource('products_images', ProductImageController::class);
-    //quan ly binh lua
-    Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
-    Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
-    Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
 
-    Route::get('orders', [OrdersController::class, 'index'])->name('orders.index');
-    Route::get('orders/{id}', [OrdersController::class, 'show'])->name('orders.show');
-    Route::post('orders/{id}/update-status', [OrdersController::class, 'updateStatus'])->name('orders.updateStatus');
-    // quản lý khuyến mãi
-    Route::resource('promotions', PromotionController::class);
+    Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');//sửa sản phẩm
+// Quản lý sản phẩm
+Route::resource('products', ProductController::class);
+// Quản lý kích thước sản phẩm (Size)
+Route::resource('sizes', SizeController::class);
+// Quản lý màu sắc sản phẩm (Color)
+Route::resource('colors', ColorController::class);
+// Quản lý biến thể sản phẩm (Product Variants)
+Route::resource('products_variants', ProductVariantController::class);
+ // Quản lý hình ảnh sản phẩm (Product Images)
+ Route::resource('products_images', ProductImageController::class);
+//quản lý banner
+
+Route::resource('posts', PostController::class);
+
+//quan ly binh lua
+Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
+Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
+Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
+
+
 });
