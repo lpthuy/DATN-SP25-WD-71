@@ -38,7 +38,8 @@
                         </td>
                         <td class="align-middle">{{ $product->name }}</td>
                         <td class="align-middle">{{ $product->category->name ?? 'Không có danh mục' }}</td>
-                        <td class="align-middle">{{ Str::limit($product->description, 100) }}</td>
+                        {{-- <td class="align-middle">{!! Str::limit($product->description, 100) !!}</td> --}}
+                               <td class="align-middle"><div style="max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{!! $product->description !!}</div></td>
                         <td class="align-middle">
                             <button class="btn btn-info btn-sm open-variants" data-product-id="{{ $product->id }}" data-variants='@json($product->variants->toArray())'>
                                 <i class="fas fa-eye"></i> Biến thể

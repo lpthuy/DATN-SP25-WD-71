@@ -158,6 +158,8 @@
 
     <link href="{{ asset('client/css/account_oder_style.scss4d9c.css') }}"
         rel="stylesheet" type="text/css"/>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    
     <script>
         var Bizweb = Bizweb || {};
         Bizweb.store = 'lofi-style.mysapo.net';
