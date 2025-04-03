@@ -27,6 +27,7 @@
     @csrf
     <label for="status">Cập nhật trạng thái:</label>
     <select name="status" class="form-control mb-2">
+        <option value="Đang xử lý" {{ $order->status == 'Đang xử lý' ? 'selected' : '' }}>Đang xử lý</option>
         <option value="đang xác nhận" {{ $order->status == 'đang xác nhận' ? 'selected' : '' }}>Đang xác nhận</option>
         <option value="đang giao hàng" {{ $order->status == 'đang giao hàng' ? 'selected' : '' }}>đang giao hàng</option>
         <option value="đã giao thành công" {{ $order->status == 'đã giao thành công' ? 'selected' : '' }}>Đã giao thành công</option>

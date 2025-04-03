@@ -166,4 +166,6 @@ class OrderController extends Controller
     $pdf = Pdf::loadView('admin.orders.pdf', compact('order', 'items'));
     return $pdf->download('don-hang-'.$order->order_code.'.pdf');
 }
+
+
 }

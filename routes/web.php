@@ -57,6 +57,8 @@ Route::get('/api/order-status/{id}', function ($id) {
     ]);
 });
 
+
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/gioi-thieu', [HomeController::class, 'about'])->name('about');
@@ -188,6 +190,12 @@ Route::post('/checkout/process', [CheckoutController::class, 'process'])->name('
 
 
 Route::get('/admin/orders/{id}/pdf', [OrderController::class, 'exportPDF'])->name('orders.exportPDF');
+
+
+// web.php
+Route::post('/don-hang/{id}/da-nhan', [OrderController::class, 'markAsReceived'])->name('order.received');
+Route::post('/don-hang/{id}/hoan-hang', [OrderController::class, 'markAsReturned'])->name('order.return');
+
 
 
 
