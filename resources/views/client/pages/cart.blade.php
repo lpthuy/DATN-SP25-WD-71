@@ -1,6 +1,7 @@
 @extends('client.layouts.main')
 
-@section('title', 'Giỏ hàng')
+
+
 
 @section('content')
     <section class="bread-crumb">
@@ -51,40 +52,57 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @if(session()->has('cart') && count(session('cart')) > 0)
-                                                @foreach(session('cart') as $cartKey => $item)
-                                                    <tr id="cart-item-{{ $cartKey }}">
-                                                        <td>
-                                                            <input type="checkbox" class="cart-checkbox" data-id="{{ $cartKey }}">
-                                                        </td>
-                                                        <td>
-                                                            @php
-                                                                $image = isset($item['image']) ? explode(',', $item['image'])[0] : 'default.png';
-                                                            @endphp
-                                                            <img src="{{ asset('storage/' . $image) }}" alt="{{ $item['name'] }}" class="cart-image">
-                                                        </td>
-                                                        <td>{{ $item['name'] }}</td>
-                                                        <td>{{ $item['color'] }}</td>
-                                                        <td>{{ $item['size'] }}</td>
-                                                        <td>{{ number_format($item['price'], 0, ',', '.') }}₫</td>
-                                                        <td>
-                                                            <div class="quantity-container">
-                                                                <button class="btn-quantity btn-decrease" data-id="{{ $cartKey }}">-</button>
-                                                                <input type="number" value="{{ $item['quantity'] }}" min="1" class="quantity-input" data-id="{{ $cartKey }}">
-                                                                <button class="btn-quantity btn-increase" data-id="{{ $cartKey }}">+</button>
-                                                            </div>
-                                                        </td>
-                                                        <td class="cart-total">{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫</td>
-                                                        <td>
-                                                            <button class="btn btn-danger remove-cart-item" data-id="{{ $cartKey }}">Xóa</button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach
-                                            @else
-                                                <tr>
-                                                    <td colspan="9" class="text-center">Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</td>
-                                                </tr>
-                                            @endif
+                                            @php
+    use App\Models\Product;
+    use App\Models\ProductVariant;
+
+    $cartItems = session('cart', []);
+    $validCartItems = [];
+
+    foreach ($cartItems as $key => $item) {
+        $productExists = Product::find($item['product_id']);
+        $variantExists = ProductVariant::find($item['variant_id']);
+        if ($productExists && $variantExists) {
+            $validCartItems[$key] = $item;
+        }
+    }
+@endphp
+
+@if(count($validCartItems) > 0)
+    @foreach($validCartItems as $cartKey => $item)
+        <tr id="cart-item-{{ $cartKey }}">
+            <td>
+                <input type="checkbox" class="cart-checkbox" data-id="{{ $cartKey }}">
+            </td>
+            <td>
+                @php
+                    $image = isset($item['image']) ? explode(',', $item['image'])[0] : 'default.png';
+                @endphp
+                <img src="{{ asset('storage/' . $image) }}" alt="{{ $item['name'] }}" class="cart-image">
+            </td>
+            <td>{{ $item['name'] }}</td>
+            <td>{{ $item['color'] }}</td>
+            <td>{{ $item['size'] }}</td>
+            <td>{{ number_format($item['price'], 0, ',', '.') }}₫</td>
+            <td>
+                <div class="quantity-container">
+                    <button class="btn-quantity btn-decrease" data-id="{{ $cartKey }}">-</button>
+                    <input type="number" value="{{ $item['quantity'] }}" min="1" class="quantity-input" data-id="{{ $cartKey }}">
+                    <button class="btn-quantity btn-increase" data-id="{{ $cartKey }}">+</button>
+                </div>
+            </td>
+            <td class="cart-total">{{ number_format($item['price'] * $item['quantity'], 0, ',', '.') }}₫</td>
+            <td>
+                <button class="btn btn-danger remove-cart-item" data-id="{{ $cartKey }}">Xóa</button>
+            </td>
+        </tr>
+    @endforeach
+@else
+    <tr>
+        <td colspan="9" class="text-center">Giỏ hàng của bạn hiện tại chưa có sản phẩm nào.</td>
+    </tr>
+@endif
+
                                         </tbody>
                                         
                                     </table>
@@ -261,6 +279,39 @@
 });
 
     </script>
+
+    
+    <script>
+        setInterval(() => {
+            fetch('{{ route('cart.recheck') }}', {
+                method: 'POST',
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+                    "Content-Type": "application/json",
+                },
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    const validCartKeys = Object.keys(data.cart);
+                    document.querySelectorAll('[id^="cart-item-"]').forEach(row => {
+                        const cartKey = row.id.replace('cart-item-', '');
+                        if (!validCartKeys.includes(cartKey)) {
+                            row.remove(); // Xoá khỏi giao diện nếu đã bị ẩn
+                        }
+                    });
+        
+                    // Cập nhật tổng tiền nếu muốn
+                    let total = 0;
+                    for (const item of Object.values(data.cart)) {
+                        total += item.price * item.quantity;
+                    }
+                    document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN').format(total) + '₫';
+                }
+            });
+        }, 5000); // 5 giây kiểm tra một lần
+        </script>
+        
 @endsection
 
     <style>

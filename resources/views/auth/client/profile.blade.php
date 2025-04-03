@@ -2,6 +2,8 @@
 
 @section('title', 'Tài khoản')
 
+
+
 @section('content')
     <section class="bread-crumb">
         <div class="container">
@@ -20,6 +22,12 @@
             </ul>
         </div>
     </section>
+    @section('title', 'Giỏ hàng')
+@if(session('error'))
+    <div class="alert alert-danger" style="margin-bottom: 20px;">
+        {{ session('error') }}
+    </div>
+@endif
 
     <section class="signup page_customer_account">
         <div class="container">
@@ -50,7 +58,8 @@
                         <p><strong>Họ tên:</strong> {{ Auth::user()->name }}</p>
                         <p><strong>Email:</strong> {{ Auth::user()->email }}</p>
                         <p><strong>Số điện thoại:</strong> {{ Auth::user()->phone ?? 'Chưa cập nhật' }}</p>
-                        
+                        <p><strong>Địa chỉ:</strong> {{ Auth::user()->address ?? 'Chưa cập nhật' }}</p>
+
                         <!-- Nút sửa thông tin -->
                         <a style="background: #ef4339;
           color: #fff;

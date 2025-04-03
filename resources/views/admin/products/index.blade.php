@@ -47,13 +47,14 @@
                             <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm">
                                 <i class="fas fa-edit"></i> Sửa
                             </a>
-                            <form action="{{ route('products.destroy', $product->id) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('products.toggleActive', $product->id) }}" method="POST" style="display:inline;">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc chắn muốn xóa?')">
-                                    <i class="fas fa-trash"></i> Xóa
+                                <button type="submit" class="btn btn-sm {{ $product->is_active ? 'btn-secondary' : 'btn-success' }}">
+                                    <i class="fas {{ $product->is_active ? 'fa-eye-slash' : 'fa-eye' }}"></i> 
+                                    {{ $product->is_active ? 'Ẩn' : 'Hiện' }}
                                 </button>
                             </form>
+                            
                         </td>
                     </tr>
                 @endforeach

@@ -100,9 +100,30 @@ public function removeItem(Request $request)
 }
 public function countCart()
 {
-    $cartCount = session('cart') ? count(session('cart')) : 0;
-    return response()->json(['cart_count' => $cartCount]);
+    $cartItems = session()->get('cart', []);
+    $validCartItems = [];
+
+    foreach ($cartItems as $key => $item) {
+        $product = \App\Models\Product::find($item['product_id']);
+        $variant = \App\Models\ProductVariant::find($item['variant_id']);
+
+        // ✅ Chỉ giữ lại sản phẩm nếu vẫn còn tồn tại & đang được hiển thị (is_active = true)
+        if ($product && $variant && $product->is_active) {
+            // Cập nhật lại tên sản phẩm nếu đã bị sửa trong DB
+            $item['name'] = $product->name;
+
+            $validCartItems[$key] = $item;
+        }
+    }
+
+    // ✅ Cập nhật lại session cart
+    session()->put('cart', $validCartItems);
+
+    return response()->json(['cart_count' => count($validCartItems)]);
 }
+
+
+
 
 public function index()
     {
@@ -112,4 +133,30 @@ public function index()
         // Trả về view giỏ hàng
         return view('client.pages.cart', compact('cartItems'));
     }
+
+
+    // CartController.php
+public function recheckCart()
+{
+    $cartItems = session('cart', []);
+    $updatedCart = [];
+
+    foreach ($cartItems as $key => $item) {
+        $product = \App\Models\Product::find($item['product_id']);
+        $variant = \App\Models\ProductVariant::find($item['variant_id']);
+
+        if ($product && $variant && $product->is_active) {
+            $item['name'] = $product->name;
+            $updatedCart[$key] = $item;
+        }
+    }
+
+    session()->put('cart', $updatedCart);
+
+    return response()->json([
+        'success' => true,
+        'cart' => $updatedCart
+    ]);
+}
+
 }

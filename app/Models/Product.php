@@ -37,4 +37,10 @@ class Product extends Model {
         'price' => 0, // Giá mặc định là 0 nếu không có giá trị
     ];
 
+    public function orderItems()
+{
+    return $this->hasMany(OrderItem::class);
+}
+
+
 }

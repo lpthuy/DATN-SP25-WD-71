@@ -13,39 +13,45 @@ use Illuminate\Support\Str;
 class CheckoutController extends Controller
 {
     public function show(Request $request)
-    {
-        $user = Auth::user();
+{
+    $user = Auth::user();
 
-        $cart = session('cart', []);
-        if (empty($cart)) {
-            return redirect()->route('cart')->with('error', 'Không có sản phẩm nào trong giỏ hàng!');
-        }
+    // 👉 Kiểm tra nếu chưa có địa chỉ
+    if (empty($user->address)) {
+        return redirect()->route('profile')->with('error', 'Vui lòng cập nhật địa chỉ trước khi đặt hàng.');
+    }
 
-        $selectedProducts = json_decode($request->input('selected_products'), true);
+    $cart = session('cart', []);
+    if (empty($cart)) {
+        return redirect()->route('cart')->with('error', 'Không có sản phẩm nào trong giỏ hàng!');
+    }
 
-        $checkoutItems = [];
-        $total = 0;
+    $selectedProducts = json_decode($request->input('selected_products'), true);
 
-        if ($selectedProducts) {
-            foreach ($selectedProducts as $selected) {
-                $cartKey = $selected['cartKey'];
-                $quantity = (int)$selected['quantity'];
+    $checkoutItems = [];
+    $total = 0;
 
-                if (isset($cart[$cartKey])) {
-                    $item = $cart[$cartKey];
-                    $item['quantity'] = $quantity;
-                    $item['total_price'] = $quantity * $item['price'];
-                    $checkoutItems[] = $item;
-                    $total += $item['total_price'];
-                }
+    if ($selectedProducts) {
+        foreach ($selectedProducts as $selected) {
+            $cartKey = $selected['cartKey'];
+            $quantity = (int)$selected['quantity'];
+
+            if (isset($cart[$cartKey])) {
+                $item = $cart[$cartKey];
+                $item['quantity'] = $quantity;
+                $item['total_price'] = $quantity * $item['price'];
+                $checkoutItems[] = $item;
+                $total += $item['total_price'];
             }
         }
-
-        // Lưu vào session để dùng sau khi thanh toán
-        session(['checkout_items' => $checkoutItems]);
-
-        return view('client.pages.checkout-confirm', compact('checkoutItems', 'total', 'user'));
     }
+
+    // Lưu vào session để dùng sau khi thanh toán
+    session(['checkout_items' => $checkoutItems]);
+
+    return view('client.pages.checkout-confirm', compact('checkoutItems', 'total', 'user'));
+}
+
 
     public function process(Request $request)
     {

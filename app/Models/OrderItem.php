@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Models;
 
@@ -11,6 +11,8 @@ class OrderItem extends Model
 
     protected $fillable = ['order_id', 'product_id', 'product_name', 'color', 'size', 'quantity', 'price'];
 
-    
-    
+    public function promotion()
+    {
+        return $this->belongsTo(Promotion::class, 'promotion_id');
+    }
 }

@@ -325,6 +325,21 @@ return [
         ],
     ],
 
+    // Quản lý Đơn hàng
+    ['header' => 'QUẢN LÝ ĐƠN HÀNG'],
+    [
+        'text'    => 'Quản lý Đơn hàng',
+        'icon'    => 'fas fa-shopping-cart',
+        'submenu' => [
+            [
+                'text' => 'Danh sách đơn hàng',
+                'url'  => 'admin/orders',
+                'icon' => 'fas fa-list',
+            ],
+        ],
+    ],
+    
+
     // Quản lý Danh mục
     ['header' => 'QUẢN LÝ DANH MỤC'],
     [
@@ -344,6 +359,7 @@ return [
         ],
     ],
 
+    // Quản lý Sản phẩm
     [
         'text'    => 'Quản lý Sản phẩm',
         'icon'    => 'fas fa-box',
@@ -360,7 +376,8 @@ return [
             ],
         ],
     ],
-    [
+
+   [
         'header' => 'QUẢN LÝ BÀI VIẾT',
     ],
     [
@@ -380,6 +397,10 @@ return [
         ],
     ],
     
+
+
+    // Quản lý Size & Color
+
     [
         'text'    => 'Kích thước & Màu sắc',
         'icon'    => 'fas fa-ruler-combined',
@@ -398,7 +419,6 @@ return [
     ],
 
     // Quản lý Banner
-   
     [
         'text'    => 'Quản lý Banner',
         'icon'    => 'fas fa-images',
@@ -410,21 +430,22 @@ return [
             ],
         ],
     ],
-    // Quản lý Bình luận
 
-[
-    'text'    => 'Quản lý Bình luận',
-    'icon'    => 'fas fa-comments',
-    'submenu' => [
-        [
-            'text' => 'Danh sách Bình luận',
-            'url'  => 'admin/comments',
-            'icon' => 'fas fa-comment-dots',
+    // Quản lý Bình luận
+    [
+        'text'    => 'Quản lý Bình luận',
+        'icon'    => 'fas fa-comments',
+        'submenu' => [
+            [
+                'text' => 'Danh sách Bình luận',
+                'url'  => 'admin/comments',
+                'icon' => 'fas fa-comment-dots',
+            ],
         ],
     ],
-],
 
 ],
+
 
 
 

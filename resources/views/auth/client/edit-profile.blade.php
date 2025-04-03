@@ -40,6 +40,12 @@
                                         <input type="text" class="form-control form-control-lg" name="phone"
                                             value="{{ old('phone', $user->phone) }}">
                                     </fieldset>
+                                    <fieldset class="form-group">
+                                        <label for="address">Địa chỉ:</label>
+                                        <input type="text" class="form-control form-control-lg" name="address"
+                                            value="{{ old('address', $user->address) }}" required>
+                                    </fieldset>
+                                    
                                     <button type="submit" class="btn btn-style btn_50">Lưu thay đổi</button>
 
 
