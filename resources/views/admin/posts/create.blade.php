@@ -7,16 +7,31 @@
 @stop
 
 @section('content')
-    <form action="{{ route('posts.store') }}" method="POST">
+    <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
             <label for="title" class="form-label">Tiêu đề</label>
             <input type="text" name="title" class="form-control" required>
         </div>
+
         <div class="mb-3">
             <label for="content" class="form-label fw-bold">Nội dung bài viết</label>
             <textarea id="content" name="content" class="form-control">{{ old('content') }}</textarea>
-        </div>        
+        </div>
+
+        <!-- Ảnh bìa -->
+        <div class="mb-3">
+            <label for="image" class="form-label fw-bold">Ảnh bìa</label>
+            <input type="file" name="image" class="form-control">
+        </div>
+
+        <!-- Trạng thái bài viết -->
+        <div class="mb-3">
+            <label for="is_active" class="form-label fw-bold">Trạng thái</label>
+            <input type="checkbox" name="is_active" value="1">
+            <span>Bật</span>
+        </div>
+
         <button type="submit" class="btn btn-success">Lưu</button>
         <a href="{{ route('posts.index') }}" class="btn btn-secondary">Hủy</a>
     </form>
