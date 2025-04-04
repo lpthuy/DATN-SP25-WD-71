@@ -14,8 +14,7 @@ use App\Http\Controllers\Admin\ProductVariantController;
 
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PromotionController;
-
-
+use App\Http\Controllers\Admin\RevenueStatisticsController;
 // use App\Http\Controllers\Admin\RevenueStatisticsController;
 
 use App\Http\Controllers\Admin\SizeController;
