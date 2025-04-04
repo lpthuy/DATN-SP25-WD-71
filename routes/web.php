@@ -14,7 +14,10 @@ use App\Http\Controllers\Admin\ProductVariantController;
 
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PromotionController;
-use App\Http\Controllers\Admin\RevenueStatisticsController;
+
+
+// use App\Http\Controllers\Admin\RevenueStatisticsController;
+
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Client\CartController;
@@ -56,6 +59,12 @@ Route::get('/api/order-status/{id}', function ($id) {
     ]);
 });
 
+Route::post('/apply-coupon', [PromotionController::class, 'apply'])->name('apply.coupon');
+Route::post('/save-promo-code', [PromotionController::class, 'saveCode'])->name('save.promo.code');
+
+
+// quản lý khuyến mãi
+Route::resource('promotions', PromotionController::class);
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -80,6 +89,8 @@ Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment
 
 
 Route::get('/tin-tuc', [HomeController::class, 'post'])->name('post');
+Route::get('post-detail/{post}', [HomeController::class, 'postShow'])->name('showpost');
+
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
 Route::get('/yeu-thich', [HomeController::class, 'wishlist'])->name('wishlist');
@@ -226,7 +237,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('posts', PostController::class);
 
-    //quan ly binh luaậnận
+
+    //battat bai vietviet
+    Route::post('posts/{post}/toggle-status', [PostController::class, 'toggleStatus'])->name('posts.toggleStatus');
+    //show bai viet clientclient
+  
+
+
+
+    //quan ly binh lua
+
     Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
     Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
     Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');

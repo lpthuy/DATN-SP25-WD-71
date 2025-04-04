@@ -9,5 +9,8 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content'];
+    // Các trường được phép gán giá trị
+    protected $fillable = ['title', 'content', 'image', 'is_active'];
+
+    // Nếu cần, bạn có thể thêm các phương thức bổ sung vào đây để xử lý các yêu cầu đặc biệt
 }

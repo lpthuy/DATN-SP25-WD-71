@@ -22,12 +22,12 @@
             </div>
     
             <!-- Hình ảnh bài viết (nếu có) -->
-            {{-- @if($post->image)
+            @if($post->image)
                 <div class="mb-4">
                     <h4 class="fw-bold text-dark">Hình ảnh bài viết</h4>
                     <img src="{{ asset('storage/' . $post->image) }}" alt="Image" class="img-fluid rounded shadow-sm">
                 </div>
-            @endif --}}
+            @endif
     
             <!-- Các nút điều hướng -->
             <div class="mt-auto d-flex justify-content-between">
