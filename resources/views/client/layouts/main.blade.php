@@ -164,6 +164,14 @@
         <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     
     <script>
+        .pagination-wrapper {
+    text-align: center; /* Căn giữa */
+    margin-top: 30px; /* Khoảng cách từ nội dung bài viết */
+    position: relative;
+    bottom: 0;
+}
+
+
         var Bizweb = Bizweb || {};
         Bizweb.store = 'lofi-style.mysapo.net';
         Bizweb.id = 456491;
@@ -1425,6 +1433,7 @@
         <div id="popupCartModal" class="modal fade" role="dialog">
         </div>
         <script>
+            
             var swiper = new Swiper(".mySwiper", {
                 slidesPerView: 3, // Hiển thị 3 coupon mỗi lần
                 spaceBetween: 20, // Khoảng cách giữa các slide

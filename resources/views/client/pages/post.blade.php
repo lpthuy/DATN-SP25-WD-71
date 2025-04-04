@@ -31,319 +31,115 @@
                     <div class="blog-content">
                         <h1 class="title-page">Tin tức</h1>
                         <div class="list-blogs row">
-                            <article class="list-article col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="blog-post">
-                                    <div class="post-image">
-                                        <a class="post-thumbnail" href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                            title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                            <img class="lazy"
-                                                src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                        </a>
-                                    </div>
-                                    <div class="post-info">
-                                        <div class="blog-post-meta">
-                                            <div class="time-post f">
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
-                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                    class="svg-inline--fa fa-user fa-w-14">
-                                                    <path fill="currentColor"
-                                                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                                                        class=""></path>
-                                                </svg>
-                                                <span>Team Lofi</span>
-                                            </div>
-                                            <div class="time-post">
-
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                    data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
-                                                    <path fill="currentColor"
-                                                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                                                        class=""></path>
-                                                </svg>
-
-                                                Thứ Ba,
-                                                28/02/2023
-                                            </div>
+                  
+                            @foreach($posts as $post)
+                            @if($post->is_active) <!-- Kiểm tra trạng thái bài viết -->
+                                <article class="list-article col-xl-6 col-lg-6 col-md-6 col-12">
+                                    <div class="blog-post">
+                                        <div class="post-image">
+                                            <a class="post-thumbnail" href="{{ route('showpost', $post->id) }}" title="{{ $post->title }}">
+                                                <!-- Hiển thị ảnh bìa nếu có -->
+                                                @if($post->image)
+                                                    <img class="lazy" src="{{ asset('storage/'.$post->image) }}" data-src="{{ asset('storage/'.$post->image) }}" alt="{{ $post->title }}">
+                                                @else
+                                                    <img class="lazy" src="{{ asset('storage/default_image.jpg') }}" data-src="{{ asset('storage/default_image.jpg') }}" alt="Default image">
+                                                @endif
+                                            </a>
                                         </div>
-                                        <h3 class="blog-post-title">
-                                            <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">Tự tin diện áo
-                                                nhún ngực chuẩn trend 2023</a>
-                                        </h3>
-
-                                        <div class="entry-content">
-                                            Thêm một lưu ý nữa, nàng nên cân nhắc chọn mẫu áo lót phù hợp khi
-                                            mặc&nbsp;áo nhún ngực. Với một số mẫu&nbsp;áo nhún ngực&nbsp;mà...
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-
-                            <article class="list-article col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="blog-post">
-                                    <div class="post-image">
-                                        <a class="post-thumbnail" href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                            title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                            <img class="lazy"
-                                                src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                        </a>
-                                    </div>
-                                    <div class="post-info">
-                                        <div class="blog-post-meta">
-                                            <div class="time-post f">
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
-                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                    class="svg-inline--fa fa-user fa-w-14">
-                                                    <path fill="currentColor"
-                                                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                                                        class=""></path>
-                                                </svg>
-                                                <span>Team Lofi</span>
+                                        <div class="post-info">
+                                            <div class="blog-post-meta">
+                                                <div class="time-post f">
+                                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
+                                                         role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="svg-inline--fa fa-user fa-w-14">
+                                                        <path fill="currentColor" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z" class=""></path>
+                                                    </svg>
+                                                    <span>{{ $post->author }}</span>
+                                                </div>
+                                                <div class="time-post">
+                                                    <svg aria-hidden="true" focusable="false" data-prefix="fal" data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
+                                                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z" class=""></path>
+                                                    </svg>
+                                                    {{ $post->created_at->format('l, d/m/Y') }}
+                                                </div>
                                             </div>
-                                            <div class="time-post">
-
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                    data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
-                                                    <path fill="currentColor"
-                                                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                                                        class=""></path>
-                                                </svg>
-
-                                                Thứ Ba,
-                                                28/02/2023
+                                            <h3 class="blog-post-title">
+                                                <a href="{{ route('showpost', $post->id) }}" title="{{ $post->title }}">{{ $post->title }}</a>
+                                            </h3>
+                        
+                                            <div class="entry-content">
+                                                {{ Str::limit($post->content, 100) }}
                                             </div>
                                         </div>
-                                        <h3 class="blog-post-title">
-                                            <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">Tự tin diện áo
-                                                nhún ngực chuẩn trend 2023</a>
-                                        </h3>
-
-                                        <div class="entry-content">
-                                            Thêm một lưu ý nữa, nàng nên cân nhắc chọn mẫu áo lót phù hợp khi
-                                            mặc&nbsp;áo nhún ngực. Với một số mẫu&nbsp;áo nhún ngực&nbsp;mà...
-                                        </div>
                                     </div>
-                                </div>
-                            </article>
-                            <article class="list-article col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="blog-post">
-                                    <div class="post-image">
-                                        <a class="post-thumbnail" href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                            title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                            <img class="lazy"
-                                                src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                        </a>
-                                    </div>
-                                    <div class="post-info">
-                                        <div class="blog-post-meta">
-                                            <div class="time-post f">
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
-                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                    class="svg-inline--fa fa-user fa-w-14">
-                                                    <path fill="currentColor"
-                                                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                                                        class=""></path>
-                                                </svg>
-                                                <span>Team Lofi</span>
-                                            </div>
-                                            <div class="time-post">
+                                </article>
+                            @endif
+                        @endforeach
+                        
+                        
+                        <style>
+                            /* Chia 2 bài viết trên mỗi dòng */
+.list-article {
+    width: 48%;
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 20px;
+}
 
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                    data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
-                                                    <path fill="currentColor"
-                                                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                                                        class=""></path>
-                                                </svg>
+/* Ẩn nội dung bài viết */
+.entry-content {
+    display: none;
+}
 
-                                                Thứ Ba,
-                                                28/02/2023
-                                            </div>
-                                        </div>
-                                        <h3 class="blog-post-title">
-                                            <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">Tự tin diện áo
-                                                nhún ngực chuẩn trend 2023</a>
-                                        </h3>
+/* Đồng nhất kích thước ảnh */
+.post-image img {
+    width: 100%;
+    height: 180px; /* Chiều cao cố định */
+    object-fit: cover; /* Cắt ảnh phù hợp khung */
+    border-radius: 8px;
+}
 
-                                        <div class="entry-content">
-                                            Thêm một lưu ý nữa, nàng nên cân nhắc chọn mẫu áo lót phù hợp khi
-                                            mặc&nbsp;áo nhún ngực. Với một số mẫu&nbsp;áo nhún ngực&nbsp;mà...
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
-                            <article class="list-article col-xl-6 col-lg-6 col-md-6 col-12">
-                                <div class="blog-post">
-                                    <div class="post-image">
-                                        <a class="post-thumbnail" href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                            title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                            <img class="lazy"
-                                                src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-                                        </a>
-                                    </div>
-                                    <div class="post-info">
-                                        <div class="blog-post-meta">
-                                            <div class="time-post f">
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user"
-                                                    role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"
-                                                    class="svg-inline--fa fa-user fa-w-14">
-                                                    <path fill="currentColor"
-                                                        d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                                                        class=""></path>
-                                                </svg>
-                                                <span>Team Lofi</span>
-                                            </div>
-                                            <div class="time-post">
+/* Căn giữa chữ */
+.blog-post-title {
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
 
-                                                <svg aria-hidden="true" focusable="false" data-prefix="fal"
-                                                    data-icon="clock" role="img" xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 512 512" class="svg-inline--fa fa-clock fa-w-16">
-                                                    <path fill="currentColor"
-                                                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm216 248c0 118.7-96.1 216-216 216-118.7 0-216-96.1-216-216 0-118.7 96.1-216 216-216 118.7 0 216 96.1 216 216zm-148.9 88.3l-81.2-59c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h14c6.6 0 12 5.4 12 12v146.3l70.5 51.3c5.4 3.9 6.5 11.4 2.6 16.8l-8.2 11.3c-3.9 5.3-11.4 6.5-16.8 2.6z"
-                                                        class=""></path>
-                                                </svg>
+/* Khoảng cách giữa các bài viết */
+.blog-post {
+    padding: 10px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-                                                Thứ Ba,
-                                                28/02/2023
-                                            </div>
-                                        </div>
-                                        <h3 class="blog-post-title">
-                                            <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">Tự tin diện áo
-                                                nhún ngực chuẩn trend 2023</a>
-                                        </h3>
+                        </style>
 
-                                        <div class="entry-content">
-                                            Thêm một lưu ý nữa, nàng nên cân nhắc chọn mẫu áo lót phù hợp khi
-                                            mặc&nbsp;áo nhún ngực. Với một số mẫu&nbsp;áo nhún ngực&nbsp;mà...
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
+                        
+                        <div class="pagination-wrapper text-center mt-4">
+                            {{ $posts->links() }} <!-- Tạo các liên kết phân trang -->
+                        </div>
+                        
                         </div>
                     </div>
                 </div>
+                
                 <div class="col-lg-3 col-12">
                     <div class="sidebar">
                         <div class="group-menu">
                             <div class="sidebarblog-title title_block">
-                                <h2>Danh mục</h2>
+                                <h2>Danh mục trang</h2>
                             </div>
                             <div class="layered-category">
                                 <ul class="menuList-links">
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="index.html" title="Trang chủ">Trang chủ</a>
+                                        <a class="nav-link" href="{{ route('home') }}" title="Trang chủ">Trang chủ</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="gioi-thieu.html" title="Giới thiệu">Giới
+                                        <a class="nav-link" href="{{ route('about') }}" title="Giới thiệu">Giới
                                             thiệu</a>
                                     </li>
-                                    {{-- <li class="has-submenu level0 ">
-                                        <a class="nav-link" href="collections/all.html" title="Sản phẩm">
-                                            Sản phẩm
-                                            <span class="icon-plus-submenu plus-nClick1"></span>
-                                        </a>
-                                        <ul class="submenu-links" style="display: none;">
-                                            <li class="has-submenu level1">
-                                                <a href="san-pham-ao.html" title="Sản phẩm áo">
-                                                    Sản phẩm áo
-                                                    <span class="icon-plus-submenu plus-nClick2"></span>
-                                                </a>
-                                                <ul class="submenu-links" style="display: none;">
-                                                    <li>
-                                                        <a href="ao-phong.html" title="Áo phông">Áo phông</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="ao-so-mi.html" title="Áo sơ mi">Áo sơ mi</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="ao-kieu.html" title="Áo kiểu">Áo kiểu</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="ao-len.html" title="Áo len">Áo len</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="ao-khoac.html" title="Áo khoác">Áo khoác</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu level1">
-                                                <a href="san-pham-quan.html" title="Sản phẩm quần">
-                                                    Sản phẩm quần
-                                                    <span class="icon-plus-submenu plus-nClick2"></span>
-                                                </a>
-                                                <ul class="submenu-links" style="display: none;">
-                                                    <li>
-                                                        <a href="quan-jeans.html" title="Quần jeans">Quần
-                                                            jeans</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-kaki.html" title="Quần kaki">Quần kaki</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-short.html" title="Quần short">Quần
-                                                            short</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="quan-lung.html" title="Quần lửng">Quần lửng</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu level1">
-                                                <a href="san-pham-vay.html" title="Sản phẩm váy">
-                                                    Sản phẩm váy
-                                                    <span class="icon-plus-submenu plus-nClick2"></span>
-                                                </a>
-                                                <ul class="submenu-links" style="display: none;">
-                                                    <li>
-                                                        <a href="vay-bo.html" title="Váy bó">Váy bó</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="vay-xuong.html" title="Váy xuông">Váy xuông</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="vay-chu-a.html" title="Váy chữ A">Váy chữ A</a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="dam-om.html" title="Đầm ôm">Đầm ôm</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu level1">
-                                                <a href="tui-phu-kien.html" title="Túi xách">
-                                                    Túi xách
-                                                    <span class="icon-plus-submenu plus-nClick2"></span>
-                                                </a>
-                                                <ul class="submenu-links" style="display: none;">
-                                                    <li>
-                                                        <a href="vi.html" title="Ví">Ví</a>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                            <li class="has-submenu level1">
-                                                <a href="giay-dep.html" title="Giày dép">
-                                                    Giày dép
-                                                </a>
-                                            </li>
-                                            <li class="has-submenu level1">
-                                                <a href="phu-kien-1.html" title="Phụ kiện">
-                                                    Phụ kiện
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li> --}}
+                                
                                     <li class="has-submenu level0">
                                         <a class="nav-link" href="{{ route('products.all') }}" title="Sản phẩm">
                                             Sản phẩm
@@ -367,10 +163,10 @@
                                     </li>
                                     
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="tin-tuc.html" title="Tin tức">Tin tức</a>
+                                        <a class="nav-link" href="{{ route('post') }}" title="Tin tức">Tin tức</a>
                                     </li>
                                     <li class="nav-item ">
-                                        <a class="nav-link" href="lien-he.html" title="Liên hệ">Liên hệ</a>
+                                        <a class="nav-link" href="{{ route('contact') }}" title="Liên hệ">Liên hệ</a>
                                     </li>
                                 </ul>
                             </div>
@@ -383,96 +179,73 @@
                                 <div class="sidebarblog-title title_block">
                                     <h2><a href="tin-tuc.html">Tin tức mới nhất</a></h2>
                                 </div>
+                                
                                 <div class="list-news-latest">
-
-                                    <div class="item-article clearfix">
-                                        <div class="post-image">
-                                            <a class="image-blog scale_hover"
-                                                href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                                <img class="img_blog lazy"
-                                                    src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h3><a title="Tự tin diện áo nhún ngực chuẩn trend 2023"
-                                                    href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html">Tự tin
-                                                    diện áo nhún ngực chuẩn trend 2023</a></h3>
-                                            <span class="author">Team Lofi</span>
-                                            <span class="date">28/02/2023</span>
-                                        </div>
+                                    <div class="news-container">
+                                        @foreach($posts as $post)
+                                            @if($post->is_active) 
+                                                <div class="news-item">
+                                                    <a class="news-image" href="{{ route('showpost', $post) }}" title="{{ $post->title }}">
+                                                        <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}">
+                                                    </a>
+                                                    <h3 class="news-title">
+                                                        <a href="{{ route('showpost', $post) }}">{{ $post->title }}</a>
+                                                    </h3>
+                                                </div>
+                                            @endif
+                                        @endforeach
                                     </div>
-
-                                    <div class="item-article clearfix">
-                                        <div class="post-image">
-                                            <a class="image-blog scale_hover"
-                                                href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                                <img class="img_blog lazy"
-                                                    src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h3><a title="Tự tin diện áo nhún ngực chuẩn trend 2023"
-                                                    href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html">Tự tin
-                                                    diện áo nhún ngực chuẩn trend 2023</a></h3>
-                                            <span class="author">Team Lofi</span>
-                                            <span class="date">28/02/2023</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-article clearfix">
-                                        <div class="post-image">
-                                            <a class="image-blog scale_hover"
-                                                href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                                <img class="img_blog lazy"
-                                                    src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h3><a title="Tự tin diện áo nhún ngực chuẩn trend 2023"
-                                                    href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html">Tự tin
-                                                    diện áo nhún ngực chuẩn trend 2023</a></h3>
-                                            <span class="author">Team Lofi</span>
-                                            <span class="date">28/02/2023</span>
-                                        </div>
-                                    </div>
-                                    <div class="item-article clearfix">
-                                        <div class="post-image">
-                                            <a class="image-blog scale_hover"
-                                                href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
-                                                title="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                                <img class="img_blog lazy"
-                                                    src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    data-src="https://bizweb.dktcdn.net/100/456/491/articles/photo-3-1677289987350451107342.jpg?v=1678808081280"
-                                                    alt="Tự tin diện áo nhún ngực chuẩn trend 2023">
-
-                                            </a>
-                                        </div>
-                                        <div class="post-content">
-                                            <h3><a title="Tự tin diện áo nhún ngực chuẩn trend 2023"
-                                                    href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html">Tự tin
-                                                    diện áo nhún ngực chuẩn trend 2023</a></h3>
-                                            <span class="author">Team Lofi</span>
-                                            <span class="date">28/02/2023</span>
-                                        </div>
-                                    </div>
-                                    
-
                                 </div>
+                                
+                                <style>
+                                    .news-container {
+                                        max-height: 350px; /* Giới hạn chiều cao */
+                                        overflow-y: auto; /* Tạo thanh cuộn dọc */
+                                        padding-right: 10px;
+                                    }
+                                
+                                    .news-item {
+                                        display: flex;
+                                        align-items: center;
+                                        gap: 15px;
+                                        border-bottom: 1px solid #ddd;
+                                        padding-bottom: 10px;
+                                        padding-top: 10px;
+                                    }
+                                
+                                    .news-image img {
+                                        width: 80px; 
+                                        height: 80px;
+                                        object-fit: cover;
+                                        border-radius: 8px;
+                                    }
+                                
+                                    .news-title {
+                                        font-size: 16px;
+                                        font-weight: bold;
+                                        margin: 0;
+                                    }
+                                
+                                    .news-title a {
+                                        color: #333;
+                                        text-decoration: none;
+                                    }
+                                
+                                    .news-title a:hover {
+                                        color: #d9534f;
+                                    }
+                                
+                                    /* Ẩn scrollbar để giao diện đẹp hơn */
+                                    .news-container::-webkit-scrollbar {
+                                        width: 5px;
+                                    }
+                                
+                                    .news-container::-webkit-scrollbar-thumb {
+                                        background: #888;
+                                        border-radius: 5px;
+                                    }
+                                </style>
+                                
                             </div>
                         </div>
                     </div>
@@ -483,4 +256,6 @@
 @endsection
 
 @section('js')
+
+
 @endsection

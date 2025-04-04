@@ -80,6 +80,8 @@ Route::post('/comment/{id}', [CommentController::class, 'store'])->name('comment
 
 
 Route::get('/tin-tuc', [HomeController::class, 'post'])->name('post');
+Route::get('post-detail/{post}', [HomeController::class, 'postShow'])->name('showpost');
+
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
 Route::get('/yeu-thich', [HomeController::class, 'wishlist'])->name('wishlist');
@@ -225,6 +227,13 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     //quản lý banner
 
     Route::resource('posts', PostController::class);
+
+    //battat bai vietviet
+    Route::post('posts/{post}/toggle-status', [PostController::class, 'toggleStatus'])->name('posts.toggleStatus');
+    //show bai viet clientclient
+  
+
+
 
     //quan ly binh lua
     Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
