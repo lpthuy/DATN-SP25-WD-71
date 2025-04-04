@@ -14,8 +14,7 @@ use App\Http\Controllers\Admin\ProductVariantController;
 
 use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\PromotionController;
-
-
+use App\Http\Controllers\Admin\RevenueStatisticsController;
 // use App\Http\Controllers\Admin\RevenueStatisticsController;
 
 use App\Http\Controllers\Admin\SizeController;
@@ -257,6 +256,5 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // quản lý khuyến mãi
     Route::resource('promotions', PromotionController::class);
     // quan ly thong ke
-    Route::get('statistics', action: [StatisticsController::class, 'index']);
     Route::get('revenue', [RevenueStatisticsController::class, 'statistics'])->name('admin.revenue.statistics');
 });
