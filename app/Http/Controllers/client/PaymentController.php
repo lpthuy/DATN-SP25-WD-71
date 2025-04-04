@@ -16,8 +16,8 @@ class PaymentController extends Controller
     {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route('vnpay.return');
-        $vnp_TmnCode = "8KRHG0YN";
-        $vnp_HashSecret = "BJM1MZ1B4BZ946AJ0BPBWZQL6YOLF4T7";
+        $vnp_TmnCode = "42KMOEEN";
+        $vnp_HashSecret = "L6BDRBS2Y4JH5VO6SZYWJX4UEQ6U5UKB";
 
         $price = (int) $request->input('price');
         $quantity = (int) $request->input('quantity');
@@ -29,10 +29,10 @@ class PaymentController extends Controller
 
         $vnp_TxnRef = time();
         $vnp_OrderInfo = "Thanh toán đơn hàng";
-        $vnp_Amount = $totalAmount * 100;
+        $vnp_Amount = $totalAmount * 100; // nhân 100 vì VNPAY tính đơn vị là VND x 100
         $vnp_Locale = "VN";
         $vnp_BankCode = $request->input('bank_code', "NCB");
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+        $vnp_IpAddr = $request->ip(); // Lấy IP an toàn hơn
 
         // Lưu vào session
         session([
@@ -60,16 +60,10 @@ class PaymentController extends Controller
         }
 
         ksort($inputData);
-        $query = "";
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            $hashdata .= ($hashdata ? '&' : '') . urlencode($key) . "=" . urlencode($value);
-            $query .= urlencode($key) . "=" . urlencode($value) . "&";
-        }
-
-        $vnp_Url .= "?" . $query;
+        $hashdata = urldecode(http_build_query($inputData));
+        $query = http_build_query($inputData);
         $vnpSecureHash = hash_hmac('sha512', $hashdata, $vnp_HashSecret);
-        $vnp_Url .= "vnp_SecureHash=" . $vnpSecureHash;
+        $vnp_Url .= '?' . $query . '&vnp_SecureHash=' . $vnpSecureHash;
 
         return response()->json([
             'code' => '00',
@@ -79,8 +73,21 @@ class PaymentController extends Controller
         ]);
     }
 
+
     public function vnpayReturn(Request $request)
     {
+        $vnp_HashSecret = "L6BDRBS2Y4JH5VO6SZYWJX4UEQ6U5UKB";
+        $vnp_SecureHash = $request->input('vnp_SecureHash');
+        $inputData = $request->except(['vnp_SecureHash', 'vnp_SecureHashType']);
+
+        ksort($inputData);
+        $hashData = urldecode(http_build_query($inputData));
+        $secureHash = hash_hmac('sha512', $hashData, $vnp_HashSecret);
+
+        if ($secureHash !== $vnp_SecureHash) {
+            return redirect()->route('order')->with('error', "Dữ liệu không hợp lệ (chữ ký sai)!");
+        }
+
         $vnp_TxnRef = $request->input('vnp_TxnRef');
         $vnp_ResponseCode = $request->input('vnp_ResponseCode');
         $vnp_Amount = $request->input('vnp_Amount') / 100;
@@ -97,6 +104,7 @@ class PaymentController extends Controller
                 'user_id' => $userId,
                 'payment_method' => 'VNPAY',
                 'status' => 'processing',
+                'total' => $vnp_Amount,
             ]);
 
             foreach ($checkoutItems as $item) {
@@ -114,10 +122,8 @@ class PaymentController extends Controller
             session()->forget(['checkout_items', 'order_code']);
 
             return redirect()->route('order')->with('success', "Thanh toán thành công! Mã đơn hàng: $order->order_code");
-
         } else {
             return redirect()->route('order')->with('error', "Thanh toán thất bại. Mã lỗi: $vnp_ResponseCode");
-
         }
     }
 }
