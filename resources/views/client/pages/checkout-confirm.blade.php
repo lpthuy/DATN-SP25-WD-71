@@ -41,6 +41,16 @@
             </tbody>
         </table>
 
+        <div class="mb-3">
+            <label><strong>🎁 Mã giảm giá</strong></label>
+            <div class="d-flex">
+                <input type="text" id="coupon-code" class="form-control me-2" placeholder="Nhập mã...">
+                <button class="btn btn-dark" onclick="applyCoupon()">Áp dụng</button>
+            </div>
+            <div id="coupon-message" class="text-danger mt-1"></div>
+        </div>
+        
+
         <div class="mt-4">
             <h5 class="mb-3">🔰 Chọn phương thức thanh toán</h5>
             <div class="row">
@@ -72,9 +82,10 @@
             </div>
         </div>
 
-        <div class="text-right">
-            <h4>Tổng cộng: {{ number_format($total, 0, ',', '.') }}₫</h4>
+        <div class="text-right mt-3">
+            <h4>Tổng cộng: <span id="total-price">{{ number_format($total, 0, ',', '.') }}₫</span></h4>
         </div>
+        
 
         <button class="btn btn-success mt-3" id="buy-now-btn">Xác nhận và thanh toán</button>
     </div>
@@ -155,6 +166,49 @@
 
         });
     </script>
+<script>
+    function applyCoupon() {
+    const code = document.getElementById('coupon-code').value.trim();
+    const messageEl = document.getElementById('coupon-message');
+    let total = {{ $total }};
+
+    fetch('{{ route('apply.coupon') }}', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ code: code, total: total })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const newTotal = total - data.discount;
+
+            // ✅ Gửi tiếp 1 request để lưu mã vào session server
+            fetch('{{ route('save.promo.code') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code: code })
+            });
+
+            // ✅ Hiển thị kết quả
+            document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN').format(newTotal) + '₫';
+            messageEl.innerHTML = `<span class="text-success">${data.message} - Giảm ${data.discount.toLocaleString()}₫</span>`;
+        } else {
+            messageEl.innerText = data.message;
+        }
+    })
+    .catch(error => {
+        console.error('Lỗi:', error);
+        messageEl.innerText = 'Lỗi khi áp dụng mã!';
+    });
+}
+
+</script>
 
 
 @endsection

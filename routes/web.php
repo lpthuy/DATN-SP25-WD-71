@@ -13,7 +13,7 @@ use App\Http\Controllers\Admin\ProductImageController;
 use App\Http\Controllers\Admin\ProductVariantController;
 
 use App\Http\Controllers\Admin\PostController;
-
+use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Admin\SizeController;
 
 
@@ -57,6 +57,12 @@ Route::get('/api/order-status/{id}', function ($id) {
     ]);
 });
 
+Route::post('/apply-coupon', [PromotionController::class, 'apply'])->name('apply.coupon');
+Route::post('/save-promo-code', [PromotionController::class, 'saveCode'])->name('save.promo.code');
+
+
+// quản lý khuyến mãi
+Route::resource('promotions', PromotionController::class);
 
 
 Route::get('/', [HomeController::class, 'index'])->name('home');

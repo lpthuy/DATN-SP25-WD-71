@@ -25,12 +25,14 @@ class OrderController extends Controller
         if (!$checkoutItems || !$user) {
             return response()->json(['status' => 'error', 'message' => 'Không tìm thấy giỏ hàng hoặc chưa đăng nhập!']);
         }
-
+      // ✅ Lấy mã giảm giá từ session nếu có
+    $appliedCode = session('applied_promo_code');
         $order = Order::create([
             'order_code'      => $orderCode,
             'user_id'         => $user->id,
             'payment_method'  => 'cod',
             'status'          => 'processing',
+            'promotion_code'  => $appliedCode ?? null, // nếu không có sẽ là null
         ]);
 
         foreach ($checkoutItems as $item) {
@@ -56,7 +58,7 @@ class OrderController extends Controller
         }
 
         // Xóa session giỏ hàng sau khi lưu đơn hàng
-        session()->forget(['checkout_items']);
+        session()->forget(['checkout_items', 'applied_promo_code']);
 
         // ✅ Gửi email xác nhận đơn hàng
         try {
