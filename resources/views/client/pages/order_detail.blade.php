@@ -47,8 +47,35 @@
     </table>
 
     <div class="text-right">
-        <h4 class="section-title"><strong>Tổng cộng:</strong> {{ number_format($total, 0, ',', '.') }}VNĐ</h4>
+        {{-- Giá gốc --}}
+        <div class="section-title">
+            <p><strong>Giá gốc:</strong> {{ number_format($total, 0, ',', '.') }}₫</p>
+    
+            {{-- Nếu có mã giảm giá đã dùng --}}
+            @if($order->promotion_code)
+                @php
+                    $promotion = \App\Models\Promotion::where('code', $order->promotion_code)->first();
+                    $discountAmount = 0;
+                    if ($promotion) {
+                        if ($promotion->discount_type === 'fixed') {
+                            $discountAmount = $promotion->discount_value;
+                        } elseif ($promotion->discount_type === 'percentage') {
+                            $discountAmount = $total * ($promotion->discount_value / 100);
+                        }
+                    }
+                    $finalTotal = $total - $discountAmount;
+                @endphp
+        
+                {{-- <p><strong>Mã giảm giá đã dùng:</strong> {{ $order->promotion_code }}</p> --}}
+                <p><strong>Đã giảm:</strong> {{ number_format($discountAmount, 0, ',', '.') }}₫</p>
+                <h4 ><strong>Tổng cộng:</strong> {{ number_format($finalTotal, 0, ',', '.') }}₫</h4>
+            @else
+                <h4 ><strong>Tổng cộng:</strong> {{ number_format($total, 0, ',', '.') }}₫</h4>
+            @endif
+        </div>
+        
     </div>
+    
 
     <a href="{{ route('order') }}" class="btn btn-secondary mt-3">⬅ Quay lại danh sách đơn hàng</a>
 </div>
