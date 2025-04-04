@@ -237,6 +237,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('posts', PostController::class);
 
+
     //battat bai vietviet
     Route::post('posts/{post}/toggle-status', [PostController::class, 'toggleStatus'])->name('posts.toggleStatus');
     //show bai viet clientclient
@@ -245,6 +246,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 
     //quan ly binh lua
+
     Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
     Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
     Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
