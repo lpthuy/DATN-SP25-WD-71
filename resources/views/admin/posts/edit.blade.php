@@ -7,39 +7,54 @@
 @endsection
 
 @section('content')
-    
 
-        <!-- Nội dung chỉnh sửa bài viết -->
-   
-            <div class="card shadow p-4">
-                <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    @method('PUT') <!-- Đảm bảo là PUT vì bạn đang cập nhật dữ liệu -->
-                    
-                    <!-- Tiêu đề bài viết -->
-                    <div class="mb-3">
-                        <label for="title" class="form-label fw-bold">Tiêu đề bài viết</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title', $post->title) }}" required>
-                    </div>
-
-                    <!-- Nội dung bài viết -->
-                    <div class="mb-3">
-                        <label for="content" class="form-label fw-bold">Nội dung bài viết</label>
-                        <textarea id="content" name="content" class="form-control" required>{{ old('content', $post->content) }}</textarea>
-                    </div>
-                    <!-- Nút bấm lưu -->
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-save"></i> Cập nhật bài viết
-                        </button>
-                        <a href="{{ route('posts.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Hủy
-                        </a>
-                    </div>
-                </form>
+    <div class="card shadow p-4">
+        <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT') <!-- Đảm bảo là PUT vì bạn đang cập nhật dữ liệu -->
+            
+            <!-- Tiêu đề bài viết -->
+            <div class="mb-3">
+                <label for="title" class="form-label fw-bold">Tiêu đề bài viết</label>
+                <input type="text" name="title" class="form-control" value="{{ old('title', $post->title) }}" required>
             </div>
-        </div>
-  
+
+            <!-- Nội dung bài viết -->
+            <div class="mb-3">
+                <label for="content" class="form-label fw-bold">Nội dung bài viết</label>
+                <textarea id="content" name="content" class="form-control" required>{{ old('content', $post->content) }}</textarea>
+            </div>
+
+            <!-- Ảnh bìa -->
+            <div class="mb-3">
+                <label for="image" class="form-label fw-bold">Ảnh bìa</label>
+                <input type="file" name="image" class="form-control">
+                @if ($post->image)
+                    <div class="mt-2">
+                        <img src="{{ asset('storage/' . $post->image) }}" alt="Ảnh bìa" width="100">
+                    </div>
+                @endif
+            </div>
+
+            <!-- Trạng thái bài viết -->
+            <div class="mb-3">
+                <label for="is_active" class="form-label fw-bold">Trạng thái</label>
+                <input type="checkbox" name="is_active" {{ old('is_active', $post->is_active) ? 'checked' : '' }}>
+                <span>{{ old('is_active', $post->is_active) ? 'Bật' : 'Tắt' }}</span>
+            </div>
+
+            <!-- Nút bấm lưu -->
+            <div class="mt-4">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-save"></i> Cập nhật bài viết
+                </button>
+                <a href="{{ route('posts.index') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Hủy
+                </a>
+            </div>
+        </form>
+    </div>
+
 @endsection
 
 @section('css')

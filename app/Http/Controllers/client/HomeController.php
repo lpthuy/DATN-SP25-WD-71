@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Client;
 
+use App\Models\Post;
 use App\Models\User;
 use App\Models\Color;
 use App\Models\Banner;
@@ -165,9 +166,16 @@ class HomeController extends Controller
 
     public function post()
     {
-        return view('client.pages.post');
+        $posts = Post::where('is_active', true)->paginate(4); // Phân trang và chỉ lấy bài viết có trạng thái 'bật'
+
+        return view('client.pages.post',compact('posts'));
     }
 
+    public function postShow(Post $post)
+{
+    $posts = Post::where('is_active', true)->paginate(4); // Thêm biến $posts
+    return view('client.pages.post-detail', compact('post', 'posts'));
+}
     public function contact()
     {
         return view('client.pages.contact');
