@@ -584,7 +584,7 @@
 
 
 
-		<section class="section_product_hot module_product">
+		{{-- <section class="section_product_hot module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-1" data-section="ajax-tab-1">
 					<div class="row">
@@ -1356,12 +1356,12 @@
 					$(".section_product_hot .tab_ul ul").animate({ scrollLeft: leftPos + 150 }, 500);
 				});
 			})
-		</script>
+		</script> --}}
 
 
 
 
-		<section class="section_product_new module_product">
+		{{-- <section class="section_product_new module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-2" data-section-2="ajax-tab-2">
 					<div class="row">
@@ -2137,11 +2137,11 @@
 				});
 			})
 		</script>
+ --}}
 
 
 
-
-		<section class="section_product_sale module_product">
+		{{-- <section class="section_product_sale module_product">
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-12">
@@ -2631,12 +2631,12 @@
 					}
 				}
 			});
-		</script>
+		</script> --}}
 
 
 
 
-		<section class="section_product_goodprice module_product">
+		{{-- <section class="section_product_goodprice module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-2" data-section-2="ajax-tab-2">
 					<div class="row">
@@ -3413,7 +3413,7 @@
 					$(".section_product_goodprice .tab_ul ul").animate({ scrollLeft: leftPos + 150 }, 500);
 				});
 			})
-		</script>
+		</script> --}}
 
 
 
@@ -3614,7 +3614,7 @@
 
 
 
-		<section class="section_brand">
+		{{-- <section class="section_brand">
 			<div class="container">
 				<div class="brand-swiper swiper-container">
 					<div class="swiper-wrapper">
@@ -3695,7 +3695,7 @@
 				}
 			});
 		</script>
-
+ --}}
 
 
 

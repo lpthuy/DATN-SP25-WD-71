@@ -6,8 +6,8 @@
 <!-- Swiper CSS -->
 
 
-    <h1 class="d-none">Lofi Style - LOFI STYLE - Thương hiệu thời trang của người trẻ hiện đại! Ra đời vào năm
-        2016, LOFISTYLE luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tin và năng lượng
+    <h1 class="d-none"> RAINBOW - STORE  Thương hiệu thời trang của người trẻ hiện đại! Ra đời vào năm
+        2016, RAINBOW - STORE  luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tin và năng lượng
         tích cực cho khách hàng.</h1>
 
         <section class="awe-section-1">
@@ -184,7 +184,7 @@
         </section>
     </section>
 
-    <section class="awe-section-3">
+    {{-- <section class="awe-section-3">
         <section class="section_category">
             <div class="container">
                 <div class="heading-home">
@@ -280,7 +280,7 @@
         </section>
 
 
-    </section>
+    </section> --}}
 
 
      <section class="awe-section-4">
@@ -320,7 +320,7 @@
         </section>
     </section>
     
-    <section class="awe-section-5">
+    {{-- <section class="awe-section-5">
         <link rel="preload" as="script" href="{{ asset('client/js/count-down4d9c.js') }}" />
         <script src="{{ asset('client/js/count-down4d9c.js') }}" type="text/javascript"></script>
         <section class="section_flash_sale module_product">
@@ -937,9 +937,9 @@
 
             </div>
         </section>
-    </section>
+    </section> --}}
 
-    <section class="awe-section-6">
+    {{-- <section class="awe-section-6">
         <div class="section_banner_featured feature_banner">
             <div class="container">
                 <div class="row">
@@ -976,7 +976,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <section class="awe-section-7">
         <div class="section_product_new module_product">
@@ -1114,7 +1114,7 @@
                         <div class="swiper-wrapper">
                             <div class="swiper-slide single-testimonial">
                                 <div class="testimonials-wrapper">
-                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Lofi Style có thể là điểm
+                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Rainbow - store có thể là điểm
                                         đến cuối cùng của mình, bán toàn đồ chất lượng.</div>
                                     <div class="testimonials-img">
                                         <img width="90" height="90" class="lazy img-responsive"
@@ -1130,7 +1130,7 @@
 
                             <div class="swiper-slide single-testimonial">
                                 <div class="testimonials-wrapper">
-                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Lofi Style có thể là điểm
+                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Rainbow - store có thể là điểm
                                         đến cuối cùng của mình, bán toàn đồ chất lượng.</div>
                                     <div class="testimonials-img">
                                         <img width="90" height="90" class="lazy img-responsive"
@@ -1146,7 +1146,7 @@
 
                             <div class="swiper-slide single-testimonial">
                                 <div class="testimonials-wrapper">
-                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Lofi Style có thể là điểm
+                                    <div class="desc">Mình đã mua ở rất nhiều nơi rồi, Rainbow - store có thể là điểm
                                         đến cuối cùng của mình, bán toàn đồ chất lượng.</div>
                                     <div class="testimonials-img">
                                         <img width="90" height="90" class="lazy img-responsive"
@@ -1210,7 +1210,7 @@
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
                                             </svg>
-                                            <span>Team Lofi</span>
+                                            <span>Rainbow - store</span>
                                         </div>
                                         <h3>
                                             <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
@@ -1254,7 +1254,7 @@
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
                                             </svg>
-                                            <span>Team Lofi</span>
+                                            <span>Rainbow - store</span>
                                         </div>
                                         <h3>
                                             <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
@@ -1298,7 +1298,7 @@
                                                     d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
                                                     class=""></path>
                                             </svg>
-                                            <span>Team Lofi</span>
+                                            <span>Rainbow - store</span>
                                         </div>
                                         <h3>
                                             <a href="tu-tin-dien-ao-nhun-nguc-chuan-trend-2023.html"
@@ -1320,7 +1320,7 @@
 
     </section>
 
-    <section class="awe-section-10">
+    {{-- <section class="awe-section-10">
         <section class="section_instagram">
             <div class="container">
                 <div class="heading-home">
@@ -1461,7 +1461,7 @@
                 </div>
             </div>
         </section>
-    </section>
+    </section> --}}
 @endsection
 
 @section('js')
