@@ -8,38 +8,61 @@
         <div class="col-md-4">
             <label for="filter_type" class="form-label">Lọc theo:</label>
             <select name="filter_type" id="filter_type" class="form-control">
-                <option value="day" {{ request('filter_type') == 'day' ? 'selected' : '' }}>Ngày</option>
-                <option value="month" {{ request('filter_type') == 'month' ? 'selected' : '' }}>Tháng</option>
-                <option value="year" {{ request('filter_type') == 'year' ? 'selected' : '' }}>Năm</option>
+                <option value="day" {{ $filterType == 'day' ? 'selected' : '' }}>Ngày</option>
+                <option value="month" {{ $filterType == 'month' ? 'selected' : '' }}>Tháng</option>
+                <option value="year" {{ $filterType == 'year' ? 'selected' : '' }}>Năm</option>
             </select>
         </div>
         <div class="col-md-4">
             <label for="filter_value" class="form-label">Chọn ngày/tháng/năm:</label>
-            <input type="text" name="filter_value" id="filter_value" class="form-control" value="{{ request('filter_value') }}">
+            <input type="text" name="filter_value" id="filter_value" class="form-control" value="{{ $filterValue }}">
         </div>
-        <div class="col-md-4 d-flex align-items-end">
-            <button type="submit" class="btn btn-primary w-100">Lọc</button>
+        <div class="col-md-4">
+            <label for="filter_status" class="form-label">Trạng thái:</label>
+            <select name="filter_status" id="filter_status" class="form-control">
+                <option value="">Tất cả</option>
+                @foreach ($statuses as $status)
+                <option value="{{ $status }}" {{ $filterStatus == $status ? 'selected' : '' }}>
+                    {{ ucfirst($status) }}
+                </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="col-md-12 d-flex justify-content-end mt-3">
+            <button type="submit" class="btn btn-primary">Lọc</button>
         </div>
     </form>
 
-    <div class="card p-3 mb-4">
-        <h4>Doanh thu: <span class="text-success">{{ number_format($totalRevenue, 0, ',', '.') }} VNĐ</span></h4>
-    </div>
-
+    <!-- Bảng thống kê theo trạng thái -->
+    <h4 class="mb-3">Thống kê theo trạng thái</h4>
     <table class="table table-bordered table-hover">
         <thead class="table-dark">
             <tr>
-                <th>Thời gian</th>
+                <th>Trạng thái</th>
                 <th>Doanh thu</th>
+                <th>Số lượng đơn hàng</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($revenues as $time => $revenue)
+            @forelse ($statisticsByStatus as $status => $data)
             <tr>
-                <td>{{ $time }}</td>
-                <td>{{ number_format($revenue, 0, ',', '.') }} VNĐ</td>
+                <td>
+                    @if ($status == 'completed')
+                    Đơn đã thành công
+                    @elseif ($status == 'cancelled')
+                    Đơn đã hủy
+                    @else
+                    {{ ucfirst($status) }}
+                    @endif
+                </td>
+                <td>{{ number_format($data['revenue'], 0, ',', '.') }} VNĐ</td>
+                <td>{{ $data['order_count'] }}</td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="3" class="text-center">Không có dữ liệu</td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 </div>
@@ -51,9 +74,8 @@
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         flatpickr("#filter_value", {
-            enableTime: true, // Cho phép chọn giờ
-            dateFormat: "Y-m-d H:i", // Định dạng ngày giờ
-            locale: "vn" // Hiển thị tiếng Việt
+            dateFormat: "Y-m-d",
+            locale: "vn"
         });
     });
 </script>

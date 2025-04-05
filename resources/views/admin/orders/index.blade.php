@@ -37,8 +37,10 @@
         @foreach($orders as $order)
         <tr>
             <td>{{ $order->order_code }}</td>
+
             <td>{{ $order->user->name ?? 'Không có tên' }}</td>
             <td>{{ $order->user->address ?? 'Chưa có địa chỉ' }}</td>
+
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->created_at }}</td>
             <td>{{ $order->status }}</td>
