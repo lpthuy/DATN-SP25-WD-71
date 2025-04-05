@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -23,6 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $categories = Category::where('is_active', 1)->get(); // Lấy danh mục đang hiển thị
         return view('client.pages.home');
     }
 

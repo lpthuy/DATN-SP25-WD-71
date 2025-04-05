@@ -195,84 +195,23 @@
                 <div class="block-content">
                     <div class="category-swiper swiper-container">
                         <div class="swiper-wrapper">
-                            <div class="item swiper-slide">
-                                <a href="san-pham-ao.html" title="Sản phẩm áo">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/group-210.png') }}"
-                                            data-src="{{ asset('client/images/group-210.png') }}" alt="Sản phẩm áo" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Sản phẩm áo</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="item swiper-slide">
-                                <a href="san-pham-quan.html" title="Sản phẩm quần">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/ellipse-68.png') }}"
-                                            data-src="{{ asset('client/images/ellipse-68.png') }}" alt="Sản phẩm quần" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Sản phẩm quần</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="item swiper-slide">
-                                <a href="san-pham-vay.html" title="Sản phẩm váy">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/ellipse-69.png') }}"
-                                            data-src="{{ asset('client/images/ellipse-69.png') }}" alt="Sản phẩm váy" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Sản phẩm váy</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="item swiper-slide">
-                                <a href="tui-phu-kien.html" title="Túi xách">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/ellipse-70.png') }}"
-                                            data-src="{{ asset('client/images/ellipse-70.png') }}" alt="Túi xách" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Túi xách</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="item swiper-slide">
-                                <a href="giay-dep.html" title="Giày dép">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/ellipse-71.png') }}"
-                                            data-src="{{ asset('client/images/ellipse-71.png') }}" alt="Giày dép" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Giày dép</div>
-                                    </div>
-                                </a>
-                            </div>
-
-                            <div class="item swiper-slide">
-                                <a href="phu-kien-1.html" title="Phụ kiện">
-                                    <div class="cate-img">
-                                        <img width="130" height="130" class="lazy img-responsive"
-                                            src="{{ asset('client/images/ellipse-72.png') }}"
-                                            data-src="{{ asset('client/images/ellipse-72.png') }}" alt="Phụ kiện" />
-                                    </div>
-                                    <div class="cate-info">
-                                        <div class="cate-name">Phụ kiện</div>
-                                    </div>
-                                </a>
-                            </div>
+                            @foreach($categories as $category)
+                                <div class="item swiper-slide">
+                                    <a href="{{ url('danh-muc/' . Str::slug($category->name)) }}" title="{{ $category->name }}">
+                                        <div class="cate-img">
+                                            <img width="130" height="130" class="lazy img-responsive"
+                                                 src="{{ asset('storage/' . ($category->image_url ?? 'default.png')) }}"
+                                                 data-src="{{ asset('storage/' . ($category->image_url ?? 'default.png')) }}"
+                                                 alt="{{ $category->name }}" />
+                                        </div>
+                                        <div class="cate-info">
+                                            <div class="cate-name">{{ $category->name }}</div>
+                                        </div>
+                                    </a>
+                                </div>
+                            @endforeach
                         </div>
+                        
                         <div class="swiper-pagination"></div>
                     </div>
                 </div>

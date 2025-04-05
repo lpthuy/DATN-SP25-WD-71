@@ -64,6 +64,10 @@ Route::post('/apply-coupon', [PromotionController::class, 'apply'])->name('apply
 Route::post('/save-promo-code', [PromotionController::class, 'saveCode'])->name('save.promo.code');
 
 
+Route::get('danh-muc/{slug}', [App\Http\Controllers\Client\ProductController::class, 'category'])->name('category.products');
+
+
+
 // quản lý khuyến mãi
 Route::resource('promotions', PromotionController::class);
 
