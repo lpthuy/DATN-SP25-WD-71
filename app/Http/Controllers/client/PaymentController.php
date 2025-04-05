@@ -114,10 +114,8 @@ class PaymentController extends Controller
             session()->forget(['checkout_items', 'order_code']);
 
             return redirect()->route('order')->with('success', "Thanh toán thành công! Mã đơn hàng: $order->order_code");
-
         } else {
             return redirect()->route('order')->with('error', "Thanh toán thất bại. Mã lỗi: $vnp_ResponseCode");
-
         }
     }
 }
