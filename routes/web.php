@@ -12,9 +12,13 @@ use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 
+
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\OrdersController;
 
+// use App\Http\Controllers\Admin\PostController;
+// use App\Http\Controllers\Admin\PromotionController;
+// use App\Http\Controllers\Admin\RevenueStatisticsController;
 
 // use App\Http\Controllers\Admin\RevenueStatisticsController;
 
@@ -238,6 +242,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
     Route::resource('posts', PostController::class);
 
+
     //battat bai vietviet
     Route::post('posts/{post}/toggle-status', [PostController::class, 'toggleStatus'])->name('posts.toggleStatus');
     //show bai viet clientclient
@@ -246,6 +251,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
 
 
     //quan ly binh lua
+
     Route::resource('comments', AdminCommentController::class)->only(['index', 'destroy']);
     Route::patch('comments/{comment}/toggle', [AdminCommentController::class, 'toggleVisibility'])->name('comments.toggle');
     Route::get('/admin/comments', [AdminCommentController::class, 'index'])->name('admin.comments.index');
@@ -256,6 +262,5 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     // quản lý khuyến mãi
     Route::resource('promotions', PromotionController::class);
     // quan ly thong ke
-    Route::get('statistics', action: [StatisticsController::class, 'index']);
     Route::get('revenue', [RevenueStatisticsController::class, 'statistics'])->name('admin.revenue.statistics');
 });
