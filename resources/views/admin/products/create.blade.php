@@ -90,7 +90,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                                <span id="colorPreview-${variantIndex}" class="border ms-2 rounded-circle" 
+                                <span  id="colorPreview-${variantIndex}" class="border ms-2 rounded-circle" 
                                     style="width: 30px; height: 30px; display: inline-block; border: 1px solid #ccc;">
                                 </span>
                             </div>
@@ -299,4 +299,18 @@ document.addEventListener('wheel', function(event) {}, { passive: true });
 });
 
 </script>
+
+<style>
+    /* Giãn cách giữa select và preview màu */
+.d-flex.align-items-center > select.form-select {
+    margin-right: 12px;
+}
+
+/* Preview màu vẫn giữ nguyên kích thước và viền */
+.d-flex.align-items-center > span.rounded-circle {
+    min-width: 30px;
+    min-height: 30px;
+}
+
+</style>
 @endsection
