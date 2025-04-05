@@ -16,8 +16,8 @@ class PaymentController extends Controller
     {
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
         $vnp_Returnurl = route('vnpay.return');
-        $vnp_TmnCode = "8KRHG0YN";
-        $vnp_HashSecret = "BJM1MZ1B4BZ946AJ0BPBWZQL6YOLF4T7";
+        $vnp_TmnCode = "2KVYC04T";
+        $vnp_HashSecret = "FXNGJH0W969WQELS747QRGBUIAUFRLRN";
 
         $price = (int) $request->input('price');
         $quantity = (int) $request->input('quantity');

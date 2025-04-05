@@ -184,8 +184,8 @@
         </section>
     </section>
 
-    {{-- <section class="awe-section-3">
-        <section class="section_category">
+    <section class="awe-section-3">
+        <!-- <section class="section_category">
             <div class="container">
                 <div class="heading-home">
                     <div class="site-animation">
@@ -216,10 +216,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
 
-    </section> --}}
+    </section>
 
 
      <section class="awe-section-4">
