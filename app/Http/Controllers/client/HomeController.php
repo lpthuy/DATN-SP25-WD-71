@@ -35,14 +35,15 @@ class HomeController extends Controller
 
     public function index()
     {
+        $posts = Post::where('is_active', true)->paginate(4); // Thêm biến $posts
         $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã đã bật
         $products = Product::all(); // Lấy tất cả sản phẩm
         $products = Product::where('is_active', true)->latest()->take(8)->get();
         $banners = Banner::where('status', 1)->orderBy('position', 'asc')->get(); // Lấy banner theo thứ tự position
 
-        return view('client.pages.home', compact('products', 'banners','promotions'));
+        return view('client.pages.home', compact('products', 'banners','promotions','posts'));
     }
-    //   lấy toàn bộ sản phẩm in ra
+    //   lấy toàn bộ sản phẩm in 
     public function allProducts()
     {
         $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã khuyến mãi
