@@ -36,7 +36,7 @@
         @foreach($orders as $order)
         <tr>
             <td>{{ $order->order_code }}</td>
-            <td>{{ $order->user_id }}</td>
+            <td>{{ $order->user->name }}</td>
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->created_at }}</td>
             <td>{{ $order->status }}</td>

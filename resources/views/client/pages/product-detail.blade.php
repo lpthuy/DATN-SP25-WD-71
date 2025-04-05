@@ -469,119 +469,18 @@
                                 </div>
                             </div>
                         </div>
-                        {{-- <div class="accordion-item" id="product_tabs-4">
-                            <div class="accordion-title">
-                                Đánh giá & Bình luận
-                                <i class="icon">
-                                    <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
-                                        version="1.1" viewBox="0 0 512 512" width="15px" xml:space="preserve"
-                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                        <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 " />
-                                    </svg>
-                                </i>
-                            </div>
-                            <div class="accordion-contant">
-                                <div class="rte">
-                                    <div class="ba-text-fpt">
-                                        <!-- Hiển thị rating trung bình -->
-                                        @php
-                                            $productRating = App\Models\Comment::getAverageStarRating($product->id);
-                                        @endphp
-                                        <div class="product-rating-summary mb-4">
-                                            <div class="average-rating">
-                                                {!! $productRating['html'] !!}
-                                                <span class="rating-value">{{ $productRating['average'] }}/5</span>
-                                            </div>
-                                            <div class="rating-count">
-                                                Dựa trên {{ $productRating['count'] }} đánh giá
-                                            </div>
-                                        </div>
-                        
-                                        <!-- Danh sách bình luận -->
-                                        @if ($comments->where('is_visible', true)->isEmpty())
-                                            <p class="no-comments">Chưa có đánh giá nào</p>
-                                        @else
-                                            @foreach ($comments->where('is_visible', true) as $comment)
-                                                <div class="comment-box">
-                                                    <div class="comment-header">
-                                                        <div class="comment-info">
-                                                            <p class="comment-author">
-                                                                {{ $comment->user_id ? optional($comment->user)->name : ($comment->name ?? 'Khách') }}
-                                                            </p>
-                                                            <div class="comment-meta">
-                                                                <span class="comment-date">{{ $comment->created_at_formatted }}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div class="comment-rating">
-                                                            {!! $comment->star_rating !!}
-                                                        </div>
-                                                    </div>
-                                                    <div class="comment-content">
-                                                        <p>{{ $comment->content }}</p>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        @endif
-                        
-                                        <hr class="comment-divider">
-                        
-                                        <!-- Form đánh giá -->
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <h4 class="review-title">Viết đánh giá của bạn</h4>
-                                                <form action="{{ route('comment.store', $product->id) }}" method="POST">
-                                                    @csrf
-                                                    
-                                                    <div class="form-group rating-group">
-                                                        <label class="rating-label">Đánh giá của bạn:</label>
-                                                        <div class="star-rating-input">
-                                                            <input type="radio" id="star5" name="rating" value="5" required />
-                                                            <label for="star5" title="5 sao">★</label>
-                                                            <input type="radio" id="star4" name="rating" value="4" />
-                                                            <label for="star4" title="4 sao">★</label>
-                                                            <input type="radio" id="star3" name="rating" value="3" />
-                                                            <label for="star3" title="3 sao">★</label>
-                                                            <input type="radio" id="star2" name="rating" value="2" />
-                                                            <label for="star2" title="2 sao">★</label>
-                                                            <input type="radio" id="star1" name="rating" value="1" />
-                                                            <label for="star1" title="1 sao">★</label>
-                                                        </div>
-                                                    </div>
-                        
-                                                    @auth
-                                                        <div class="form-group">
-                                                            <label for="content">Nội dung đánh giá:</label>
-                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
-                                                        </div>
-                                                    @else
-                                                        <div class="form-group">
-                                                            <label for="name">Tên của bạn:</label>
-                                                            <input type="text" class="form-control" id="name" name="name" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="email">Email:</label>
-                                                            <input type="email" class="form-control" id="email" name="email" required>
-                                                        </div>
-                                                        <div class="form-group">
-                                                            <label for="content">Nội dung đánh giá:</label>
-                                                            <textarea class="form-control" id="content" name="content" rows="5" required placeholder="Hãy chia sẻ cảm nhận của bạn về sản phẩm..."></textarea>
-                                                        </div>
-                                                    @endauth
-                                                    
-                                                    <button type="submit" class="btn btn-submit">Gửi đánh giá</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> --}}
-                        @php
-    $userCanReview = auth()->check() && \App\Models\Order::where('user_id', auth()->id())
+                       
+                    
+  @php
+    $user = auth()->user();
+    $userCanReview = $user && \App\Models\Order::where('user_id', $user->id)
         ->where('status', 'Đã giao thành công')
-        ->whereHas('items', function($query) use ($product) {
-            $query->where('product_id', $product->id);
-        })
+        ->whereHas('items', fn($query) => $query->where('product_id', $product->id))
+        ->exists();
+
+    // Kiểm tra xem người dùng đã đánh giá sản phẩm chưa
+    $hasReviewed = $user && \App\Models\Comment::where('user_id', $user->id)
+        ->where('product_id', $product->id)
         ->exists();
 @endphp
 
@@ -639,7 +538,7 @@
 
                 <hr class="comment-divider">
 
-                @if ($userCanReview)
+                @if ($userCanReview && !$hasReviewed)
                     <div class="row">
                         <div class="col-md-12">
                             <h4 class="review-title">Viết đánh giá của bạn</h4>
@@ -668,6 +567,8 @@
                             </form>
                         </div>
                     </div>
+                @elseif($hasReviewed)
+                    <p class="alert alert-success">Bạn đã đánh giá sản phẩm này rồi.</p>
                 @elseif(auth()->check())
                     <p class="alert alert-warning">Bạn cần mua sản phẩm này và nhận hàng thành công để có thể đánh giá.</p>
                 @endif
