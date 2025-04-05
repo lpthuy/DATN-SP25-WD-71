@@ -26,6 +26,7 @@
         <tr>
             <th>Mã đơn</th>
             <th>Người dùng</th>
+            <th>Địa chỉ người dùng</th> 
             <th>Phương thức</th>
             <th>Ngày tạo</th>
             <th>Trạng thái</th>
@@ -36,7 +37,10 @@
         @foreach($orders as $order)
         <tr>
             <td>{{ $order->order_code }}</td>
-            <td>{{ $order->user->name }}</td>
+
+            <td>{{ $order->user->name ?? 'Không có tên' }}</td>
+            <td>{{ $order->user->address ?? 'Chưa có địa chỉ' }}</td>
+
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->created_at }}</td>
             <td>{{ $order->status }}</td>
