@@ -593,7 +593,7 @@
 
 
 
-		<section class="section_product_hot module_product">
+		{{-- <section class="section_product_hot module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-1" data-section="ajax-tab-1">
 					<div class="row">
@@ -1365,11 +1365,11 @@
 					$(".section_product_hot .tab_ul ul").animate({ scrollLeft: leftPos + 150 }, 500);
 				});
 			})
-		</script>
+		</script> --}}
 
 
 
-
+{{-- 
 		<section class="section_product_new module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-2" data-section-2="ajax-tab-2">
@@ -2145,11 +2145,11 @@
 					$(".section_product_new .tab_ul ul").animate({ scrollLeft: leftPos + 150 }, 500);
 				});
 			})
-		</script>
+		</script> --}}
 
 
 
-
+{{-- 
 		<section class="section_product_sale module_product">
 			<div class="container">
 				<div class="row">
@@ -2641,11 +2641,11 @@
 				}
 			});
 		</script>
+ --}}
 
 
 
-
-		<section class="section_product_goodprice module_product">
+		{{-- <section class="section_product_goodprice module_product">
 			<div class="container">
 				<div class="wrap_tab_index not-dqtab e-tabs ajax-tab-2" data-section-2="ajax-tab-2">
 					<div class="row">
@@ -3422,11 +3422,11 @@
 					$(".section_product_goodprice .tab_ul ul").animate({ scrollLeft: leftPos + 150 }, 500);
 				});
 			})
-		</script>
+		</script> --}}
 
 
 
-
+{{-- 
 		<section class="section_blog">
 			<div class="container">
 				<div class="block-title">
@@ -3618,7 +3618,7 @@
 					</div>
 				</div>
 			</div>
-		</section>
+		</section> --}}
 
 
 
@@ -3778,7 +3778,7 @@
 									src="../bizweb.dktcdn.net/100/455/315/themes/894917/assets/logo_footerf799.png?1724746453440"
 									alt="Template Alena">
 							</a>
-							<p class="text">Shop Thời trang và phụ kiện Alena</p>
+							<p class="text">Shop Thời trang và phụ kiện Rainbow</p>
 							<div class="item">
 								<svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 36 36"
 									fill="none">

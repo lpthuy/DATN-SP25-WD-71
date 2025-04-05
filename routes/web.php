@@ -13,14 +13,10 @@ use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 
 
-use App\Http\Controllers\Admin\BannerController;
-use App\Http\Controllers\Admin\OrdersController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\PromotionController;
+use App\Http\Controllers\Admin\RevenueStatisticsController;
 
-// use App\Http\Controllers\Admin\PostController;
-// use App\Http\Controllers\Admin\PromotionController;
-// use App\Http\Controllers\Admin\RevenueStatisticsController;
-
-// use App\Http\Controllers\Admin\RevenueStatisticsController;
 
 use App\Http\Controllers\Client\OrderController;
 use App\Http\Controllers\Admin\ProductController;

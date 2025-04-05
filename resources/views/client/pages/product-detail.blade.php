@@ -393,7 +393,7 @@
 
                                     <div class="ba-text-fpt">
                                         <p><b>LOFI STYLE&nbsp;</b>- Thương hiệu thời trang của người trẻ hiện
-                                            đại! Ra đời vào năm 2016, LOFISTYLE&nbsp;luôn nỗ lực với sứ mệnh tạo
+                                            đại! Ra đời vào năm 2016, Rainbow - store&nbsp;luôn nỗ lực với sứ mệnh tạo
                                             nên xu hướng thời trang mang đến sự tin tưởng&nbsp;và năng lượng
                                             tích cực cho khách hàng.&nbsp;<b>LOFI STYLE&nbsp;</b>mang hơi thở
                                             của thời trang&nbsp;<strong><em>HIỆN ĐẠI, TRẺ TRUNG, PHÓNG
@@ -429,14 +429,14 @@
 
                                     <div class="ba-text-fpt">
                                         <p><b>LOFI STYLE&nbsp;</b>- Thương hiệu thời trang của người trẻ hiện
-                                            đại! Ra đời vào năm 2016, LOFISTYLE&nbsp;luôn nỗ lực với sứ mệnh tạo
+                                            đại! Ra đời vào năm 2025, Rainbow - store&nbsp;luôn nỗ lực với sứ mệnh tạo
                                             nên xu hướng thời trang mang đến sự tin tưởng&nbsp;và năng lượng
-                                            tích cực cho khách hàng.&nbsp;<b>LOFI STYLE&nbsp;</b>mang hơi thở
+                                            tích cực cho khách hàng.&nbsp;<b>Rainbow - store&nbsp;</b>mang hơi thở
                                             của thời trang&nbsp;<strong><em>HIỆN ĐẠI, TRẺ TRUNG, PHÓNG
                                                     KHOÁNG</em></strong>&nbsp;với những mẫu thiết kế bắt nhịp xu
                                             hướng thịnh hành và có tính ứng dụng cao trong mọi hoàn cảnh.</p>
                                         <p>&nbsp;</p>
-                                        <p><em><strong>HÃY ĐẾN&nbsp;</strong><b>LOFI STYLE</b><strong>&nbsp;ĐỂ
+                                        <p><em><strong>HÃY ĐẾN&nbsp;</strong><b>Rainbow - store</b><strong>&nbsp;ĐỂ
                                                     TRẢI NGHIỆM SỰ KHÁC BIỆT!</strong></em></p>
                                     </div>
 
