@@ -32,7 +32,6 @@
                 <div class="drawer__inner">
                     <div class="CartPageContainer">
                         <div class="row">
-                            <!-- Cột sản phẩm chiếm toàn bộ chiều ngang -->
                             <div class="col-12">
                                 <table class="table table-bordered cart-table">
                                     <thead>
@@ -102,7 +101,6 @@
                             </div>
                         </div>
 
-                        <!-- Thanh toán hiển thị ở dưới -->
                         <div class="fixed-total-container">
                             <div class="total-price-container">
                                 Tổng tiền: <span id="total-price">0₫</span>
@@ -110,7 +108,7 @@
                             <form id="checkout-form" action="{{ route('checkout.show') }}" method="GET">
                                 @csrf
                                 <input type="hidden" name="selected_products" id="selected-products">
-                                <button type="submit" class="btn btn-checkout">Thanh toán</button>
+                                <button type="submit" class="btn btn-checkout" id="checkout-button">Thanh toán</button>
                             </form>
                         </div>
                     </div>
@@ -157,13 +155,13 @@
             updateTotalPrice();
         }
 
-        // Chọn tất cả
+        // Xử lý chọn tất cả
         selectAllCheckbox.addEventListener("change", function() {
             checkboxes.forEach(cb => cb.checked = this.checked);
             updateTotalPrice();
         });
 
-        // Checkbox từng sản phẩm
+        // Xử lý chọn từng sản phẩm
         checkboxes.forEach(cb => {
             cb.addEventListener("change", function() {
                 updateTotalPrice();
@@ -171,7 +169,7 @@
             });
         });
 
-        // Submit form thanh toán
+        // Xử lý submit form thanh toán
         checkoutForm.addEventListener("submit", function(e) {
             let selected = [];
             checkboxes.forEach(cb => {
@@ -194,7 +192,7 @@
             selectedProductsInput.value = JSON.stringify(selected);
         });
 
-        // Xóa sản phẩm
+        // Xử lý xóa sản phẩm
         document.querySelectorAll(".remove-cart-item").forEach(btn => {
             btn.addEventListener("click", function() {
                 const cartKey = this.getAttribute("data-id");
@@ -218,7 +216,7 @@
             });
         });
 
-        // Cập nhật số lượng
+        // Xử lý cập nhật số lượng
         document.querySelectorAll(".btn-quantity").forEach(btn => {
             btn.addEventListener("click", function() {
                 const cartKey = this.getAttribute("data-id");
@@ -251,7 +249,7 @@
             });
         });
 
-        // Kiểm tra lại giỏ hàng mỗi 5 giây
+        // Kiểm tra lại giỏ hàng định kỳ
         setInterval(() => {
             fetch('{{ route("cart.recheck") }}', {
                     method: 'POST',
@@ -301,20 +299,33 @@
         color: #333;
     }
 
+    /* Nút Thanh toán mới */
     .btn-checkout {
-        background-color: #e40046;
+        background: linear-gradient(45deg,  #e40046);
         color: white;
-        padding: 12px 20px;
+        padding: 14px 30px;
         border: none;
         font-size: 16px;
+        font-weight: bold;
         width: 100%;
-        margin-top: 10px;
-        border-radius: 8px;
-        transition: background 0.3s ease;
+        margin-top: 15px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .btn-checkout:hover {
-        background-color: #c3003b;
+        background: linear-gradient(45deg, #e55, #c3003b);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+        transform: translateY(-2px);
+    }
+
+    .btn-checkout:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
     }
 
     /* Bảng sản phẩm */
@@ -379,7 +390,7 @@
 
     /* Nút XÓA */
     .remove-cart-item {
-        background-color: #ff6b6b;
+        background-color: #e40046;
         color: white;
         border: none;
         padding: 6px 12px;
@@ -425,6 +436,11 @@
 
         .fixed-total-container {
             padding: 10px;
+        }
+
+        .btn-checkout {
+            padding: 12px 25px;
+            font-size: 14px;
         }
     }
 </style>
