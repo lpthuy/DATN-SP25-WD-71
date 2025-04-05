@@ -68,8 +68,8 @@
 
                         <a href="{{ route('home') }}" class="logo" title="Logo">
                             <img width="147" height="56"
-                                src="{{ asset('client/images/logo4d9c.png') }}"
-                                alt="Lofi Style">
+                                src="{{ asset('client/images/logo.jpg') }}"
+                                alt="Rainbow">
                         </a>
 
                     </div>

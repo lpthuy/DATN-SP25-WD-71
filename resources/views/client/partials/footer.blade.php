@@ -71,7 +71,7 @@
                         </span>
                     </h4>
                     <p class="about">Thương hiệu thời trang của người trẻ hiện đại! Ra đời vào năm 2016,
-                        LOFISTYLE luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tưởng
+                        Rainbow - Store luôn nỗ lực với sứ mệnh tạo nên xu hướng thời trang mang đến sự tin tưởng
                         và năng lượng tích cực cho khách hàng</p>
                     <ul>
                         <li>
