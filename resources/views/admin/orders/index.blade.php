@@ -26,7 +26,7 @@
         <tr>
             <th>Mã đơn</th>
             <th>Người dùng</th>
-            <th>Địa chỉ</th> 
+            <th>Địa chỉ người dùng</th> 
             <th>Phương thức</th>
             <th>Ngày tạo</th>
             <th>Trạng thái</th>
