@@ -69,9 +69,11 @@
                         </div>
                         <div class="col-lg-2 col-md-8 col-6 header-logo">
 
+
                             <a href="{{ route('home') }}" class="logo" title="Logo">
                                 <img src="{{ asset('client/images/rainbow.png') }}" alt="rainbow" class="logo-img">
                             </a>
+
 
                             <style>
                                 .logo-img {
