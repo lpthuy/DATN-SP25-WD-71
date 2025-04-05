@@ -41,12 +41,6 @@ use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 
 Auth::routes();
 
-// Route::get('/test-mail', function () {
-//     $order = \App\Models\Order::latest()->first();
-//     return Mail::to('nguyenvanquochieu311104@gmail.com')->send(new OrderSuccessMail($order));
-
-// });
-
 
 Route::get('/api/order-status/{id}', function ($id) {
     $order = Order::find($id);
@@ -62,6 +56,10 @@ Route::get('/api/order-status/{id}', function ($id) {
 
 Route::post('/apply-coupon', [PromotionController::class, 'apply'])->name('apply.coupon');
 Route::post('/save-promo-code', [PromotionController::class, 'saveCode'])->name('save.promo.code');
+
+
+Route::get('danh-muc/{slug}', [App\Http\Controllers\Client\ProductController::class, 'category'])->name('category.products');
+
 
 
 // quản lý khuyến mãi
