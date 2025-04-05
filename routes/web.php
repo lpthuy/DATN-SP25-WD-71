@@ -41,12 +41,6 @@ use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 
 Auth::routes();
 
-// Route::get('/test-mail', function () {
-//     $order = \App\Models\Order::latest()->first();
-//     return Mail::to('nguyenvanquochieu311104@gmail.com')->send(new OrderSuccessMail($order));
-
-// });
-
 
 Route::get('/api/order-status/{id}', function ($id) {
     $order = Order::find($id);
