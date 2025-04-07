@@ -489,6 +489,7 @@
         restoreCheckedItems();
     });
 
-   
+    // Kiểm tra giỏ hàng định kỳ
+    
 </script>
 @endsection
