@@ -43,8 +43,32 @@
 
             <td>{{ $order->payment_method }}</td>
             <td>{{ $order->created_at }}</td>
-            <td>{{ $order->status }}</td>
-            <td><a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-info">Chi tiết</a></td>
+            <td>
+                @php
+                    $statusMap = [
+                        'processing' => 'Đang xử lý',
+                        'confirming' => 'Đang xác nhận',
+                        'shipping' => 'Đang giao hàng',
+                        'completed' => 'Đã giao thành công',
+                        'cancelled' => 'Đã hủy',
+                        'returning' => 'Đang chờ hoàn hàng',
+                        'returned' => 'Đã hoàn hàng',
+                    ];
+                @endphp
+                {{ $statusMap[$order->status] ?? ucfirst($order->status) }}
+            </td>
+            
+            <td>
+                <a href="{{ route('orders.show', $order->id) }}" class="btn btn-sm btn-info">Chi tiết</a>
+                    <form action="{{ route('orders.destroy', $order->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xoá đơn hàng này?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i> Xoá
+                        </button>
+                    </form>
+                
+            </td>
         </tr>
         @endforeach
     </tbody>

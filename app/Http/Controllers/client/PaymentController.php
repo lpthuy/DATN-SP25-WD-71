@@ -80,42 +80,51 @@ class PaymentController extends Controller
     }
 
     public function vnpayReturn(Request $request)
-    {
-        $vnp_TxnRef = $request->input('vnp_TxnRef');
-        $vnp_ResponseCode = $request->input('vnp_ResponseCode');
-        $vnp_Amount = $request->input('vnp_Amount') / 100;
+{
+    $vnp_TxnRef = $request->input('vnp_TxnRef');
+    $vnp_ResponseCode = $request->input('vnp_ResponseCode');
+    $vnp_Amount = $request->input('vnp_Amount') / 100;
 
-        Log::info("VNPay Callback - Session Data: ", session()->all());
+    Log::info("VNPay Callback - Session Data: ", session()->all());
 
-        $checkoutItems = session('checkout_items', []);
-        $orderCode = session('order_code');
-        $userId = auth()->id();
+    $checkoutItems = session('checkout_items', []);
+    $orderCode = session('order_code');
+    $userId = auth()->id();
 
-        if ($vnp_ResponseCode == "00" && $checkoutItems && $userId) {
-            $order = Order::create([
-                'order_code' => $orderCode,
-                'user_id' => $userId,
-                'payment_method' => 'VNPAY',
-                'status' => 'processing',
+    if ($checkoutItems && $userId) {
+        // ✅ Tạo đơn hàng bất kể thành công hay thất bại
+        $isPaid = ($vnp_ResponseCode == "00") ? 1 : 0;
+
+        $order = Order::create([
+            'order_code' => $orderCode,
+            'user_id' => $userId,
+            'payment_method' => 'VNPAY',
+            'status' => 'processing',
+            'is_paid' => $isPaid
+        ]);
+
+        foreach ($checkoutItems as $item) {
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $item['product_id'] ?? null,
+                'product_name' => $item['name'] ?? '',
+                'color' => $item['color'] ?? '',
+                'size' => $item['size'] ?? '',
+                'quantity' => $item['quantity'] ?? 1,
+                'price' => $item['price'] ?? 0,
             ]);
+        }
 
-            foreach ($checkoutItems as $item) {
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $item['product_id'] ?? null,
-                    'product_name' => $item['name'] ?? '',
-                    'color' => $item['color'] ?? '',
-                    'size' => $item['size'] ?? '',
-                    'quantity' => $item['quantity'] ?? 1,
-                    'price' => $item['price'] ?? 0,
-                ]);
-            }
+        session()->forget(['checkout_items', 'order_code']);
 
-            session()->forget(['checkout_items', 'order_code']);
-
+        if ($isPaid) {
             return redirect()->route('order')->with('success', "Thanh toán thành công! Mã đơn hàng: $order->order_code");
         } else {
-            return redirect()->route('order')->with('error', "Thanh toán thất bại. Mã lỗi: $vnp_ResponseCode");
+            return redirect()->route('order')->with('error', "Thanh toán thất bại hoặc bị huỷ từ VNPay.");
         }
+    } else {
+        return redirect()->route('order')->with('error', "Dữ liệu không hợp lệ hoặc hết hạn.");
     }
+}
+
 }

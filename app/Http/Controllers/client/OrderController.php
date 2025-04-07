@@ -4,10 +4,13 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use App\Mail\OrderSuccessMail;
+use App\Models\Color;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
+use App\Models\ProductVariant;
+use App\Models\Size;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -127,11 +130,12 @@ class OrderController extends Controller
 
 
     public function cancelOrder(Request $request)
-    {
+{
+    try {
         $orderId = $request->input('order_id');
         $cancelReason = $request->input('cancel_reason');
 
-        $order = Order::find($orderId);
+        $order = Order::with('items')->find($orderId);
 
         if (!$order) {
             return response()->json(['status' => 'error', 'message' => 'Đơn hàng không tồn tại.']);
@@ -141,7 +145,6 @@ class OrderController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Đơn hàng đã bị huỷ trước đó.']);
         }
 
-        // ✅ Chỉ được huỷ nếu đang ở trạng thái "processing"
         if ($order->status !== 'processing') {
             return response()->json([
                 'status' => 'error',
@@ -149,16 +152,47 @@ class OrderController extends Controller
             ]);
         }
 
-        // ✅ Tiến hành huỷ đơn
+        // ✅ Trả lại số lượng cho từng sản phẩm (theo product_id + size_name + color_name)
+        foreach ($order->items as $item) {
+            // Tìm ID của size & color theo tên
+            $sizeId = Size::where('size_name', trim(strtolower($item->size)))->value('id');
+            $colorId = Color::where('color_name', trim(ucfirst(strtolower($item->color))))->value('id');
+
+            if (!$sizeId || !$colorId) {
+                \Log::warning("Không tìm thấy size hoặc color cho OrderItem #{$item->id} - size: {$item->size}, color: {$item->color}");
+                continue;
+            }
+
+            // Tìm biến thể sản phẩm
+            $variant = ProductVariant::where('product_id', $item->product_id)
+                ->where('size_id', $sizeId)
+                ->where('color_id', $colorId)
+                ->first();
+
+            if ($variant) {
+                $variant->stock_quantity += $item->quantity;
+                $variant->save();
+            } else {
+                \Log::warning("Không tìm thấy biến thể cho OrderItem #{$item->id} (product_id={$item->product_id}, size_id={$sizeId}, color_id={$colorId})");
+            }
+        }
+
         $order->status = 'cancelled';
         $order->cancel_reason = $cancelReason;
         $order->save();
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Huỷ đơn hàng thành công!'
+            'message' => 'Huỷ đơn hàng thành công! Số lượng sản phẩm đã trả về kho.'
         ]);
+    } catch (\Throwable $e) {
+        \Log::error('Lỗi khi huỷ đơn hàng: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Lỗi server: ' . $e->getMessage()
+        ], 500);
     }
+}
 
     public function exportPDF($id)
 {
@@ -169,5 +203,31 @@ class OrderController extends Controller
     return $pdf->download('don-hang-'.$order->order_code.'.pdf');
 }
 
+// Trong OrderController.php
+public function markAsReturned(Request $request, $id)
+{
+    $order = Order::findOrFail($id);
+
+    // Validate
+    $request->validate([
+        'return_reason' => 'required|string',
+        'return_media' => 'required|file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240'
+    ]);
+
+    // Upload file
+    $filePath = null;
+    if ($request->hasFile('return_media')) {
+        $file = $request->file('return_media');
+        $fileName = time().'_'.$file->getClientOriginalName();
+        $filePath = $file->storeAs('returns', $fileName, 'public');
+    }
+
+    $order->return_reason = $request->input('return_reason');
+    $order->return_media = $filePath;
+    $order->status = 'returning'; // nếu có trạng thái riêng
+    $order->save();
+
+    return redirect()->route('order')->with('success', 'Đã gửi yêu cầu hoàn hàng!');
+}
 
 }
