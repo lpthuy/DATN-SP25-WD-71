@@ -3,65 +3,26 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
-use App\Mail\OrderSuccessMail;
-use App\Models\Color;
 use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
-use App\Models\ProductVariant;
-use App\Models\Size;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use Barryvdh\DomPDF\Facade\Pdf;
 
 class OrderController extends Controller
 {
-
+    
     public function store(Request $request)
-    {
-        $user = Auth::user();
-        $checkoutItems = session('checkout_items', []);
-        $orderCode = 'OD' . strtoupper(Str::random(8));
 
-        if (!$checkoutItems || !$user) {
-            return response()->json(['status' => 'error', 'message' => 'Không tìm thấy giỏ hàng hoặc chưa đăng nhập!']);
-        }
-      // ✅ Lấy mã giảm giá từ session nếu có
-    $appliedCode = session('applied_promo_code');
-        $order = Order::create([
-            'order_code'      => $orderCode,
-            'user_id'         => $user->id,
-            'payment_method'  => 'cod',
-            'status'          => 'processing',
-            'promotion_code'  => $appliedCode ?? null, // nếu không có sẽ là null
-        ]);
+{
+    $user = Auth::user();
+    $checkoutItems = session('checkout_items', []);
+    $orderCode = 'OD' . strtoupper(Str::random(8));
 
-        foreach ($checkoutItems as $item) {
-            // Ghi lại chi tiết đơn hàng
-            OrderItem::create([
-                'order_id'      => $order->id,
-                'product_id'    => $item['product_id'] ?? null,
-                'product_name'  => $item['name'] ?? 'Không rõ tên',
-                'color'         => $item['color'] ?? 'Không chọn',
-                'size'          => $item['size'] ?? 'Không chọn',
-                'quantity'      => $item['quantity'] ?? 1,
-                'price'         => $item['price'] ?? 0,
-            ]);
-
-            // ✅ Trừ số lượng tồn kho
-            if (!empty($item['variant_id'])) {
-                $variant = \App\Models\ProductVariant::find($item['variant_id']);
-                if ($variant) {
-                    $variant->stock_quantity = max(0, $variant->stock_quantity - $item['quantity']);
-                    $variant->save();
-                }
-            }
-        }
-
-        // Xóa session giỏ hàng sau khi lưu đơn hàng
-        session()->forget(['checkout_items', 'applied_promo_code']);
+    if (!$checkoutItems || !$user) {
+        return response()->json(['status' => 'error', 'message' => 'Không tìm thấy giỏ hàng hoặc chưa đăng nhập!']);
+    }
 
         // ✅ Gửi email xác nhận đơn hàng
         try {
@@ -70,28 +31,47 @@ class OrderController extends Controller
             Log::error('Lỗi gửi mail xác nhận đơn hàng: ' . $e->getMessage());
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Đặt hàng thành công!',
-            'order_code' => $orderCode,
-            'redirect' => route('order') // Hoặc route('order.detail', $order->id)
+//     $order = Order::create([
+//         'order_code' => $orderCode,
+//         'user_id' => $user->id,
+//         'payment_method' => 'cod',
+//         'status' => 'processing',
+//     ]);
+
+
+    foreach ($checkoutItems as $item) {
+        OrderItem::create([
+            'order_id' => $order->id,
+            'product_id' => $item['product_id'] ?? null,
+            'product_name' => $item['name'] ?? '',
+            'color' => $item['color'] ?? 'Không có',
+            'size' => $item['size'] ?? 'Không có',
+            'quantity' => $item['quantity'] ?? 1,
+            'price' => $item['price'] ?? 0,
         ]);
     }
 
+    session()->forget(['checkout_items']);
+
+    return response()->json([
+        'status' => 'success',
+        'message' => 'Đặt hàng thành công!',
+        'order_code' => $orderCode,
+        'redirect' => route('order') // hoặc route('order.show', $order->id) nếu có route riêng
+    ]);
+}
 
 
+    
 
 
-
-
-    public function index()
-    {
+    public function index() {
         $user = Auth::user();
         $orders = Order::where('user_id', $user->id)->orderBy('created_at', 'desc')->paginate(10);
         return view('client.pages.order', compact('user', 'orders'));
     }
 
-
+    
     public function checkPaymentStatus(Request $request)
     {
         $productId = $request->query('product_id');
@@ -115,42 +95,13 @@ class OrderController extends Controller
 
 
 
-    public function show($id)
-    {
-        $user = Auth::user();
-
-        // Lấy đơn hàng
-        $order = Order::where('id', $id)->where('user_id', $user->id)->firstOrFail();
-
-        // Lấy các sản phẩm trong đơn hàng đó
-        $items = OrderItem::where('order_id', $order->id)->get();
-
-        return view('client.pages.order_detail', compact('order', 'items'));
-    }
-
-
-    public function cancelOrder(Request $request)
+public function show($id)
 {
-    try {
-        $orderId = $request->input('order_id');
-        $cancelReason = $request->input('cancel_reason');
+    $user = Auth::user();
 
-        $order = Order::with('items')->find($orderId);
+    // Lấy đơn hàng
+    $order = Order::where('id', $id)->where('user_id', $user->id)->firstOrFail();
 
-        if (!$order) {
-            return response()->json(['status' => 'error', 'message' => 'Đơn hàng không tồn tại.']);
-        }
-
-        if ($order->status === 'cancelled') {
-            return response()->json(['status' => 'error', 'message' => 'Đơn hàng đã bị huỷ trước đó.']);
-        }
-
-        if ($order->status !== 'processing') {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Chỉ những đơn hàng đang xử lý mới có thể huỷ. Hiện tại đơn hàng đang ở trạng thái: ' . strtoupper($order->status)
-            ]);
-        }
 
         // ✅ Trả lại số lượng cho từng sản phẩm (theo product_id + size_name + color_name)
         foreach ($order->items as $item) {
@@ -192,42 +143,19 @@ class OrderController extends Controller
             'message' => 'Lỗi server: ' . $e->getMessage()
         ], 500);
     }
+
+//     // Lấy các sản phẩm trong đơn hàng đó
+//     $items = OrderItem::where('order_id', $order->id)->get();
+
+//     return view('client.pages.order_detail', compact('order', 'items'));
+
 }
 
-    public function exportPDF($id)
-{
-    $order = Order::with('user')->findOrFail($id);
-    $items = $order->items;
 
-    $pdf = Pdf::loadView('admin.orders.pdf', compact('order', 'items'));
-    return $pdf->download('don-hang-'.$order->order_code.'.pdf');
-}
+    
 
-// Trong OrderController.php
-public function markAsReturned(Request $request, $id)
-{
-    $order = Order::findOrFail($id);
 
-    // Validate
-    $request->validate([
-        'return_reason' => 'required|string',
-        'return_media' => 'required|file|mimes:jpeg,png,jpg,mp4,mov,avi|max:10240'
-    ]);
 
-    // Upload file
-    $filePath = null;
-    if ($request->hasFile('return_media')) {
-        $file = $request->file('return_media');
-        $fileName = time().'_'.$file->getClientOriginalName();
-        $filePath = $file->storeAs('returns', $fileName, 'public');
-    }
-
-    $order->return_reason = $request->input('return_reason');
-    $order->return_media = $filePath;
-    $order->status = 'returning'; // nếu có trạng thái riêng
-    $order->save();
-
-    return redirect()->route('order')->with('success', 'Đã gửi yêu cầu hoàn hàng!');
 }
 public function markAsReceived($id)
 {
@@ -235,6 +163,8 @@ public function markAsReceived($id)
     $order->status = 'received'; // Cập nhật trạng thái theo logic của bạn
     $order->save();
 
+
     return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận là đã nhận.');
 }
 }
+
