@@ -9,8 +9,8 @@ export default function OrderDetailScreen() {
   const [order, setOrder] = useState<any>(null);
   const [status, setStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [markedPaid, setMarkedPaid] = useState(false); // ✅ để điều kiện hiển thị nút hoàn thành
 
-  // ✅ Phân tích dữ liệu đơn hàng khi truyền từ màn danh sách
   useEffect(() => {
     if (params.order) {
       try {
@@ -23,7 +23,7 @@ export default function OrderDetailScreen() {
     }
   }, [params.order]);
 
-  const updateStatus = async () => {
+  const updateStatus = async (newStatus = status) => {
     const token = await AsyncStorage.getItem('shipperToken');
     if (!token || !order) {
       Alert.alert('❌ Lỗi', 'Không có token hoặc đơn hàng không hợp lệ');
@@ -35,7 +35,7 @@ export default function OrderDetailScreen() {
 
       const res = await axios.put(
         `http://192.168.100.179:8000/api/shipper/orders/${order.id}/status`,
-        { status },
+        { status: newStatus },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,19 +44,53 @@ export default function OrderDetailScreen() {
         }
       );
 
-      // ✅ Kiểm tra phản hồi từ server
       if (res.data.status === 'success') {
-        setStatus(res.data.order.status); // cập nhật lại trạng thái
+        setStatus(res.data.order.status);
         Alert.alert('✅ Thành công', 'Đơn hàng đã được cập nhật');
-
-        // ✅ Trở lại màn danh sách để fetch lại danh sách mới
         router.replace('/screens/OrdersScreen');
       } else {
         Alert.alert('❌ Lỗi', res.data.message || 'Không thể cập nhật trạng thái');
       }
     } catch (err: any) {
-      const msg = err.response?.data?.message || err.message;
+      const msg = (err as any).response?.data?.message || err.message;
       console.log('❌ Lỗi cập nhật:', msg);
+      Alert.alert('❌ Lỗi', msg);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // ✅ Hàm gọi API xác nhận thanh toán
+  const markAsPaid = async () => {
+    const token = await AsyncStorage.getItem('shipperToken');
+    if (!token || !order) {
+      Alert.alert('❌ Lỗi', 'Không có token hoặc đơn hàng không hợp lệ');
+      return;
+    }
+
+    try {
+      setLoading(true);
+      const res = await axios.put(
+        `http://192.168.100.179:8000/api/shipper/orders/${order.id}/paid`,
+        { is_paid: 1 },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+          },
+        }
+      );
+
+      if (res.data.status === 'success') {
+        setMarkedPaid(true);
+        setOrder((prev: any) => ({ ...prev, is_paid: 1 }));
+        Alert.alert('✅ Thành công', 'Đã xác nhận thanh toán');
+      } else {
+        Alert.alert('❌ Lỗi', res.data.message || 'Không thể xác nhận thanh toán');
+      }
+    } catch (err: any) {
+      const msg = (err as any).response?.data?.message || err.message;
+      console.log('❌ Lỗi xác nhận thanh toán:', msg);
       Alert.alert('❌ Lỗi', msg);
     } finally {
       setLoading(false);
@@ -72,6 +106,10 @@ export default function OrderDetailScreen() {
     );
   }
 
+  const canMarkComplete =
+    (order.payment_method === 'vnpay' && order.is_paid === 1) ||
+    (order.payment_method === 'cod' && (order.is_paid === 1 || markedPaid));
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Chi tiết đơn hàng</Text>
@@ -80,23 +118,32 @@ export default function OrderDetailScreen() {
       <Text>Thanh toán: {order.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</Text>
       <Text>Trạng thái hiện tại: {translateStatus(status)}</Text>
 
-      {status === 'shipping' ? (
+      {status === 'shipping' && (
         <View style={styles.buttonGroup}>
-          <Button
-            title="Hoàn thành đơn hàng"
-            onPress={() => setStatus('completed')}
-            disabled={loading}
-          />
-          <View style={{ marginTop: 10 }}>
+          {/* ✅ Nếu là COD chưa thanh toán thì hiển thị nút xác nhận */}
+          {order.payment_method === 'cod' && !order.is_paid && !markedPaid && (
             <Button
-              title="Cập nhật trạng thái"
-              onPress={updateStatus}
+              title="Xác nhận đã thanh toán"
+              onPress={markAsPaid}
               disabled={loading}
             />
-          </View>
+          )}
+
+          {/* ✅ Hiện nút hoàn thành nếu đã xác nhận thanh toán */}
+          {canMarkComplete && (
+            <View style={{ marginTop: 10 }}>
+              <Button
+                title="Hoàn thành đơn hàng"
+                onPress={() => updateStatus('completed')}
+                disabled={loading}
+              />
+            </View>
+          )}
         </View>
-      ) : (
-        <Text style={styles.disabledText}>Không thể cập nhật trạng thái khi đơn hàng đã hoàn tất.</Text>
+      )}
+
+      {status === 'completed' && (
+        <Text style={styles.disabledText}>Đơn hàng đã hoàn tất.</Text>
       )}
     </View>
   );

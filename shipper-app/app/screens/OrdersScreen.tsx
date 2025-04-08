@@ -4,6 +4,8 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { router } from 'expo-router';
 import { useIsFocused } from '@react-navigation/native'; // ✅ Thêm dòng này
+import { Button } from 'react-native';
+
 
 type Order = {
   id: number;
@@ -67,27 +69,35 @@ export default function OrdersScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Danh sách đơn đang giao</Text>
-      {orders.length === 0 ? (
-        <Text style={{ textAlign: 'center', marginTop: 20 }}>Không có đơn hàng nào đang giao</Text>
-      ) : (
-        <FlatList
-          data={orders}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => router.push({ pathname: '/screens/OrderDetailScreen', params: { order: JSON.stringify(item) } })}>
-              <View style={styles.orderItem}>
-                <Text style={styles.orderText}>Mã đơn: {item.order_code}</Text>
-                <Text>Phương thức: {item.payment_method}</Text>
-                <Text>Thanh toán: {item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</Text>
-                <Text>Trạng thái: {translateStatus(item.status)}</Text>
-                <Text>Ngày tạo: {new Date(item.created_at).toLocaleString()}</Text>
-              </View>
-            </TouchableOpacity>
-          )}
-        />
+  <Text style={styles.title}>Danh sách đơn đang giao</Text>
+
+  {/* 👉 Nút chuyển sang lịch sử đơn đã hoàn thành */}
+  <Button
+    title="📜 Xem đơn đã hoàn thành"
+    onPress={() => router.push('/screens/CompletedOrdersScreen')}
+  />
+
+  {orders.length === 0 ? (
+    <Text style={{ textAlign: 'center', marginTop: 20 }}>Không có đơn hàng nào đang giao</Text>
+  ) : (
+    <FlatList
+      data={orders}
+      keyExtractor={(item) => item.id.toString()}
+      renderItem={({ item }) => (
+        <TouchableOpacity onPress={() => router.push({ pathname: '/screens/OrderDetailScreen', params: { order: JSON.stringify(item) } })}>
+          <View style={styles.orderItem}>
+            <Text style={styles.orderText}>Mã đơn: {item.order_code}</Text>
+            <Text>Phương thức: {item.payment_method}</Text>
+            <Text>Thanh toán: {item.is_paid ? 'Đã thanh toán' : 'Chưa thanh toán'}</Text>
+            <Text>Trạng thái: {translateStatus(item.status)}</Text>
+            <Text>Ngày tạo: {new Date(item.created_at).toLocaleString()}</Text>
+          </View>
+        </TouchableOpacity>
       )}
-    </View>
+    />
+  )}
+</View>
+
   );
 }
 
