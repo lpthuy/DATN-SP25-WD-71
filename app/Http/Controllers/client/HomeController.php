@@ -48,8 +48,9 @@ class HomeController extends Controller
     {
         $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã khuyến mãi
         $products = Product::paginate(9);
+        $category = null; // Hoặc tạo đối tượng giả nếu cần
     
-        return view('client.pages.product-by-category', compact('products', 'promotions'));
+        return view('client.pages.product-by-category', compact('products', 'promotions','category'));
     }
 
 

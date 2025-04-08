@@ -1,6 +1,7 @@
 @extends('client.layouts.main')
 
-@section('title', $category->name . ' - Danh mục sản phẩm')
+@section('title', ($category->name ?? 'Tất cả sản phẩm') . ' - Danh mục sản phẩm')
+
 
 
 @section('content')
@@ -15,11 +16,13 @@
                         </a>
                     </li>
                     <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-                        <span itemprop="name">{{ optional($category)->name }}</span>
-
+                        <span itemprop="name">
+                            {{ optional($category)->name ?? 'Tất cả sản phẩm' }}
+                        </span>
                     </li>
                 </ul>
             </div>
+            
         </section>
         {{-- <section class="section_coupons">
             <div class="container">
