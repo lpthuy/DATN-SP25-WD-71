@@ -356,47 +356,21 @@
                             <div class="accordion-title">
                                 Mô tả sản phẩm
                                 <i class="icon">
-                                    
-                                    <!DOCTYPE svg
-                                        PUBLIC '-//W3C//DTD SVG 1.1//EN' 'http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd'>
-                                    <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;"
-                                        version="1.1" viewBox="0 0 512 512" width="15px" xml:space="preserve"
-                                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+                                    <svg height="15px" id="Layer_1" style="enable-background:new 0 0 15 15;" version="1.1"
+                                        viewBox="0 0 512 512" width="15px" xmlns="http://www.w3.org/2000/svg">
                                         <polygon points="160,115.4 180.7,96 352,256 180.7,416 160,396.7 310.5,256 " />
                                     </svg>
                                 </i>
                             </div>
                             <div class="accordion-contant">
                                 <div class="rte product_getcontent">
-
-
                                     <div class="ba-text-fpt">
-                                        <p>Mô Tả Sản Phẩm:</p>
-                                        <ul>
-                                            <li><em><strong>Áo Phông</strong></em>&nbsp;được thiết kế đẹp, chuẩn
-                                                form, đường may sắc xảo, vải cotton dày, mịn, thấm hút mồ hôi
-                                                tạo sự thoải mái khi mặc!</li>
-                                            <li>
-                                                <p>Toàn bộ đều là những mẫu mã mới . Giúp bạn tự tin diện lên
-                                                    người</p>
-                                            </li>
-                                            <li>
-                                                <p>Chất vải cotton... mềm mịn, co dãn và thoáng mát -</p>
-                                            </li>
-                                            <li>Thiết kế trẻ trung năng động, hợp xu hướng thời trang quốc tế.
-                                            </li>
-                                            <li>Đường may tinh xảo, tạo nên gu thời trang sành điệu cho giới trẻ
-                                                -</li>
-                                            <li>Dễ dàng phối hợp cùng nhiều phụ kiện khác mang đến phong cách
-                                                thời trang riêng cho mỗi người, khéo léo lựa chọn trang phục
-                                                cùng phụ kiện phù hợp, bạn sẽ có set đồ đẹp mắt... -</li>
-                                            <li>Là 1 item không thể thiếu trong tủ đồ của các bạn.</li>
-                                        </ul>
+                                        {!! $product->description !!}
                                     </div>
-
                                 </div>
                             </div>
                         </div>
+                        
 
 
                         <div class="accordion-item" id="product_tabs-2">

@@ -7,11 +7,11 @@ use App\Mail\OrderSuccessMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
+
 
 
 use App\Http\Controllers\Admin\PromotionController;

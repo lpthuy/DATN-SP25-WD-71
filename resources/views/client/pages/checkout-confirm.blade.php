@@ -3,94 +3,556 @@
 @section('title', 'Xác nhận đơn hàng')
 
 @section('content')
-    <div class="container mt-4">
-        <h2>Xác nhận đơn hàng</h2>
-        <div class="card mb-4">
-            <div class="card-header"><strong>Thông tin người mua</strong></div>
-            <div class="card-body">
-                <p><strong>Họ tên:</strong> {{ $user->name ?? 'Chưa đăng nhập' }}</p>
-                <p><strong>Email:</strong> {{ $user->email ?? 'Chưa có' }}</p>
-                <p><strong>Số điện thoại:</strong> {{ $user->phone ?? 'Chưa có' }}</p>
-                <p><strong>Địa chỉ:</strong> {{ $user->address ?? 'Chưa có' }}</p>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .checkout-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .checkout-left, .checkout-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Thông tin người mua */
+        .buyer-info {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .buyer-info select, .buyer-info input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Phần sản phẩm và thanh toán */
+        .order-details {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-info p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Mã giảm giá */
+        .coupon-section {
+            margin: 20px 0;
+        }
+
+        .coupon-section input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .coupon-section button {
+            width: 28%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .coupon-section button:hover {
+            background: #0056b3;
+        }
+
+        /* Phương thức thanh toán */
+        .payment-methods {
+            margin: 20px 0;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: #007bff;
+        }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+        .payment-option img {
+            width: 30px;
+            margin-left: 10px;
+        }
+
+        /* Tổng tiền */
+        .order-summary {
+            margin: 20px 0;
+        }
+
+        .order-summary p {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .order-summary .total {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+
+        /* Nút đặt hàng */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .action-buttons a, .action-buttons button {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .action-buttons a {
+            background: #f5f5f5;
+            color: #007bff;
+            border: 1px solid #ddd;
+        }
+
+        .action-buttons a:hover {
+            background: #e9ecef;
+        }
+
+        .action-buttons button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .checkout-wrapper {
+                flex-direction: column;
+            }
+
+            .coupon-section input, .coupon-section button {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="checkout-wrapper">
+            <!-- Bên trái: Thông tin người mua -->
+            <div class="checkout-left">
+                <div class="section-title">Thông tin nhận hàng</div>
+                <div class="buyer-info">
+                    <input type="email" value="{{ $user->email ?? 'Chưa có' }}" placeholder="Email" readonly>
+                    <input type="text" value="{{ $user->name ?? 'Chưa đăng nhập' }}" placeholder="Họ và tên" readonly>
+                    <input type="text" value="{{ $user->phone ?? 'Chưa có' }}" placeholder="Số điện thoại" readonly>
+                    <input type="text" value="{{ $user->address ?? 'Chưa có' }}" placeholder="Địa chỉ" readonly>
+                    
+                </div>
             </div>
-        </div>
 
-        <table class="table table-bordered mt-3">
-            <thead>
-                <tr>
-                    <th>Tên sản phẩm</th>
-                    <th>Màu</th>
-                    <th>Size</th>
-                    <th>Số lượng</th>
-                    <th>Đơn giá</th>
-                    <th>Thành tiền</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($checkoutItems as $item)
-                    <tr>
-                        <td class="product-name">{{ $item['name'] }}</td>
-                        <td class="product-color">{{ $item['color'] }}</td>
-                        <td class="product-size">{{ $item['size'] }}</td>
-                        <td class="product-quantity">{{ $item['quantity'] }}</td>
-                        <td class="product-price" data-price="{{ $item['price'] }}">
-                            {{ number_format($item['price'], 0, ',', '.') }}₫</td>
-                        <td class="product-total">{{ number_format($item['total_price'], 0, ',', '.') }}₫</td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
+            <!-- Bên phải: Sản phẩm và thanh toán -->
+            <div class="checkout-right">
+                <div class="section-title">Văn chuyển</div>
+                <div class="order-details">
+                    <p style="background: #e7f3ff; padding: 10px; border-radius: 5px;">
+                        Đang bắt đầu thông tin giao hàng
+                    </p>
 
-        <div class="mb-3">
-            <label><strong>🎁 Mã giảm giá</strong></label>
-            <div class="d-flex">
-                <input type="text" id="coupon-code" class="form-control me-2" placeholder="Nhập mã...">
-                <button class="btn btn-dark" onclick="applyCoupon()">Áp dụng</button>
+                    <!-- Sản phẩm -->
+                    @foreach ($checkoutItems as $item)
+                        <div class="product-item">
+                        @extends('client.layouts.main')
+
+@section('title', 'Xác nhận đơn hàng')
+
+@section('content')
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .checkout-wrapper {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .checkout-left, .checkout-right {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        /* Thông tin người mua */
+        .buyer-info {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .buyer-info select, .buyer-info input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        /* Phần sản phẩm và thanh toán */
+        .order-details {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .product-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .product-item img {
+            width: 50px;
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        .product-info {
+            flex: 1;
+        }
+
+        .product-info p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Mã giảm giá */
+        .coupon-section {
+            margin: 20px 0;
+        }
+
+        .coupon-section input {
+            width: 70%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .coupon-section button {
+            width: 28%;
+            padding: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .coupon-section button:hover {
+            background: #0056b3;
+        }
+
+        /* Phương thức thanh toán */
+        .payment-methods {
+            margin: 20px 0;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: border 0.3s ease;
+        }
+
+        .payment-option:hover {
+            border-color: #007bff;
+        }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+        .payment-option img {
+            width: 30px;
+            margin-left: 10px;
+        }
+
+        /* Tổng tiền */
+        .order-summary {
+            margin: 20px 0;
+        }
+
+        .order-summary p {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .order-summary .total {
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #e74c3c;
+        }
+
+        /* Nút đặt hàng */
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .action-buttons a, .action-buttons button {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-decoration: none;
+            transition: background 0.3s ease;
+        }
+
+        .action-buttons a {
+            background: #f5f5f5;
+            color: #007bff;
+            border: 1px solid #ddd;
+        }
+
+        .action-buttons a:hover {
+            background: #e9ecef;
+        }
+
+        .action-buttons button {
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .action-buttons button:hover {
+            background: #0056b3;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .checkout-wrapper {
+                flex-direction: column;
+            }
+
+            .coupon-section input, .coupon-section button {
+                width: 100%;
+                margin: 5px 0;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <div class="checkout-wrapper">
+            <!-- Bên trái: Thông tin người mua -->
+            <div class="checkout-left">
+                <div class="section-title">Thông tin nhận hàng</div>
+                <div class="buyer-info">
+                    <input type="email" value="{{ $user->email ?? 'Chưa có' }}" placeholder="Email" readonly>
+                    <input type="text" value="{{ $user->name ?? 'Chưa đăng nhập' }}" placeholder="Họ và tên" readonly>
+                    <input type="text" value="{{ $user->phone ?? 'Chưa có' }}" placeholder="Số điện thoại" readonly>
+                    <input type="text" value="{{ $user->address ?? 'Chưa có' }}" placeholder="Địa chỉ" readonly>
+                </div>
             </div>
-            <div id="coupon-message" class="text-danger mt-1"></div>
-        </div>
-        
 
-        <div class="mt-4">
-            <h5 class="mb-3">🔰 Chọn phương thức thanh toán</h5>
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <div class="card h-100">
-                        <label class="card-body d-flex align-items-center" for="cod">
-                            <input class="form-check-input me-2" type="radio" name="payment_method" id="cod" value="cod"
-                                checked>
-                            <div>
-                                <strong>Thanh toán khi nhận hàng (COD)</strong><br>
-                                <small class="text-muted">Bạn sẽ thanh toán tiền mặt khi nhận sản phẩm.</small>
+            <!-- Bên phải: Sản phẩm và thanh toán -->
+            <div class="checkout-right">
+                <div class="section-title">Đơn hàng</div>
+                <div class="order-details">
+                    <p style="background: #e7f3ff; padding: 10px; border-radius: 5px;">
+                        Đang bắt đầu thông tin giao hàng
+                    </p>
+
+                    <!-- Sản phẩm -->
+                    @foreach ($checkoutItems as $item)
+                        <div class="product-item">
+                            <td>
+                        @php
+                        $image = isset($item['image']) ? explode(',', $item['image'])[0] : 'default.png';
+                        @endphp
+                        <img src="{{ asset('storage/' . $image) }}" alt="{{ $item['name'] }}" alt="Product Image">
+                    </td>
+                            <div class="product-info">
+                                <p>{{ $item['name'] }}</p>
+                                <p>{{ $item['color'] }} / {{ $item['size'] }}</p>
                             </div>
+                            <div class="product-price">
+                                {{ number_format($item['total_price'], 0, ',', '.') }}₫
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <!-- Mã giảm giá -->
+                    <div class="coupon-section">
+                        <input type="text" id="coupon-code" placeholder="Nhập mã giảm giá">
+                        <button onclick="applyCoupon()">Áp dụng</button>
+                    </div>
+                    <div id="coupon-message" class="text-danger mt-1"></div>
+
+                    <!-- Phương thức thanh toán -->
+                    <div class="section-title">Thanh toán</div>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" id="vnpay" value="vnpay" checked>
+                            Thanh toán qua VNPAY-QR
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp1v7T287-ikP1m7dEUbs2n1SbbLEqkMd1ZA&s" alt="VNPay">
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" id="cod" value="cod">
+                            Thanh toán khi nhận hàng (COD)
+                            <img src="https://media.istockphoto.com/id/912819716/vi/vec-to/bi%E1%BB%83u-t%C6%B0%E1%BB%A3ng-th%C6%B0%C6%A1ng-m%E1%BA%A1i-%C4%91i%E1%BB%87n-t%E1%BB%AD-thi%E1%BA%BFt-k%E1%BA%BF-money-flat.jpg?s=612x612&w=0&k=20&c=jobrYns8VnIxx-nGTq6-GZli7xR8as4ibCWvgKTS2XM=" alt="COD">
                         </label>
                     </div>
-                </div>
 
-                <div class="col-md-6 mb-3">
-                    <div class="card h-100">
-                        <label class="card-body d-flex align-items-center" for="vnpay">
-                            <input class="form-check-input me-2" type="radio" name="payment_method" id="vnpay"
-                                value="vnpay">
-                            <div>
-                                <strong>Chuyển khoản qua VNPay</strong><br>
-                                <small class="text-muted">Thanh toán online an toàn, nhanh chóng qua VNPay.</small>
-                            </div>
-                        </label>
+                    <!-- Tổng tiền -->
+                    <div class="order-summary">
+                        <p>Tạm tính <span>{{ number_format($total, 0, ',', '.') }}₫</span></p>
+                        <p>Phí vận chuyển <span>-</span></p>
+                        <p class="total">Tổng cộng <span id="total-price">{{ number_format($total, 0, ',', '.') }}₫</span></p>
+                    </div>
+
+                    <!-- Nút đặt hàng -->
+                    <div class="action-buttons">
+                        <a href="#">Quay về giỏ hàng</a>
+                        <button id="buy-now-btn">Đặt hàng</button>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="text-right mt-3">
-            <h4>Tổng cộng: <span id="total-price">{{ number_format($total, 0, ',', '.') }}₫</span></h4>
-        </div>
-        
-
-        <button class="btn btn-success mt-3" id="buy-now-btn">Xác nhận và thanh toán</button>
     </div>
 
-    {{-- CSRF token --}}
+    <!-- CSRF token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <script>
@@ -107,7 +569,6 @@
 
             if (paymentMethod === "vnpay") {
                 console.log("👉 Đang gửi yêu cầu thanh toán VNPay...");
-
                 fetch("{{ route('vnpay.payment') }}", {
                     method: "POST",
                     headers: {
@@ -140,7 +601,6 @@
                     });
             } else {
                 console.log("👉 Gửi yêu cầu thanh toán COD...");
-
                 fetch("{{ route('order.cod') }}", {
                     method: "POST",
                     headers: {
@@ -163,52 +623,205 @@
                         alert("Không thể gửi đơn hàng COD!");
                     });
             }
-
         });
-    </script>
-<script>
-    function applyCoupon() {
-    const code = document.getElementById('coupon-code').value.trim();
-    const messageEl = document.getElementById('coupon-message');
-    let total = {{ $total }};
 
-    fetch('{{ route('apply.coupon') }}', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ code: code, total: total })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const newTotal = total - data.discount;
+        function applyCoupon() {
+            const code = document.getElementById('coupon-code').value.trim();
+            const messageEl = document.getElementById('coupon-message');
+            let total = {{ $total }};
 
-            // ✅ Gửi tiếp 1 request để lưu mã vào session server
-            fetch('{{ route('save.promo.code') }}', {
+            fetch('{{ route('apply.coupon') }}', {
                 method: 'POST',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ code: code })
+                body: JSON.stringify({ code: code, total: total })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const newTotal = total - data.discount;
+                    fetch('{{ route('save.promo.code') }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ code: code })
+                    });
+
+                    document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN').format(newTotal) + '₫';
+                    messageEl.innerHTML = `<span class="text-success">${data.message} - Giảm ${data.discount.toLocaleString()}₫</span>`;
+                } else {
+                    messageEl.innerText = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                messageEl.innerText = 'Lỗi khi áp dụng mã!';
             });
-
-            // ✅ Hiển thị kết quả
-            document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN').format(newTotal) + '₫';
-            messageEl.innerHTML = `<span class="text-success">${data.message} - Giảm ${data.discount.toLocaleString()}₫</span>`;
-        } else {
-            messageEl.innerText = data.message;
         }
-    })
-    .catch(error => {
-        console.error('Lỗi:', error);
-        messageEl.innerText = 'Lỗi khi áp dụng mã!';
-    });
-}
+    </script>
+@endsection
+                            <div class="product-info">
+                                <p>{{ $item['name'] }}</p>
+                                <p>{{ $item['color'] }} / {{ $item['size'] }}</p>
+                            </div>
+                            <div class="product-price">
+                                {{ number_format($item['total_price'], 0, ',', '.') }}₫
+                            </div>
+                        </div>
+                    @endforeach
 
-</script>
+                    <!-- Mã giảm giá -->
+                    <div class="coupon-section">
+                        <input type="text" id="coupon-code" placeholder="Nhập mã giảm giá">
+                        <button onclick="applyCoupon()">Áp dụng</button>
+                    </div>
+                    <div id="coupon-message" class="text-danger mt-1"></div>
 
+                    <!-- Phương thức thanh toán -->
+                    <div class="section-title">Thanh toán</div>
+                    <div class="payment-methods">
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" id="vnpay" value="vnpay" checked>
+                            Thanh toán qua VNPAY-QR
+                            <img src="https://via.placeholder.com/30" alt="VNPay">
+                        </label>
+                        <label class="payment-option">
+                            <input type="radio" name="payment_method" id="cod" value="cod">
+                            Thanh toán khi nhận hàng (COD)
+                            <img src="https://via.placeholder.com/30" alt="COD">
+                        </label>
+                    </div>
 
+                    <!-- Tổng tiền -->
+                    <div class="order-summary">
+                        <p>Tạm tính <span>{{ number_format($total, 0, ',', '.') }}₫</span></p>
+                        <p>Phí vận chuyển <span>-</span></p>
+                        <p class="total">Tổng cộng <span id="total-price">{{ number_format($total, 0, ',', '.') }}₫</span></p>
+                    </div>
+
+                    <!-- Nút đặt hàng -->
+                    <div class="action-buttons">
+                        <a href="#">Quay về giỏ hàng</a>
+                        <button id="buy-now-btn">Đặt hàng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CSRF token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <script>
+        document.getElementById("buy-now-btn").addEventListener("click", function () {
+            let paymentMethod = document.querySelector("input[name='payment_method']:checked")?.value;
+
+            if (!paymentMethod) {
+                alert("Vui lòng chọn phương thức thanh toán!");
+                return;
+            }
+
+            let totalPrice = {{ $total }};
+            let csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+            if (paymentMethod === "vnpay") {
+                console.log("👉 Đang gửi yêu cầu thanh toán VNPay...");
+                fetch("{{ route('vnpay.payment') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({
+                        product_id: 0,
+                        product_name: "Thanh toán giỏ hàng",
+                        color: null,
+                        size: null,
+                        quantity: 1,
+                        price: totalPrice,
+                        total_price: totalPrice,
+                        bank_code: ""
+                    })
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("✅ Phản hồi từ server:", data);
+                        if (data.code === "00" && data.data) {
+                            window.location.href = data.data;
+                        } else {
+                            alert("Không thể tạo thanh toán. Hãy thử lại!");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("❌ Lỗi fetch:", err);
+                        alert("Lỗi khi gửi yêu cầu đến VNPay!");
+                    });
+            } else {
+                console.log("👉 Gửi yêu cầu thanh toán COD...");
+                fetch("{{ route('order.cod') }}", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "X-CSRF-TOKEN": csrfToken
+                    },
+                    body: JSON.stringify({})
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log("✅ Phản hồi COD:", data);
+                        if (data.status === "success") {
+                            window.location.href = data.redirect;
+                        } else {
+                            alert(data.message || "Lỗi khi lưu đơn hàng COD.");
+                        }
+                    })
+                    .catch(err => {
+                        console.error("❌ Lỗi gửi COD:", err);
+                        alert("Không thể gửi đơn hàng COD!");
+                    });
+            }
+        });
+
+        function applyCoupon() {
+            const code = document.getElementById('coupon-code').value.trim();
+            const messageEl = document.getElementById('coupon-message');
+            let total = {{ $total }};
+
+            fetch('{{ route('apply.coupon') }}', {
+                method: 'POST',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ code: code, total: total })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    const newTotal = total - data.discount;
+                    fetch('{{ route('save.promo.code') }}', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ code: code })
+                    });
+
+                    document.getElementById('total-price').innerText = new Intl.NumberFormat('vi-VN').format(newTotal) + '₫';
+                    messageEl.innerHTML = `<span class="text-success">${data.message} - Giảm ${data.discount.toLocaleString()}₫</span>`;
+                } else {
+                    messageEl.innerText = data.message;
+                }
+            })
+            .catch(error => {
+                console.error('Lỗi:', error);
+                messageEl.innerText = 'Lỗi khi áp dụng mã!';
+            });
+        }
+    </script>
 @endsection
