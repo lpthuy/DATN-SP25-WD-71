@@ -52,6 +52,14 @@ Route::prefix('shipper')->group(function () {
     Route::post('/register', [ShipperAuthController::class, 'register']);
     Route::post('/login', [ShipperAuthController::class, 'login']);
 });
+Route::middleware('auth:sanctum')->prefix('shipper')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index']);
+});
+
+Route::middleware(['auth:sanctum', 'shipper'])->group(function () {
+    Route::put('/shipper/orders/{id}/status', [OrderController::class, 'updateStatus']);
+});
+
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']); // Đơn hàng cần giao

@@ -1,7 +1,8 @@
-import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity, Alert } from 'react-native';
 import { useState } from 'react';
 import axios from 'axios';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage'; // 💡 THÊM DÒNG NÀY
 
 export default function LoginScreen() {
   const [email, setEmail] = useState('');
@@ -9,15 +10,18 @@ export default function LoginScreen() {
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post('http://127.0.0.1:8000/api/shipper/login', {
+      const res = await axios.post('http://192.168.100.179:8000/api/shipper/login', {
         email,
         password,
       });
+
       const token = res.data.token;
-      // TODO: Lưu token vào local storage nếu cần dùng sau
-      router.push('/screens/OrdersScreen'); // Chuyển sang màn danh sách đơn
-    } catch (error) {
-      alert('Đăng nhập thất bại');
+      await AsyncStorage.setItem('shipperToken', token); // 💾 LƯU TOKEN
+
+      router.push('/screens/OrdersScreen'); // ➡️ ĐI TIẾP
+    } catch (error: any) {
+      const message = error?.response?.data?.message || 'Đăng nhập thất bại';
+      Alert.alert('Lỗi', message);
     }
   };
 

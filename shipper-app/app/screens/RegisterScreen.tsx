@@ -16,18 +16,26 @@ export default function RegisterScreen() {
     }
 
     try {
-        await axios.post('http://10.0.2.2:8000/api/shipper/register', {
+      const res = await axios.post('http://192.168.100.179:8000/api/shipper/register', {
         name,
         email,
         password,
         password_confirmation: confirmPassword,
       });
+      
+      
+      
 
       Alert.alert('Thành công', 'Đăng ký thành công');
       router.replace('/screens/LoginScreen');
     } catch (error: any) {
       console.error('Lỗi đăng ký:', error.response?.data || error.message);
-      const message = error.response?.data?.message || 'Đăng ký thất bại';
+      
+      const errors = error.response?.data?.errors;
+      const message = errors
+        ? Object.values(errors).flat().join('\n')
+        : error.response?.data?.message || 'Đăng ký thất bại';
+
       Alert.alert('Lỗi', message);
     }
   };
@@ -37,7 +45,7 @@ export default function RegisterScreen() {
       <Text style={styles.title}>Đăng ký tài khoản Shipper</Text>
 
       <TextInput placeholder="Họ tên" value={name} onChangeText={setName} style={styles.input} />
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} />
+      <TextInput placeholder="Email" value={email} onChangeText={setEmail} style={styles.input} keyboardType="email-address" autoCapitalize="none" />
       <TextInput placeholder="Mật khẩu" value={password} onChangeText={setPassword} secureTextEntry style={styles.input} />
       <TextInput placeholder="Xác nhận mật khẩu" value={confirmPassword} onChangeText={setConfirmPassword} secureTextEntry style={styles.input} />
 

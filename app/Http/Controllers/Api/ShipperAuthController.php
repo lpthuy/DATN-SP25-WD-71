@@ -74,30 +74,31 @@ class ShipperAuthController extends Controller
 
     public function register(Request $request)
     {
-        Log::info('Register Request:', $request->all()); // ✅ Thêm dòng này để debug
-    
+        // Ghi log để kiểm tra đầu vào
+        Log::info('Register Request:', $request->all());
+
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|unique:users,email',
+            'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:6|confirmed',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json([
                 'status' => 'fail',
                 'errors' => $validator->errors(),
             ], 422);
         }
-    
+
         $user = User::create([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => bcrypt($request->password),
             'role'     => 'shipper',
         ]);
-    
+
         $token = $user->createToken('shipper-token')->plainTextToken;
-    
+
         return response()->json([
             'status'  => 'success',
             'message' => 'Đăng ký thành công!',
