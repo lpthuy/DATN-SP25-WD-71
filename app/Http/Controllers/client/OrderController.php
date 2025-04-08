@@ -24,12 +24,20 @@ class OrderController extends Controller
         return response()->json(['status' => 'error', 'message' => 'Không tìm thấy giỏ hàng hoặc chưa đăng nhập!']);
     }
 
-    $order = Order::create([
-        'order_code' => $orderCode,
-        'user_id' => $user->id,
-        'payment_method' => 'cod',
-        'status' => 'processing',
-    ]);
+        // ✅ Gửi email xác nhận đơn hàng
+        try {
+            Mail::to($user->email)->send(new OrderSuccessMail($order));
+        } catch (\Exception $e) {
+            Log::error('Lỗi gửi mail xác nhận đơn hàng: ' . $e->getMessage());
+        }
+
+//     $order = Order::create([
+//         'order_code' => $orderCode,
+//         'user_id' => $user->id,
+//         'payment_method' => 'cod',
+//         'status' => 'processing',
+//     ]);
+
 
     foreach ($checkoutItems as $item) {
         OrderItem::create([
@@ -94,10 +102,53 @@ public function show($id)
     // Lấy đơn hàng
     $order = Order::where('id', $id)->where('user_id', $user->id)->firstOrFail();
 
-    // Lấy các sản phẩm trong đơn hàng đó
-    $items = OrderItem::where('order_id', $order->id)->get();
 
-    return view('client.pages.order_detail', compact('order', 'items'));
+        // ✅ Trả lại số lượng cho từng sản phẩm (theo product_id + size_name + color_name)
+        foreach ($order->items as $item) {
+            // Tìm ID của size & color theo tên
+            $sizeId = Size::where('size_name', trim(strtolower($item->size)))->value('id');
+            $colorId = Color::where('color_name', trim(ucfirst(strtolower($item->color))))->value('id');
+
+            if (!$sizeId || !$colorId) {
+                Log::warning("Không tìm thấy size hoặc color cho OrderItem #{$item->id} - size: {$item->size}, color: {$item->color}");
+                continue;
+            }
+
+            // Tìm biến thể sản phẩm
+            $variant = ProductVariant::where('product_id', $item->product_id)
+                ->where('size_id', $sizeId)
+                ->where('color_id', $colorId)
+                ->first();
+
+            if ($variant) {
+                $variant->stock_quantity += $item->quantity;
+                $variant->save();
+            } else {
+                Log::warning("Không tìm thấy biến thể cho OrderItem #{$item->id} (product_id={$item->product_id}, size_id={$sizeId}, color_id={$colorId})");
+            }
+        }
+
+        $order->status = 'cancelled';
+        $order->cancel_reason = $cancelReason;
+        $order->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Huỷ đơn hàng thành công! Số lượng sản phẩm đã trả về kho.'
+        ]);
+    } catch (\Throwable $e) {
+        Log::error('Lỗi khi huỷ đơn hàng: ' . $e->getMessage());
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Lỗi server: ' . $e->getMessage()
+        ], 500);
+    }
+
+//     // Lấy các sản phẩm trong đơn hàng đó
+//     $items = OrderItem::where('order_id', $order->id)->get();
+
+//     return view('client.pages.order_detail', compact('order', 'items'));
+
 }
 
 
@@ -105,5 +156,15 @@ public function show($id)
 
 
 
+}
+public function markAsReceived($id)
+{
+    $order = Order::findOrFail($id);
+    $order->status = 'received'; // Cập nhật trạng thái theo logic của bạn
+    $order->save();
+
+
+    return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận là đã nhận.');
+}
 }
 
