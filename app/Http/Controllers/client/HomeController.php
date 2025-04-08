@@ -76,9 +76,10 @@ class HomeController extends Controller
         if (!$id) {
             return redirect()->route('home')->with('error', 'Danh mục không hợp lệ.');
         }
-    
+  
         $category = Category::findOrFail($id);
-    
+      
+
         // Phân trang sản phẩm trong danh mục
         $products = Product::where('category_id', $id)->paginate(9); // Thêm phân trang ở đây
     

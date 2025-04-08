@@ -67,7 +67,7 @@ class OrderController extends Controller
         try {
             Mail::to($user->email)->send(new OrderSuccessMail($order));
         } catch (\Exception $e) {
-            \Log::error('Lỗi gửi mail xác nhận đơn hàng: ' . $e->getMessage());
+            Log::error('Lỗi gửi mail xác nhận đơn hàng: ' . $e->getMessage());
         }
 
         return response()->json([
@@ -159,7 +159,7 @@ class OrderController extends Controller
             $colorId = Color::where('color_name', trim(ucfirst(strtolower($item->color))))->value('id');
 
             if (!$sizeId || !$colorId) {
-                \Log::warning("Không tìm thấy size hoặc color cho OrderItem #{$item->id} - size: {$item->size}, color: {$item->color}");
+                Log::warning("Không tìm thấy size hoặc color cho OrderItem #{$item->id} - size: {$item->size}, color: {$item->color}");
                 continue;
             }
 
@@ -173,7 +173,7 @@ class OrderController extends Controller
                 $variant->stock_quantity += $item->quantity;
                 $variant->save();
             } else {
-                \Log::warning("Không tìm thấy biến thể cho OrderItem #{$item->id} (product_id={$item->product_id}, size_id={$sizeId}, color_id={$colorId})");
+                Log::warning("Không tìm thấy biến thể cho OrderItem #{$item->id} (product_id={$item->product_id}, size_id={$sizeId}, color_id={$colorId})");
             }
         }
 
@@ -186,7 +186,7 @@ class OrderController extends Controller
             'message' => 'Huỷ đơn hàng thành công! Số lượng sản phẩm đã trả về kho.'
         ]);
     } catch (\Throwable $e) {
-        \Log::error('Lỗi khi huỷ đơn hàng: ' . $e->getMessage());
+        Log::error('Lỗi khi huỷ đơn hàng: ' . $e->getMessage());
         return response()->json([
             'status' => 'error',
             'message' => 'Lỗi server: ' . $e->getMessage()
@@ -229,5 +229,12 @@ public function markAsReturned(Request $request, $id)
 
     return redirect()->route('order')->with('success', 'Đã gửi yêu cầu hoàn hàng!');
 }
+public function markAsReceived($id)
+{
+    $order = Order::findOrFail($id);
+    $order->status = 'received'; // Cập nhật trạng thái theo logic của bạn
+    $order->save();
 
+    return redirect()->back()->with('success', 'Đơn hàng đã được xác nhận là đã nhận.');
+}
 }
