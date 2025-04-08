@@ -70,6 +70,7 @@ class Kernel extends HttpKernel
         'auth' => \App\Http\Middleware\Authenticate::class,
         'admin' => \App\Http\Middleware\AdminMiddleware::class, // 👈 Kiểm tra dòng này
         'shipper' => \App\Http\Middleware\ShipperMiddleware::class,
+        'without_throttle' => \App\Http\Middleware\WithoutThrottle::class,
     ];
     
 }

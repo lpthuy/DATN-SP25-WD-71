@@ -85,13 +85,14 @@
                                                                                                                                 $method = strtolower($order->payment_method);
                                                                                                                             @endphp
 
-                                                                                                                            @if ($method === 'cod')
-                                                                                                                                <span class="badge badge-secondary">Chưa thanh toán (COD)</span>
-                                                                                                                            @elseif ($order->is_paid)
-                                                                                                                                <span class="badge badge-success">Thanh toán thành công</span>
-                                                                                                                            @else
-                                                                                                                                <span class="badge badge-danger">Thanh toán thất bại</span>
-                                                                                                                            @endif
+@if ($order->is_paid)
+    <span class="badge badge-success">Thanh toán thành công</span>
+@elseif (strtolower($order->payment_method) === 'cod')
+    <span class="badge badge-secondary">Chưa thanh toán (COD)</span>
+@else
+    <span class="badge badge-danger">Thanh toán thất bại</span>
+@endif
+
                                                                                                                         </td>
 
                                                                                                                         <!-- Dành cho script -->
