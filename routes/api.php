@@ -52,12 +52,18 @@ Route::prefix('shipper')->group(function () {
     Route::post('/register', [ShipperAuthController::class, 'register']);
     Route::post('/login', [ShipperAuthController::class, 'login']);
 });
-Route::middleware('auth:sanctum')->prefix('shipper')->group(function () {
+
+
+Route::middleware(['auth:sanctum', 'throttle:none'])->prefix('shipper')->group(function () {
     Route::get('/orders', [OrderController::class, 'index']);
+    Route::get('/shipper/completed-orders', [OrderController::class, 'completed']);
 });
+
 
 Route::middleware(['auth:sanctum', 'shipper'])->group(function () {
     Route::put('/shipper/orders/{id}/status', [OrderController::class, 'updateStatus']);
+    Route::put('/shipper/orders/{id}/paid', [OrderController::class, 'markAsPaid']);
+
 });
 
 
