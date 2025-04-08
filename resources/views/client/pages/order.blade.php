@@ -134,6 +134,7 @@
                                         @else
                                         <tr>
 
+
                                             <td colspan="7">
 
                                                 <p class="text-center">Bạn chưa có đơn hàng nào.</p>
@@ -146,6 +147,7 @@
 
                             <div class="paginate-pages pull-right page-account text-right col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                 {{ $orders->links() }}
+
                             </div>
                         </div>
                     </div>
@@ -153,6 +155,7 @@
 
             </div>
         </div>
+
     </div>
 </section>
 
@@ -167,24 +170,32 @@
 
                 if (status.includes("đang xử lý")) {
                     actionCell.innerHTML = `
+
                             <button class="btn btn-sm btn-danger" onclick="showCancelModal(${orderId})">
                                 <i class="fas fa-times-circle"></i> Huỷ đơn
                             </button>
                         `;
+
                 } else if (status.includes("giao thành công") || status.includes("đã giao") || status.includes("hoàn tất")) {
                     actionCell.innerHTML = `
                             <form action="/orders/${orderId}/received" method="POST" style="display:inline-block;">
+
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                 <button type="submit" class="btn btn-sm btn-success">
                                     <i class="fas fa-check-circle"></i> Đã nhận hàng
                                 </button>
                             </form>
+    
+                            <button class="btn btn-sm btn-outline-danger" style="margin-left: 5px;" onclick="showReturnModal(${orderId})">
+                                <i class="fas fa-undo-alt"></i> Hoàn hàng
+                            </button>
                         `;
                 } else if (status.includes("hủy") || status.includes("đã huỷ")) {
                     actionCell.innerHTML = `<span class="badge badge-danger">Đã huỷ</span>`;
                 } else {
                     actionCell.innerHTML = `<span class="text-muted">Không có hành động</span>`;
                 }
+
             }
 
             // Gọi lần đầu
@@ -201,31 +212,35 @@
 
 
 
-<!-- Modal chọn lý do hủy -->
-<div id="cancelModal" class="cancel-modal" style="display: none;">
+
+    <!-- Modal hoàn hàng -->
+<div id="returnModal" class="cancel-modal" style="display: none;">
     <div class="cancel-modal-content">
-        <h5 class="cancel-title">📝 Lý do hủy đơn hàng</h5>
-        <form id="cancelForm">
-            <div class="cancel-reason">
-                <label><input type="radio" name="reason" value="Tôi không còn nhu cầu"> Tôi không còn nhu cầu</label>
-                <label><input type="radio" name="reason" value="Tôi đặt nhầm"> Tôi đặt nhầm</label>
-                <label><input type="radio" name="reason" value="Thời gian giao hàng quá lâu"> Thời gian giao hàng quá lâu</label>
-                <label><input type="radio" name="reason" value="Lý do khác" id="other-reason-radio"> Lý do khác</label>
-                <textarea id="customReason" placeholder="Nhập lý do khác..." rows="3" style="display: none;"></textarea>
+        <h5 class="cancel-title">📦 Lý do hoàn hàng</h5>
+        <form id="returnForm" enctype="multipart/form-data" method="POST" action="{{ route('order.return', ['id' => 0]) }}">
+            @csrf
+            <input type="hidden" name="order_id" id="returnOrderId">
+
+            <div class="form-group">
+                <label for="return_reason">Lý do:</label>
+                <textarea class="form-control" name="return_reason" id="return_reason" rows="3" required></textarea>
             </div>
 
-            <input type="hidden" id="cancelOrderId">
+            <div class="form-group mt-3">
+                <label for="return_media">Ảnh/Video hàng lỗi:</label>
+                <input type="file" class="form-control" name="return_media" accept="image/*,video/*" required>
+            </div>
 
             <div class="cancel-actions">
-                <button type="button" onclick="submitCancelReason()" class="btn btn-danger">Xác nhận</button>
-                <button type="button" onclick="closeCancelModal()" class="btn btn-secondary">Đóng</button>
+                <button type="submit" class="btn btn-danger">Gửi hoàn hàng</button>
+                <button type="button" onclick="closeReturnModal()" class="btn btn-secondary">Đóng</button>
             </div>
         </form>
     </div>
 </div>
 
-
 <script>
+
     document.addEventListener("DOMContentLoaded", function() {
         const badges = document.querySelectorAll('.order-status-badge');
 
@@ -262,15 +277,25 @@
                                     classList += 'badge-secondary';
                             }
 
-                            badge.innerText = text;
-                            badge.className = classList;
-                        }
-                    });
-            });
-        }, 3000); // Cập nhật mỗi 3 giây
-    });
-</script>
 
+</script>
+    
+
+    <!-- Modal chọn lý do hủy -->
+    <div id="cancelModal" class="cancel-modal" style="display: none;">
+        <div class="cancel-modal-content">
+            <h5 class="cancel-title">📝 Lý do hủy đơn hàng</h5>
+            <form id="cancelForm">
+                <div class="cancel-reason">
+                    <label><input type="radio" name="reason" value="Tôi không còn nhu cầu"> Tôi không còn nhu cầu</label>
+                    <label><input type="radio" name="reason" value="Tôi đặt nhầm"> Tôi đặt nhầm</label>
+                    <label><input type="radio" name="reason" value="Thời gian giao hàng quá lâu"> Thời gian giao hàng quá
+                        lâu</label>
+                    <label><input type="radio" name="reason" value="Lý do khác" id="other-reason-radio"> Lý do khác</label>
+                    <textarea id="customReason" placeholder="Nhập lý do khác..." rows="3" style="display: none;"></textarea>
+                </div>
+
+                <input type="hidden" id="cancelOrderId">
 
 
 <script>
@@ -311,11 +336,47 @@
             reason = document.getElementById('customReason').value.trim();
             if (!reason) {
                 alert('Vui lòng nhập lý do cụ thể!');
+
                 return;
             }
-        } else {
-            reason = selected.value;
+
+            if (selected.value === 'Lý do khác') {
+                reason = document.getElementById('customReason').value.trim();
+                if (!reason) {
+                    alert('Vui lòng nhập lý do cụ thể!');
+                    return;
+                }
+            } else {
+                reason = selected.value;
+            }
+
+            fetch("{{ route('order.cancel') }}", {
+                method: "POST",
+                headers: {
+                    "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').getAttribute("content"),
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    order_id: orderId,
+                    cancel_reason: reason
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        alert(data.message);
+                        location.reload();
+                    } else {
+                        alert(data.message || 'Huỷ thất bại!');
+                    }
+                })
+                .catch(error => {
+                    alert('Có lỗi xảy ra khi gửi yêu cầu.');
+                    console.error(error);
+                });
+
         }
+
 
         fetch("{{ route('order.cancel') }}", {
                 method: "POST",
@@ -625,8 +686,10 @@
 
         .col-left-ac,
         .col-right-ac {
+
             width: 100%;
         }
+
 
         .table-order th,
         .table-order td {
@@ -639,6 +702,7 @@
         }
     }
 </style>
+
 
 
 @endsection

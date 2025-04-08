@@ -48,8 +48,9 @@ class HomeController extends Controller
     {
         $promotions = Promotion::where('is_active', 1)->get(); // Lấy các mã khuyến mãi
         $products = Product::paginate(9);
+        $category = null; // Hoặc tạo đối tượng giả nếu cần
     
-        return view('client.pages.product-by-category', compact('products', 'promotions'));
+        return view('client.pages.product-by-category', compact('products', 'promotions','category'));
     }
 
 
@@ -76,9 +77,10 @@ class HomeController extends Controller
         if (!$id) {
             return redirect()->route('home')->with('error', 'Danh mục không hợp lệ.');
         }
-    
+  
         $category = Category::findOrFail($id);
-    
+      
+
         // Phân trang sản phẩm trong danh mục
         $products = Product::where('category_id', $id)->paginate(9); // Thêm phân trang ở đây
     

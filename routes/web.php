@@ -1,19 +1,21 @@
 <?php
 
-use App\Http\Controllers\Admin\BannerController;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Mail\OrderSuccessMail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\ColorController;
 use App\Http\Controllers\Client\CartController;
 use App\Http\Controllers\client\HomeController;
 
 
-use App\Http\Controllers\Admin\PostController;
+
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\OrdersController;
 
 
 use App\Http\Controllers\Client\OrderController;
@@ -27,13 +29,12 @@ use App\Http\Controllers\Admin\PromotionController;
 use App\Http\Controllers\Client\CheckoutController;
 use App\Http\Controllers\Admin\StatisticsController;
 use App\Http\Controllers\Admin\ProductImageController;
-use App\Http\Controllers\Admin\PaymentMethodController;
 
+use App\Http\Controllers\Admin\PaymentMethodController;
 use App\Http\Controllers\Admin\ProductVariantController;
 use App\Http\Controllers\Admin\RevenueStatisticsController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
-use App\Http\Controllers\Admin\OrdersController;
 
 Auth::routes();
 
@@ -55,6 +56,14 @@ Route::post('/save-promo-code', [PromotionController::class, 'saveCode'])->name(
 
 
 Route::get('danh-muc/{slug}', [App\Http\Controllers\Client\ProductController::class, 'category'])->name('category.products');
+
+Route::get('/checkout/retry/{order}', [CheckoutController::class, 'retry'])->name('checkout.retry');
+
+// Route (web.php)
+Route::post('/don-hang/{id}/hoan-hang', [OrderController::class, 'markAsReturned'])->name('order.return');
+
+Route::delete('/admin/orders/{id}', [OrdersController::class, 'destroy'])->name('orders.destroy');
+
 
 
 

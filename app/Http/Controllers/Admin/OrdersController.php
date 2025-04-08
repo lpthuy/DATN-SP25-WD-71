@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class OrdersController extends Controller
 {
+    public function destroy($id)
+{
+    $order = Order::findOrFail($id);
+    $order->delete();
+
+    return redirect()->route('orders.index')->with('success', 'Đã xoá đơn hàng thành công.');
+}
+
     public function index(Request $request)
 {
     $query = Order::query();
