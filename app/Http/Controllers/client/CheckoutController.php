@@ -142,4 +142,20 @@ class CheckoutController extends Controller
             return redirect()->route('checkout.show')->with('error', 'Thanh toán thất bại. Mã lỗi: ' . $vnp_ResponseCode);
         }
     }
+
+    public function retry(Order $order)
+    {
+        // Kiểm tra quyền hoặc trạng thái đơn nếu cần
+    
+        // Lấy lại các sản phẩm trong đơn để hiển thị lại
+        $items = $order->items()->with('variant')->get();
+    
+        // Truyền sang view checkout-confirm.blade.php
+        return view('client.pages.checkout-confirm', [
+            'order' => $order,
+            'items' => $items
+        ]);
+    }
+    
+
 }

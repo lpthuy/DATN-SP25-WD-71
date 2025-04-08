@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\Product;
 use App\Models\ProductVariant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -136,27 +138,39 @@ public function index()
 
 
     // CartController.php
-public function recheckCart()
-{
-    $cartItems = session('cart', []);
-    $updatedCart = [];
-
-    foreach ($cartItems as $key => $item) {
-        $product = \App\Models\Product::find($item['product_id']);
-        $variant = \App\Models\ProductVariant::find($item['variant_id']);
-
-        if ($product && $variant && $product->is_active) {
-            $item['name'] = $product->name;
-            $updatedCart[$key] = $item;
-        }
+    public function recheckCart(Request $request)
+    {
+        $orderId = $request->input('order_id');
+        $order = Order::with('items')->findOrFail($orderId);
+    
+        // Map lại các item về dạng mà view checkout-confirm sử dụng
+        $checkoutItems = $order->items->map(function ($item) {
+            $totalPrice = $item->price * $item->quantity;
+            return [
+                'product_id' => $item->product_id,
+                'name' => $item->product_name,
+                'color' => $item->color,
+                'size' => $item->size,
+                'quantity' => $item->quantity,
+                'price' => $item->price,
+                'total_price' => $totalPrice,
+            ];
+        })->toArray();
+    
+        $total = array_sum(array_column($checkoutItems, 'total_price'));
+    
+        // Lưu vào session
+        session([
+            'checkout_items' => $checkoutItems,
+            'order_code' => $order->order_code,
+        ]);
+    
+        return view('client.pages.checkout-confirm', [
+            'checkoutItems' => $checkoutItems,
+            'total' => $total,
+            'user' => Auth::user(),
+        ]);
     }
-
-    session()->put('cart', $updatedCart);
-
-    return response()->json([
-        'success' => true,
-        'cart' => $updatedCart
-    ]);
-}
+    
 
 }

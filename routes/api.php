@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
+
+// routes/api.php
+use App\Http\Controllers\Api\ShipperAuthController;
+use App\Http\Controllers\Api\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -42,3 +46,25 @@ Route::post('/vietqr/webhook', function (Request $request) {
 
     return response()->json(['message' => 'Không tìm thấy đơn hàng'], 404);
 });
+
+
+Route::prefix('shipper')->group(function () {
+    Route::post('/register', [ShipperAuthController::class, 'register']);
+    Route::post('/login', [ShipperAuthController::class, 'login']);
+});
+Route::middleware('auth:sanctum')->prefix('shipper')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index']);
+});
+
+Route::middleware(['auth:sanctum', 'shipper'])->group(function () {
+    Route::put('/shipper/orders/{id}/status', [OrderController::class, 'updateStatus']);
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/orders', [OrderController::class, 'index']); // Đơn hàng cần giao
+    Route::post('/orders/{id}/status', [OrderController::class, 'updateStatus']); // Cập nhật trạng thái
+    Route::post('/logout', [ShipperAuthController::class, 'logout']);
+});
+
+

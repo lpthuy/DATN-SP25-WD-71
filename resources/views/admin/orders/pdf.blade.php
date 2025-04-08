@@ -47,6 +47,40 @@
         </tbody>
     </table>
 
-    <h3 style="text-align:right">Tổng cộng: {{ number_format($total) }} VNĐ</h3>
+    @php
+    $total = 0;
+    foreach ($items as $item) {
+        $total += $item->price * $item->quantity;
+    }
+
+    $promotion = null;
+    $discountAmount = 0;
+    $finalTotal = $total;
+
+    if ($order->promotion_code) {
+        $promotion = \App\Models\Promotion::where('code', $order->promotion_code)->first();
+        if ($promotion) {
+            $discountAmount = $promotion->discount_type === 'fixed'
+                ? $promotion->discount_value
+                : $total * ($promotion->discount_value / 100);
+            $finalTotal = max(0, $total - $discountAmount);
+        }
+    }
+@endphp
+
+<div class="mt-4 border-top pt-3">
+    <h4><strong>Thông tin thanh toán</strong></h4>
+    <p><strong>Giá gốc:</strong> {{ number_format($total, 0, ',', '.') }} VNĐ</p>
+
+    @if ($promotion)
+        <p><strong>Mã giảm giá:</strong> {{ $order->promotion_code }} 
+            ({{ $promotion->discount_type === 'percentage' ? $promotion->discount_value . '%' : number_format($promotion->discount_value, 0, ',', '.') . ' VNĐ' }})
+        </p>
+        <p><strong>Đã giảm:</strong> {{ number_format($discountAmount, 0, ',', '.') }} VNĐ</p>
+    @endif
+
+    <h4 style="color:#e3342f"><strong>Tổng thanh toán:</strong> {{ number_format($finalTotal, 0, ',', '.') }} VNĐ</h4>
+</div>
+
 </body>
 </html>
